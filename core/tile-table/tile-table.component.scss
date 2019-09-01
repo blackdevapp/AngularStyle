@@ -1,0 +1,157 @@
+.table-body {
+  .ul-body {
+    min-height: 80px;
+    height: auto;
+    background: #F7F9F9;
+    width: 100%;
+    display: flex;
+    list-style-type: none;
+    flex-wrap: wrap;
+    padding: 0;
+    align-items: center;
+    transition: all 0.3s ease;
+
+    & > li:first-child {
+      padding: 0 36px;
+    }
+
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
+      height: auto;
+      align-items: flex-start;
+      padding: 15px;
+    }
+
+    &:hover {
+      box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+      background: white;
+      cursor: pointer;
+      color: #0d47a1;
+    }
+
+    li {
+      width: 13%;
+
+      .btn-simple {
+        border: 0;
+      }
+
+      @media screen and (max-width: 600px) {
+        width: auto;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+}
+
+.table-header ul {
+
+  display: flex;
+  width: 100%;
+  list-style-type: none;
+  flex-wrap: wrap;
+  box-shadow: 0 11px 13px -13px grey;
+  height: 100px;
+  margin-bottom: 31px;
+
+  li {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    text-transform: capitalize;
+    width: 13%;
+
+    span {
+      padding: 17px 0;
+    }
+
+
+    @media screen and (max-width: 600px) {
+      width: auto;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+    height: auto;
+  }
+}
+.align{
+  text-align: center;
+}
+.display-none {
+  display: none;
+}
+
+.scroll {
+  display: block;
+  height: 60vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  @media screen and (max-width: 600px) {
+    height: 25vh;
+  }
+}
+
+.sort-icon-dir {
+  float: right !important;
+
+  .sort-icon-dir-padding-top {
+    padding-top: 10px;
+
+    ul li a {
+      color: black !important;
+    }
+  }
+}
+
+.margin-bottom {
+  margin-bottom: 90px !important;
+}
+
+.dropdown-width {
+  min-width: 140px;
+}
+
+.card-header {
+  //height: 50px;
+  float: none;
+
+  .sort-ico {
+    margin-top: 8px;
+    float: right;
+  }
+}
+
+.drop-btn {
+  border: 2px solid #ef5350;
+  background: transparent;
+  color: #757575;
+}
+
+.open > .btn.dropdown-toggle {
+  border: 2px solid #ef5350;
+  background: transparent;
+  color: #757575;
+}
+
+
+.profile-img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.drop-li {
+  width: 100% !important;
+}
+
+.dropdown-menu{
+  li{
+    a{
+      text-transform: capitalize
+    }
+  }
+}

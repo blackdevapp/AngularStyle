@@ -1,0 +1,65 @@
+/deep/.row-class {
+  overflow: auto;
+  display: flex!important;
+  margin-bottom: 5px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  &.bare{
+    width: 42px;
+    height: 22px;
+    background-color: #e2e2e2;
+  }
+  &.day-main-date-icon {
+    font-size: 23px!important;
+  }
+  .time{
+    float: left;
+    margin-right: 34px;
+    i{
+      margin-bottom: 0;
+    }
+  }
+  .details{
+    display: flex;
+    justify-content: space-between;
+    .each-detail{
+      //display: flex;
+      margin: 0 20px;
+      max-width: 150px;
+      float: left;
+      min-width: 88px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 256px;
+      white-space: nowrap;
+      &.actions{
+        cursor: pointer;
+        i{
+          font-size: 18px!important;
+        }
+      }
+      .airport{
+        text-transform: capitalize;
+        &.bare{
+          width: 27px;
+          height: 22px;
+          background-color: #e2e2e2;
+        }
+      }
+      .location{
+        text-decoration: underline;
+        cursor: pointer;
+        &.bare{
+          width: 103px;
+          height: 22px;
+          background-color: #e2e2e2;
+        }
+      }
+    }
+
+    .flexRow{
+      display: flex;
+    }
+  }
+}

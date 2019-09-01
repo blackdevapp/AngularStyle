@@ -1,0 +1,112 @@
+@import "../../../assets/sass/md/classes.scss";
+$x-small: 425px;
+.icon-selector {
+  margin-top: 46px;
+  @extend .vertical-center;
+  flex-direction: column;
+
+  .row {
+    div {
+      font-size: 8px;
+      @extend .center;
+    }
+  }
+}
+.cursor{
+  cursor: pointer;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  position: relative;
+  margin: 1em;
+}
+
+.demo-form {
+  padding: 4em;
+}
+
+.mat-card {
+  padding: 0;
+  max-width: 600px;
+  margin: 3rem auto;
+}
+
+mat-form-field /deep/ {
+  margin-top: -5px;
+}
+
+.alert {
+  padding: 10px;
+  background-color: #ff6438;
+  color: white;
+}
+
+.time-input {
+  width: 40px;
+  padding-bottom: 1px;
+  padding-left: 5px
+}
+
+
+.black-box{
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.87);
+  color: white;
+  height: 45px;
+  border-radius: 4px;
+
+  a{
+    color: #0d47a1;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+
+
+.pin-ico{
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 34px;
+  width: 34px;
+  background-color: transparent;
+  border: 3px solid transparent;
+
+  i{
+    font-size: 17px;
+    padding: 10px;
+    margin: -5px;
+  }
+}
+.pin-ico:hover{
+cursor: pointer;
+    background-color: #000;
+    color: white;
+    //padding: 10px;
+    //margin: -13px;
+    border-radius: 50%;
+    border: 3px solid #c5c5c5;
+
+}
+
+@media screen and (max-width: $x-small){
+  .btn-full-width{
+    width: 100%;
+  }
+}
+
+
+.full-width{
+  width: 100%!important;
+}

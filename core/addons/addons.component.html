@@ -1,0 +1,12 @@
+<div (click)="addon.availability = !addon.availability;returnData(addon.availability)">
+	<i class="material-icons checked" *ngIf="addon.availability">check_circle</i>
+	<div class="form-group icon-selector">
+        <i class="material-icons">{{addon.icon}}</i>
+        <div class="row">
+        	<div class="col-md-12">
+        		{{addon.name}}
+        	</div>
+        </div>
+    </div>
+    
+</div>

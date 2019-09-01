@@ -1,0 +1,25 @@
+
+<div (click)="clickItem(notify)">
+  <div class="alert-box">
+    <div class="right-side">
+      <div class="top">{{notify.type}}</div>
+      <div class="bottom">{{notify.user_id.email}}</div>
+    </div>
+    <div class="left-side" *ngIf="notify.type==='VISA'">
+      <div class="col-md-12">
+        <span>Form : {{notify.details?.details?.name}} </span>
+      </div>
+
+
+    </div>
+    <div class="left-side" *ngIf="notify.type==='BOOK'">
+      <div class="col-md-12">
+        <span>From : {{notify?.details?.details?.from}} </span>
+      </div>
+
+      <div class="col-md-12">
+        <span>To : {{notify?.details?.details?.to}}</span>
+      </div>
+    </div>
+  </div>
+</div>

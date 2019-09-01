@@ -1,0 +1,235 @@
+<div class="col-md-12 top-spacing2">
+  <div class="go-back" (click)="goBackToDash()">
+    <i class="material-icons">keyboard_arrow_left</i>
+    Back to Onboarding
+  </div>
+  <div class="card card-stats">
+    <div class="card-header" data-background-color="orange">
+      <!--<i class="fa fa-arrow-left"></i>-->
+      Agency Information
+    </div>
+    <div class="card-content">
+      <div class="col-md-12 col-sm-12">
+        <div class="col-md-3 col-sm-3 col-xs-12">
+          <div class="form-group form-black label-floating "
+            [ngClass]="[getValidationClass('companyName'),!agencyInfo.companyName ? 'is-empty' : '']">
+            <label class="control-label">Company Name</label>
+            <input class="form-control" type="text" [(ngModel)]="agencyInfo.companyName"
+              (ngModelChange)="agencyInfoValidation.fields.companyName.originalValue=agencyInfo.companyName"
+              name="companyName">
+            <span class="form-control-feedback">
+              <i class="material-icons">priority_high</i>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-3 col-xs-12">
+          <div class="form-group form-black label-floating"
+            [ngClass]="[getValidationClass('city'),!agencyInfo.city ? 'is-empty' : '']">
+            <label class="control-label">City</label>
+            <input class="form-control" [(ngModel)]="agencyInfo.city"
+              (ngModelChange)="agencyInfoValidation.fields.city.originalValue=agencyInfo.city" type="text" name="city">
+            <span class="form-control-feedback">
+              <i class="material-icons">priority_high</i>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+          <div class="form-group form-black label-floating"
+            [ngClass]="[getValidationClass('city'),!agencyInfo.website ? 'is-empty' : '']">
+            <label class="control-label">Website</label>
+            <input class="form-control" [(ngModel)]="agencyInfo.website"
+              (ngModelChange)="agencyInfoValidation.fields.website.originalValue=agencyInfo.website" type="text" name="website">
+            <span class="form-control-feedback">
+              <i class="material-icons">priority_high</i>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-3 col-xs-12 text-center">
+          <input class="files" type="file" accept="image/png, image/jpeg" (change)="fileChangeListener($event)" #fileInput>
+          <div class="avatar text-center" (click)="fileInput.click()">
+            <img [src]="agencyInfo.logo?agencyInfo.logo:'../../assets/img/faces/marc.jpg'" alt="Avatar" class="image">
+            <div class="overlay">
+              <div class="text">Uplaod</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12">
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="form-group form-black label-floating "
+            [ngClass]="[getValidationClass('officialRepresentative'),!agencyInfo.officialRepresentative ? 'is-empty' : '']">
+            <label class="control-label">Official Responsive</label>
+            <input class="form-control" [(ngModel)]="agencyInfo.officialRepresentative"
+              (ngModelChange)="agencyInfoValidation.fields.officialRepresentative.originalValue=agencyInfo.officialRepresentative"
+              type="text" name="official">
+            <span class="form-control-feedback">
+              <i class="material-icons">priority_high</i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="col-md-12"
+            *ngFor="let item of agencyInfo.alternativeRepresentative;trackBy:indexTracker;let i=index">
+            <div class="col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0">
+              <div class="form-group form-black label-floating "
+                [ngClass]="!agencyInfo.alternativeRepresentative[i] ? 'is-empty' : ''">
+                <label class="control-label">Alternative Representative {{i + 1}}</label>
+                <input class="form-control" type="text" [(ngModel)]="agencyInfo.alternativeRepresentative[i]"
+                  name="AlternativeRepresentative">
+                <p class="alert" *ngIf="dupAlternativeRepresentative.indexOf(i)>-1">You have duplicated data entry. Please validate your data</p>
+              </div>
+              <span class="icon-position">
+                <div class="ico-back" *ngIf="i>0" (click)="remove(agencyInfo.alternativeRepresentative,i)">
+                  <i class="fa fa-trash-o ico" title="Delete"></i>
+                </div>
+                <div class="ico-back" (click)="agencyInfo.alternativeRepresentative.push('')">
+                  <i class="fa fa-plus ico" title="Add"></i>
+                </div>
+
+
+              </span>
+            </div>
+          </div>
+          <div class="col-md-12" *ngFor="let item of agencyInfo.telephone;trackBy:indexTracker;let i=index">
+            <div class="col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0">
+              <div class="form-group form-black label-floating" [ngClass]="!agencyInfo.telephone[i] ? 'is-empty' : ''">
+                <label class="control-label">TelePhone Number {{i + 1}}</label>
+                <input class="form-control" [(ngModel)]="agencyInfo.telephone[i]" maxlength="11" type="tel" name="TelePhoneNumber">
+                <p class="alert" *ngIf="dupTelephone.indexOf(i)>-1">You have duplicated data entry. Please validate your data</p>
+
+              </div>
+              <span class="icon-position">
+                <div class="ico-back" *ngIf="i>0" (click)="remove(agencyInfo.telephone,i)">
+                  <i class="fa fa-trash-o ico" title="Delete"></i>
+                </div>
+                <div class="ico-back" (click)="agencyInfo.telephone.push('')">
+                  <i class="fa fa-plus ico" title="Add"></i>
+                </div>
+
+
+              </span>
+            </div>
+          </div>
+          <div class="col-md-12" *ngFor="let item of agencyInfo.mobile;trackBy:indexTracker;let i=index">
+            <div class="col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0">
+              <div class="form-group form-black label-floating" [ngClass]="!agencyInfo.mobile[i] ? 'is-empty' : ''">
+                <label class="control-label">{{i==0?'Primery Mobile No':'Mobile No '+(i+1)}}</label>
+                <input class="form-control" [(ngModel)]="agencyInfo.mobile[i]" maxlength="11" type="tel" name="Mobile No">
+                <p class="alert" *ngIf="dupMobile.indexOf(i)>-1">You have duplicated data entry. Please validate your data</p>
+
+              </div>
+              <span class="icon-position">
+                <div class="ico-back" *ngIf="i>0" (click)="remove(agencyInfo.mobile,i)">
+                  <i class="fa fa-trash-o ico" title="Delete"></i>
+                </div>
+                <div class="ico-back" (click)="agencyInfo.mobile.push('')">
+                  <i class="fa fa-plus ico" title="Add"></i>
+                </div>
+
+
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="col-md-12" *ngFor="let item of agencyInfo.fax;trackBy:indexTracker;let i=index">
+            <div class="col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0">
+              <div class="form-group form-black label-floating" [ngClass]="!agencyInfo.fax[i] ? 'is-empty' : ''">
+                <label class="control-label">Fax Number {{i + 1}}</label>
+                <input class="form-control " [(ngModel)]="agencyInfo.fax[i]" maxlength="11" type="tel" name="FaxNum">
+                <p class="alert" *ngIf="dupFax.indexOf(i)>-1">You have duplicated data entry. Please validate your data</p>
+
+              </div>
+              <span class="icon-position">
+                <div class="ico-back" *ngIf="i>0" (click)="remove(agencyInfo.fax,i)">
+                  <i class="fa fa-trash-o ico" title="Delete"></i>
+                </div>
+                <div class="ico-back" (click)="agencyInfo.fax.push('')">
+                  <i class="fa fa-plus ico" title="Add"></i>
+                </div>
+
+
+              </span>
+            </div>
+          </div>
+          <div class="col-md-12" *ngFor="let item of agencyInfo.email;trackBy:indexTracker;let i=index">
+            <div class="col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0">
+              <div class="form-group form-black label-floating" [ngClass]="!agencyInfo.email[i] ? 'is-empty' : ''">
+                <label class="control-label">{{i==0?'Primery Email':'Email '+(i+1)}}</label>
+                <input class="form-control" [(ngModel)]="agencyInfo.email[i]" type="email" name="email">
+                <p class="alert" *ngIf="dupEmail.indexOf(i)>-1">You have duplicated data entry. Please validate your data</p>
+
+              </div>
+              <span class="icon-position">
+                <div class="ico-back" *ngIf="i>0" (click)="remove(agencyInfo.email,i)">
+                  <i class="fa fa-trash-o ico" title="Delete"></i>
+                </div>
+                <div class="ico-back" (click)="agencyInfo.email.push('')">
+                  <i class="fa fa-plus ico" title="Add"></i>
+                </div>
+
+
+              </span>
+            </div>
+          </div>
+          <div class="col-md-12" *ngFor="let item of agencyInfo.officialAddress;trackBy:indexTracker;let i=index">
+            <div class="col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0">
+              <div class="form-group form-black label-floating"
+                [ngClass]="!agencyInfo.officialAddress[i] ? 'is-empty' : ''">
+                <label class="control-label">address {{i + 1}}</label>
+                <input class="form-control  input-width" [(ngModel)]="agencyInfo.officialAddress[i]" type="text"
+                  name="address">
+                <p class="alert" *ngIf="dupOfficialAddress.indexOf(i)>-1">You have duplicated data entry. Please validate your data</p>
+
+              </div>
+              <span class="icon-position">
+                <div class="ico-back" *ngIf="i>0" (click)="remove(agencyInfo.officialAddress,i)">
+                  <i class="fa fa-trash-o ico" title="Delete"></i>
+                </div>
+                <div class="ico-back" (click)="agencyInfo.officialAddress.push('')">
+                  <i class="fa fa-plus ico" title="Add"></i>
+                </div>
+                <div class="ico-back" (click)="openMap()">
+                  <i class="fa fa-map-marker ico" title="location"></i>
+                </div>
+
+
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-success pull-right" (click)="submit()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<div id="map2" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Location</h4>
+      </div>
+      <div class="modal-body">
+        <app-maps *ngIf="popUpMap"></app-maps>
+
+      </div>
+      <div class="modal-footer text-center">
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="row pull-left">
+  <i class="fa fa-remove colse" (click)="tmpImages=[];"></i>
+</div>
+<ngx-slick-carousel class="big-carousel"
+                    #slickModal1="slick-carousel"
+                    [config]="mainSlideConfig">
+  <div ngxSlickItem class="slide" *ngFor="let image of tmpImages">
+    <!-- <img [attr.src]="image" class="img"> -->
+    <div [ngStyle]="{'background-image': 'url(https://' + image + ')'}"></div>
+  </div>
+</ngx-slick-carousel>

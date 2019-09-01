@@ -1,0 +1,25 @@
+$tablet: 768px;
+$small: 320px;
+$x-small: 425px;
+
+
+.full-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-two{
+
+  
+}
+
+
+.site-wrapper{
+  max-width: 1440px;
+  float: none;
+  display: block;
+  margin: 0 auto;
+  overflow: hidden;
+}
+

@@ -1,0 +1,47 @@
+<div class="col-md-12">
+  <div class="row">
+    <div class="row-class">
+      <div class="time">
+			                        <span class="">
+			                        	<i class="material-icons">access_time</i>
+                                {{event.time}}
+			                      	</span>
+      </div>
+      <div class="details">
+        <div class="each-detail">
+          <div class="flexRow">
+				                          <span>
+				                            <i class="material-icons"
+                                       *ngIf="event.type==='AIRPLANE'&&!event.arrival">flight_takeoff</i>
+                                    <i class="material-icons"
+                                       *ngIf="event.type==='AIRPLANE'&&event.arrival">flight_land</i>
+				                            <i class="material-icons" *ngIf="event.type==='hotel-room'">hotel</i>
+				                            <i class="material-icons" *ngIf="event.type==='van-driver'">airport_shuttle</i>
+				                          </span>
+            <div *ngIf="event.type==='AIRPLANE'||event.type==='van-driver'">
+                                    <span class="airport">
+					                          <!-- MNL -->
+                                      {{event.details.from}}
+					                        </span>
+              <span><i class="material-icons">arrow_right_alt</i></span>
+              <span class="airport">
+            {{event.details.to}}
+					                      </span>
+            </div>
+            <div *ngIf="event.type==='hotel-room'">
+                                    <span class="airport">
+                                      {{event.temp ? 'Checkout' : 'Checkin'}}
+					                        </span>
+              <span><i class="material-icons">arrow_right_alt</i></span>
+              <span class="airport">
+            {{event.details.to}}
+					                      </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

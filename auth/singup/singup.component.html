@@ -1,0 +1,211 @@
+<app-loading *ngIf="loading"></app-loading>
+
+<div class="signup-wrapper">
+  <!--<div class="card" *ngIf="mode=='A'">-->
+    <!--<div class="card-header" data-background-color="purple">-->
+      <!--<h4 class="title">Register</h4>-->
+      <!--<p class="category">Referral Code</p>-->
+    <!--</div>-->
+    <!--<div class="card-content">-->
+      <!--<form>-->
+        <!--<div class="row">-->
+          <!--<div class="col-md-12">-->
+            <!--<div class="form-group form-black label-floating is-empty">-->
+              <!--<label class="control-label">Please enter your referral key</label>-->
+              <!--<input class="form-control" [(ngModel)]="referralCode" type="text" name="username">-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<button type="submit" class="btn btn-primary pull-right" (click)="goToOnBoarding()">Submit</button>-->
+        <!--<div class="clearfix"></div>-->
+        <!--<a style="cursor: pointer" (click)="mode='B'">I'm a User</a><br>-->
+        <!--<a style="margin-top: 10px;cursor: pointer" (click)="goToLogin()">I have an account</a>-->
+      <!--</form>-->
+    <!--</div>-->
+  <!--</div>-->
+
+  <div class="card" *ngIf="mode=='B'">
+    <div class="card-header" data-background-color="purple">
+      <h4 class="title">Register</h4>
+      <p class="category">Registeration Now</p>
+    </div>
+    <div class="card-content" style="padding: 40px!important;padding-top: 10px!important;">
+      <form [formGroup]="singupForm" (ngSubmit)="singup()">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group form-black label-floating is-empty">
+              <label class="control-label">Full Name</label>
+              <input class="form-control" type="text" name="username" formControlName="username">
+            </div>
+            <!--</div>-->
+            <!--<div class="col-md-12">-->
+            <div class="form-group form-black label-floating is-empty">
+              <label class="control-label">E-mail</label>
+              <input formControlName="email" class="form-control" type="email" name="email">
+            </div>
+            <!--</div>-->
+            <!--<div class="col-md-12">-->
+            <!-- <div class="form-group form-black label-floating is-empty">
+                <label class="control-label">Mobile Number</label>
+                <input formControlName="mobileNo" class="form-control" type="mobileNo" name="mobileNo">
+            </div> -->
+            <!--</div>-->
+            <!--<div class="col-md-12">-->
+            <div class="form-group form-black label-floating is-empty">
+              <label class="control-label">Password</label>
+              <input class="form-control" type="password" name="password" formControlName="password">
+            </div>
+            <!--</div>-->
+            <!--<div class="col-md-12">-->
+            <!-- <div class="form-group form-black label-floating is-empty">
+                <label class="control-label">Confirm Password</label>
+                <input class="form-control" type="password" name="confirmpassword" formControlName="confirmpassword">
+            </div> -->
+          </div>
+        </div>
+        <re-captcha (captchaResponse)="handleCorrectCaptcha($event)"
+                    site_key="6LdYMH4UAAAAAMPluqvLFv6lU37I-h1uXbZJZvBx"></re-captcha>
+
+
+        <button type="submit" class="btn btn-primary pull-right" [disabled]="!singupForm.valid">Singup Now</button>
+
+        <div class="clearfix"></div>
+        <a style="cursor: pointer" (click)="mode='A'">I'm an Agency</a><br>
+        <a style="margin-top: 10px;cursor: pointer" (click)="goToLogin()">I have an account</a>
+
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-primary pull-left social facebook full-width" (click)="facebook()">
+            <i class="fa fa-facebook-f input_ico"></i>
+            Register with Facebook
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="mode=='C'">
+    <div class="col-md-12 padding-right">
+      <div class="row">
+        <div class="col-md-5  text-center left-card">
+          <img src="../../../assets/img/logo.png" class="logo">
+          <h4 class="site-name">Next Journey</h4>
+          <p>Create an account</p>
+
+          <div class="col-md-12">
+            <button type="submit" class="btn btn-primary pull-left social facebook full-width" (click)="facebook()">
+              <i class="fab fa-facebook-f input_ico f-ico"></i>&nbsp;&nbsp;
+              Register with Facebook
+            </button>
+          </div>
+
+          <div class="col-md-12 or-top-space">
+            <hr class="or" title="or">
+          </div>
+
+          <form [formGroup]="singupForm" (ngSubmit)="singup()">
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1 text-left col-xs-10 col-xs-offset-1 padding">
+                <div class="form-group form-black label-floating is-empty">
+                  <label class="control-label">Full Name</label>
+                  <input class="form-control" type="text" name="username" formControlName="username">
+                </div>
+                <!--</div>-->
+                <!--<div class="col-md-12">-->
+                <div class="form-group form-black label-floating is-empty">
+                  <label class="control-label">E-mail</label>
+                  <input formControlName="email" class="form-control" type="email" name="email">
+                </div>
+                <!--</div>-->
+                <!--<div class="col-md-12">-->
+                <!-- <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Mobile Number</label>
+                    <input formControlName="mobileNo" class="form-control" type="mobileNo" name="mobileNo">
+                </div> -->
+                <!--</div>-->
+                <!--<div class="col-md-12">-->
+                <div class="form-group form-black label-floating is-empty">
+                  <label class="control-label">Password</label>
+                  <input class="form-control" type="password" name="password" formControlName="password">
+                </div>
+                <!--</div>-->
+                <!--<div class="col-md-12">-->
+                <!-- <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Confirm Password</label>
+                    <input class="form-control" type="password" name="confirmpassword" formControlName="confirmpassword">
+                </div> -->
+              </div>
+            </div>
+            <div class="re-captcha-wrap">
+              <re-captcha (captchaResponse)="handleCorrectCaptcha($event)"
+                          site_key="6LdYMH4UAAAAAMPluqvLFv6lU37I-h1uXbZJZvBx"></re-captcha>
+            </div>
+            <div class="col-md-12">
+              <button type="submit" class="btn btn-primary btn-full-width  " [disabled]="!singupForm.valid">Get
+                started
+              </button>
+            </div>
+
+            <div class="clearfix"></div>
+            <a style="cursor: pointer" (click)="mode='A'">I'm an Agency</a><br>
+
+            <a style="color: #525252">
+              Already have an account? <a style="color: #0d47a1;cursor: pointer" (click)="goToLogin()">Log in</a>
+            </a>
+          </form>
+        </div>
+        <div class="col-md-7 padding">
+          <section class="right-card">
+              <h3>
+                  Next Journey, Smarter way to build your personal, corporate or even family trips.
+                  <div class="action">
+                      <button class="type">
+                          Traveller
+                      </button>
+                      <button class="type">
+                        Agency
+                      </button>
+                  </div>
+                </h3>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="mode=='A'">
+    <div class="col-md-12 padding-right">
+      <div class="row">
+        <div class="col-md-5  text-center left-card">
+          <img src="../../../assets/img/logo.png" class="logo">
+          <h4 class="site-name">Next Journey</h4>
+          <p>Register</p>
+          <p>Referral Code</p>
+          <!--<div class="card-content">-->
+            <form>
+              <div class="row">
+                <div class="col-md-12 text-left">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Please enter your referral key</label>
+                    <input class="form-control" [(ngModel)]="referralCode" type="text" name="username">
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary pull-right btn-full-width" (click)="goToOnBoarding()">Submit</button>
+              <div class="clearfix"></div>
+              <a style="cursor: pointer" (click)="mode='C'">I'm a User</a><br>
+              <a style="margin-top: 10px;cursor: pointer" (click)="goToLogin()">I have an account</a>
+            </form>
+          <!--</div>-->
+        </div>
+        <div class="col-md-7 padding">
+          <section class="right-card">
+            <h3>
+              Next Journey
+            </h3>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,189 @@
+//@import "../../../../variables";
+//$phone: 750px;
+//$tablet: 780px;
+//
+//.navbar-nav > li > a:hover{
+//  background-color: unset;
+//}
+//.header{
+//  height: 80px;
+//  background-color: $Black;
+//  //background-color: rgba(0, 0, 0, 0.91);
+//  opacity: 0.7;
+//  @media (max-width: $phone) {
+//    height: unset;
+//  }
+//}
+//
+//.navbar-toggle{
+//  @media (max-width: $phone) {
+//    background-color: $white;
+//  }
+//}
+//
+//.logo{
+//  margin-left: 5px;
+//  height: auto;
+//  width: 21px;
+//  @media (max-width: $phone) {
+//    height: 30px;
+//    margin-left: unset;
+//    margin-top: unset;
+//  }
+//}
+//
+///deep/.mat-form-field-appearance-legacy .mat-form-field-underline{
+//  background-color: $white;
+//}
+//
+//.search_input{
+//  direction: rtl;
+//  width: 300px;
+//  @media (max-width: $tablet) {
+//    width: 150px;
+//  }
+//  @media (max-width: $phone) {
+//    width: 100%;
+//  }
+//}
+//
+//
+//.navbar_top_padding2{
+//  padding-top: 10px;
+//}
+//.navbar_top_padding{
+//  padding-top: 20px;
+//}
+//.navbar_left_padding{
+//  padding-left: 50px;
+//  @media (max-width: $phone) {
+//    padding: 15px!important;
+//  }
+//
+//  @media (max-width: $tablet) {
+//    padding-left: unset;
+//  }
+//}
+//.navbar_left_padding2{
+//  padding-left: 335px;
+//  @media (max-width: $phone) {
+//    padding-left: unset;
+//  }
+//  @media (max-width: $tablet) {
+//    padding-left: unset;
+//  }
+//}
+//
+//.navbar .navbar-nav > li > a{
+//  font-size: 12px;
+//  color: $white;
+//}
+//
+//.header_item{
+//  color: $white;
+//  text-align: left;
+//  letter-spacing: 0.14em;
+//  cursor: pointer;
+//  @media (max-width: $phone) {
+//    text-align: center;
+//  }
+//}
+//
+//.avatar_photo{
+//  width: 30px;
+//  height: 30px;
+//  cursor: pointer;
+//}
+//
+//
+//
+//.search-bar{
+//  background: url("../../../../assets/img/landingTour/magnifying-glass.png") no-repeat;
+//  height: 20px;
+//  .custom-input{
+//    width: 300px;
+//    border-top: none;
+//    border-left: none;
+//    border-right: none;
+//    background: transparent;
+//    border-bottom: 2px solid $white;
+//    color: $white;
+//    padding-left: 20px;
+//  }
+//}
+
+
+.header-background{
+  padding: 0;
+  background: rgba(0, 0, 0, 0.48);
+}
+.navbar-brand::after{
+  position: absolute;
+  width: 55px;
+  content: "";
+  border: 2px solid white;
+  left: 0;
+  top: 24px;
+}
+
+.navbar-brand{
+  padding-left: 70px;
+}
+
+.phone-num{
+  color: white;
+  padding-left: 70px;
+  position: relative;
+  top: -10px;
+}
+
+.nav > li > a {
+  padding: 10px 5px;
+  cursor: pointer;
+}
+
+
+
+.search-bar{
+  background: url("../../../../assets/img/landingTour/magnifying-glass.png") no-repeat;
+  background-position: 95%;
+  background-size: 12px 12px;
+  height: 20px;
+  .custom-input{
+    width: 200px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background: #ffffff61;
+    //border-bottom: 2px solid white;
+    color: white;
+    border-radius: 35px;
+    padding-left: 20px;
+    border: transparent;
+  }
+}
+
+.center-logo{
+  width: 27px;
+  margin-top: 7px;
+  margin-left: 30%;
+}
+
+.badge-basket{
+  position: absolute;
+  top: 7px;
+  border: 1px solid #FFF;
+  right: 0px;
+  font-size: 9px;
+  background: #f44336;
+  color: #FFFFFF;
+  min-width: 15px;
+  padding: 0px 5px;
+  height: 15px;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 15px;
+  vertical-align: middle;
+  display: block;
+  z-index: 1;
+}

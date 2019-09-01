@@ -1,0 +1,74 @@
+
+
+<!--<section class="footer">-->
+  <!--<div class="container">-->
+    <!--<div class="col-md-12 ">-->
+      <!--<div class="col-md-9">-->
+        <!--<p class="footerItem" (click)="navigateTo('/')">HOME</p>-->
+        <!--<p class="footerItem" (click)="navigateTo('/public/publicOne/0')">TOUR</p>-->
+        <!--<p class="footerItem">LOREM</p>-->
+        <!--<p class="footerItem">IPSUM</p>-->
+      <!--</div>-->
+      <!--<div class="col-md-3">-->
+        <!--<p class="footerItem2" style="">-->
+          <!--ALL RIGHTS RESERVED 2018 BARBODINC-->
+        <!--</p>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</section>-->
+
+
+<div class="footer-back">
+  <div class="col-md-12 footer-padding text-center">
+    <img [src]="agency.logo?agency.logo:'../../assets/img/logo.png'" class="center-logo">
+
+    <!--<p class="footer-title">Chilling</p>-->
+  </div>
+
+  <!--<div class="col-md-12">-->
+    <!--<p class="sub-text">A silky & refined minimalist travel website.</p>-->
+    <!--<p class="sub-text">Beautiful places & Beautiful holidays.</p>-->
+  <!--</div>-->
+
+  <div class="col-md-12 text-center icon-padding">
+    <i class="fa fa-facebook-f icons"></i>
+    <i class="fa fa-instagram icons"></i>
+    <i class="fa fa-twitter icons"></i>
+    <i class="fa fa-youtube-play icons"></i>
+    <i class="fa fa-wikipedia-w icons"></i>
+    <i class="fa fa-dribbble icons"></i>
+  </div>
+
+  <div class="col-md-10 col-md-offset-1 contact-section">
+    <div class="col-md-1"></div>
+    <div class="col-md-3 text-center">
+      <i class="fa fa-phone"></i>
+      <p class="sub-text3">Booking line: 8 a.m - 22 p.m</p>
+      <p class="sub-text2">{{agency.mobile_number?agency.mobile_number[0]:''}}</p>
+    </div>
+
+    <div class="col-md-2 text-center">
+      <i class="fa fa-envelope"></i>
+      <p class="sub-text3">Email Support</p>
+      <p class="sub-text2">{{agency.email_address?agency.email_address[0]:''}}</p>
+    </div>
+
+    <div class="col-md-2 text-center">
+      <i class="fa fa-skype blue-ico"></i>
+      <p class="sub-text3">Support Center</p>
+      <p class="sub-text2"></p>
+    </div>
+
+    <div class="col-md-2 text-center">
+      <i class="fa fa-question"></i>
+      <a href="mailto:{{agency.email_address?agency.email_address[0]:''}}?Subject=Hello"><p class="sub-text3">Keep in touch</p></a>
+      <a href="mailto:{{agency.email_address?agency.email_address[0]:''}}?Subject=Hello"><p class="sub-text2">Send Question</p></a>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+
+  <div class="col-md-12">
+    <p class="sub-text5"> Copyright 2017 chilling made by <span class="sub-text4">{{agency.company_name?agency.company_name:''}}</span></p>
+  </div>
+</div>

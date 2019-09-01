@@ -1,0 +1,1221 @@
+<div class="col-md-12">
+  <div *ngIf="changeLoading" class="loader">
+    <svg class="circular" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+    </svg>
+  </div>
+  <div class="helper" *ngIf="getShowHelper()">
+    <div class="helper-wrp">
+      <div class="cursor"></div>
+      <div class="hl-left-division">
+        <div class="hl-logo-wrp">
+          <div class="hl-logo-logo">
+
+          </div>
+          <div class="hl-logo-texts">
+            <div class="hl-logo-text-each"></div>
+            <div class="hl-logo-text-each"></div>
+            <div class="hl-logo-text-each"></div>
+          </div>
+        </div>
+        <div class="hl-menu">
+          <div class="hl-each-menu"></div>
+          <div class="hl-each-menu"></div>
+          <div class="hl-each-menu"></div>
+        </div>
+      </div>
+      <div class="hl-right-division">
+        <div class="pricing-div">
+          <div class="icon"></div>
+          <div class="price"></div>
+        </div>
+        <div class="division-wrp">
+          <div class="stepper">
+            <div class="each-step"></div>
+            <div class="each-step"></div>
+          </div>
+          <div class="panels-wrp">
+            <div class="left-panel">
+              <div class="left-panel-wrp">
+                <div class="left-panel-search">
+                  <div class="from-to">
+                    <div class="from"></div>
+                    <div class="to"></div>
+                  </div>
+                  <div class="submit-button-f">
+                  </div>
+
+                </div>
+                <div class="left-panel-results">
+                  <div class="each-result">
+                    <i class="material-icons">airport_shuttle</i>
+                    <div class="dashes"></div>
+                    <i class="material-icons">airport_shuttle</i>
+                  </div>
+                  <div class="each-result">
+                    <i class="material-icons">hotel</i>
+                    <div class="dashes"></div>
+                    <i class="material-icons">hotel</i>
+                  </div>
+                  <div class="each-result">
+                    <i class="material-icons">hotel</i>
+                    <div class="dashes"></div>
+                    <i class="material-icons">hotel</i>
+                  </div>
+                  <div class="each-result">
+                    <i class="material-icons">airplanemode_active</i>
+                    <div class="dashes"></div>
+                    <i class="material-icons">airplanemode_active</i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="right-panel">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary pull-right next" (click)="helperDisable()">skip</button>
+  </div>
+  <div class="icon-stepper">
+    <!--<br>-->
+    <mat-horizontal-stepper linear #stepper labelPosition="bottom">
+      <mat-step [stepControl]="true" errorMessage="Name is required.">
+        <ng-template matStepLabel>
+          <p class="icons step-name" social=""> Build Itinerary</p>
+        </ng-template>
+        <div class="col-md-6">
+          <div class="row toolbar1">
+            <div class="search col-md-12">
+              <div class="col-md-12" [ngClass]="cardsData.length>0?'search-wrp':'search-wrp-no-data'">
+                <div class="col-md-12 margin-bottom-space">
+                  <div class="col-md-6 col-sm-6 col-xs-12 c-field">
+                    <div class="form-group  label-floating custom-form1">
+                      <!-- <label class="control-label">From City</label> -->
+                      <input type="text" class="form-control"
+                             name="airline"
+                             autofocus
+                             id="from-city"
+                             placeholder="From"
+                             (blur)="initData()"
+                             (input)="getCities($event.target.value,'from')"
+                             [matAutocomplete]="auto1"
+                      >
+                      <mat-autocomplete #auto1="matAutocomplete"
+                                        (optionSelected)="card.from = $event.option.value;fromSelected()">
+                        <mat-option *ngIf="loader">
+                          <div class="text-center actionBtn">
+                            <i class="fa fa-spinner fa-pulse fa-fw"></i>
+                          </div>
+                        </mat-option>
+                        <mat-option *ngFor="let item of cityFromList" [value]="item.CityName">
+                                                    <span class="option-style">{{item.CityName}} - ({{item.CountryName}}
+                                                                                                 ) </span>
+                        </mat-option>
+                      </mat-autocomplete>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-12 c-field">
+                    <div class="form-group  label-floating custom-form1">
+                      <!-- <label class="control-label">From City</label> -->
+                      <input type="text" class="form-control"
+                             name="airline"
+                             autofocus
+                             placeholder="To"
+                             class="text-left"
+                             (blur)="initData()"
+                             (input)="getCities($event.target.value,'to')"
+                             [matAutocomplete]="auto2"
+                      >
+                      <mat-autocomplete #auto2="matAutocomplete"
+                                        (optionSelected)="card.to = $event.option.value;changeTo($event.option.value);toSelected()">
+                        <mat-option *ngIf="loader">
+                          <div class="text-center actionBtn">
+                            <i class="fa fa-spinner fa-pulse fa-fw"></i>
+                          </div>
+                        </mat-option>
+                        <mat-option *ngFor="let item of cityToList" [value]="item.CityName">
+                                                    <span class="option-style">{{item.CityName}} - ({{item.CountryName}}
+                                                                                                 )</span>
+                        </mat-option>
+                      </mat-autocomplete>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="col-md-3 col-xs-12 col-sm-3 text-left mobile-top-space">
+                    <mat-slide-toggle social="" [(ngModel)]="topFilter.shared" color="primary"
+                    >
+                    </mat-slide-toggle>
+                  </div>
+                  <div class="col-md-3  col-xs-12 col-sm-3 text-left mobile-top-space">
+                    <mat-slide-toggle social="" [(ngModel)]="topFilter.hotel" color="primary"
+                    >
+                    </mat-slide-toggle>
+                  </div>
+                  <div class="col-md-3  col-xs-12 col-sm-3 text-left mobile-top-space">
+                    <mat-slide-toggle social="" [(ngModel)]="topFilter.airfare" color="primary"
+                    >
+                    </mat-slide-toggle>
+                  </div>
+                  <div class="col-md-3  col-xs-12 col-sm-3 text-left mobile-top-space">
+                    <mat-slide-toggle social="" [(ngModel)]="topFilter.van" color="primary"
+                    >
+                    </mat-slide-toggle>
+                  </div>
+                </div>
+                <div>
+                  <div class="date-wrp col-md-3" (click)="dDep.open()">
+                    <!-- <div class="date-wrp"> -->
+                    <mat-form-field class="zero-width">
+                      <input matInput [(ngModel)]="topFilter.from" [min]="today"
+                             (ngModelChange)="changeDateFormat()"
+                             [matDatepicker]="dDep" placeholder="Choose a date">
+                      <mat-datepicker #dDep></mat-datepicker>
+                    </mat-form-field>
+                    <div class="d-details">
+                      <div class="d-month">{{moment(topFilter.from).format('MMM')}}</div>
+                      <div class="d-year">{{moment(topFilter.from).format('YYYY')}}</div>
+                    </div>
+                    <div class="d-day">
+                      <div class="d-day-week">{{moment(topFilter.from).format('ddd')}}</div>
+                      <div class="d-day-month">{{moment(topFilter.from).format('DD')}}</div>
+                    </div>
+
+                    <!-- </div> -->
+                  </div>
+                  <div class="col-md-9 quantity-wrp">
+                    <div class="col-md-4 quantity-each">
+                      <div class="q-details">
+                        <span class="q-name">adults</span>
+                        <span class="q-description"
+                              [ngStyle]="{'font-size':checkSideBarSize() ==='large-card' ? '12px' : '9px' }">12+ Years</span>
+                      </div>
+                      <div class="q-quantity">
+                        <input type="number" [(ngModel)]="adult" name=""
+                               (ngModelChange)="changeQuantity()"
+                               placeholder="0" autofocus>
+                      </div>
+                    </div>
+                    <div class="col-md-4 quantity-each">
+                      <div class="q-details">
+                        <span class="q-name">Children</span>
+                        <span class="q-description"
+                              [ngStyle]="{'font-size':checkSideBarSize() ==='large-card' ? '12px' : '9px' }">2-11 Years</span>
+                      </div>
+                      <div class="q-quantity">
+                        <input type="number" [(ngModel)]="children"
+                               (ngModelChange)="changeQuantity()" placeholder="0">
+                      </div>
+                    </div>
+                    <div class="col-md-4 quantity-each">
+                      <div class="q-details">
+                        <span class="q-name">infants</span>
+                        <span class="q-description"
+                              [ngStyle]="{'font-size':checkSideBarSize() ==='large-card' ? '12px' : '9px' }">< 2 Years</span>
+                      </div>
+                      <div class="q-quantity">
+                        <input type="number" [(ngModel)]="infant"
+                               (ngModelChange)="changeQuantity()" placeholder="0">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 dates" style="display: none">
+                  <mat-form-field class="full-width">
+                    <input matInput [matDatepicker]="m" [min]="today" placeholder="Departure Date"
+                           [(ngModel)]="topFilter.from"
+                           class="date" name="picker1" (ngModelChange)="changeDateFormat()">
+                    <mat-datepicker-toggle matSuffix [for]="m"></mat-datepicker-toggle>
+                    <mat-datepicker #m></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field class="full-width" *ngIf="appSetting.ITINERARY_TO">
+                    <input matInput [matDatepicker]="s" placeholder="Arrival Date"
+                           [(ngModel)]="topFilter.to"
+                           class="date" name="picker2">
+                    <mat-datepicker-toggle matSuffix [for]="s"></mat-datepicker-toggle>
+                    <mat-datepicker #s></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field class="full-width" *ngIf="role==='company'">
+                    <input matInput placeholder="Quantity" [(ngModel)]="topFilter.quantity"
+                           class="date" name="quantity">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-12 text-center">
+                  <button type="submit" class="btn btn-danger full-width"
+                          [disabled]="!topFilter.from||!card.from||!card.to||!(topFilter.quantity>0)||!(adult>=1)||!validSearch
+||!(topFilter.van||topFilter.airfare||topFilter.shared||topFilter.hotel)" (click)="searchComponent()">
+                    search
+                  </button>
+                </div>
+              </div>
+              <div class="fetching-data airfare" *ngIf="loaderType === 'airfare'">
+                <div class="text">
+                  fetching airfares...
+                </div>
+                <div class="server">
+
+                </div>
+              </div>
+              <div class="fetching-data hotel" *ngIf="loaderType === 'hotel'">
+                <div class="text">
+                  fetching Hotels...
+                </div>
+                <div class="server">
+
+                </div>
+              </div>
+              <div class="fetching-data van" *ngIf="loaderType === 'van'">
+                <div class="text">
+                  fetching vans...
+                </div>
+                <div class="server">
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div cdkDropList id="list-1" [cdkDropListConnectedTo]="getConnectedListToComponent()">
+                <ng-container *ngFor="let cardData of cardsData">
+                  <div cdkDrag>
+                    <div class="custom-placeholder" *cdkDragPlaceholder></div>
+                    <app-element-list
+                      [mode]="'read-only'"
+                      [filter]="cardData.associated_agency==='airasia'?filterAirasia:null"
+                      (deleted)="deletePackageOne($event)"
+                      (checked)="managePackages($event.component?._id,$event,cardData)"
+                      (imageSelector)="tmpImages = $event"
+                      [offline]="true" [eachComponent]="cardData">
+                    </app-element-list>
+
+                    <div *cdkDragPreview class="drag-preview">
+                      <app-element-drag
+                        [filter]="cardData.associated_agency==='airasia'?filterAirasia:null"
+                        [offline]="true" [eachComponent]="cardData">
+                      </app-element-drag>
+                    </div>
+                  </div>
+                </ng-container>
+                <div *ngIf="!memory.getLoading() && cardsData.length==0 && doFilter">
+                  <h5>No result found for submitted form.</h5>
+                </div>
+              </div>
+            </div>
+            <!--<div class="col-md-2">-->
+            <!--<ul class="top-ten-wrp">-->
+            <!--<li class="top-ten-each">-->
+            <!--<div class="info">-->
+            <!--<span class="price">-->
+            <!--<div class="icon">-->
+            <!--<i class="material-icons">access_time</i>-->
+            <!--</div>-->
+            <!--<div class="amount">-->
+            <!--$1000-->
+            <!--</div>-->
+            <!--</span>-->
+            <!--<span class="time">-->
+            <!--<div class="icon">-->
+            <!--<i class="material-icons">access_time</i>-->
+            <!--</div>-->
+            <!--<div class="amount">-->
+            <!--22:50-->
+            <!--</div>-->
+            <!--</span>-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--<li class="top-ten-each">-->
+            <!--<div class="info">-->
+            <!--<span class="price">-->
+            <!--<div class="icon">-->
+            <!--<i class="material-icons">access_time</i>-->
+            <!--</div>-->
+            <!--<div class="amount">-->
+            <!--$1000-->
+            <!--</div>-->
+            <!--</span>-->
+            <!--<span class="time">-->
+            <!--<div class="icon">-->
+            <!--<i class="material-icons">access_time</i>-->
+            <!--</div>-->
+            <!--<div class="amount">-->
+            <!--22:50-->
+            <!--</div>-->
+            <!--</span>-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</div>-->
+          </div>
+
+        </div>
+        <div class="col-md-6" #stickyNavbar [ngClass]="(cardsData?.length >0) ? checkStickyDrop() : ''">
+          <div class="card card-stats itenerary">
+            <div>
+              <image-upload *ngIf="role!=='company'"
+                            url="{{appSetting.UPLOAD_URL}}/api/upload/5c15efb47b741fff2044ec26"
+                            [max]="10"
+                            class="cover-image image-upload"
+                            [extensions]="['jpg','png','jpeg']"
+                            [maxFileSize]="3048576"
+                            buttonCaption="Upload Cover"
+                            [partName]="'image'"
+                            dropBoxMessage=""
+                            clearButtonCaption=""
+                            (uploadStateChanged)="coverState = !coverState"
+                            (uploadFinished)="uploadFinished($event)"
+                            (removed)="onRemoved($event)"
+                            [uploadedFiles]="images1">
+              </image-upload>
+
+              <image-upload *ngIf="role!=='company'"
+                            url="{{appSetting.UPLOAD_URL}}/api/upload/5c15efb47b741fff2044ec26"
+                            [max]="10"
+                            [extensions]="['jpg','png','jpeg']"
+                            [maxFileSize]="3048576"
+                            buttonCaption="Upload Logo"
+                            [partName]="'image'"
+                            dropBoxMessage=""
+                            class="logo-image image-upload"
+                            clearButtonCaption=""
+                            (uploadStateChanged)="logoState = !logoState"
+                            (uploadFinished)="uploadFinishedLogo($event)"
+                            [uploadedFiles]="imageLogo">
+              </image-upload>
+              <div class="cover">
+                                <span class="cover-loading" *ngIf="coverState">
+                                    <img src="https://www.mrsnelsons.com/Public/img/dots.gif" alt="">
+                                </span>
+                <i *ngIf="this.card.cover?.length&&role!=='company'"
+                   (click)="card.cover.splice(currentSlide,1)"
+                   class="material-icons trash">delete</i>
+
+                <i class="material-icons" *ngIf="role!=='company'" (click)="startCoverUpload()">photo_camera</i>
+                <ngx-slick-carousel (afterChange)="currentSlide = $event.currentSlide"
+                                    *ngIf="this.card.cover?.length"
+                                    class="carousel"
+                                    #slickModal="slick-carousel"
+                                    [config]="mainSlideConfig"
+                >
+                  <div ngxSlickItem class="slide" *ngFor="let image of card.cover">
+                    <!-- <img src="{{image}}" alt=""> -->
+                    <div class="content"
+                         [ngStyle]="{'background-image': 'url(' + image.largeImageURL + ')'}">
+                    </div>
+                  </div>
+                </ngx-slick-carousel>
+              </div>
+              <div class="agency-logo bare" (click)="startLogoUpload()"
+                   [ngStyle]="{'background-image': 'url('+ card.logo + ')'}">
+                                 <span class="logo-loading" *ngIf="logoState">
+                                    <img src="https://www.mrsnelsons.com/Public/img/dots.gif" alt="">
+                                </span>
+              </div>
+              <div class="scroller col-md-12">
+                <div class="row">
+                  <div class="itenerary-info">
+			      <span>
+			      	<div class="form-group form-black label-floating custom-form">
+		              <!-- <label class="control-label">From City</label> -->
+		              <input type="text" class="form-control"
+                         name="airline"
+                         autofocus
+                         placeholder="Manila"
+                         [disabled]="update"
+                         [(ngModel)]="card.from"
+                         (blur)="initData()"
+                         (input)="getCities($event.target.value,'from')"
+                         [matAutocomplete]="auto1"
+                  >
+		            <mat-autocomplete #auto1="matAutocomplete"
+                                  (optionSelected)="card.from = $event.option.value;fromSelected()">
+		              <mat-option *ngIf="loader">
+		                  <div class="text-center actionBtn">
+		                    <i class="fa fa-spinner fa-pulse fa-fw"></i>
+		                  </div>
+		                </mat-option>
+		                <mat-option *ngFor="let item of cityFromList" [value]="item.CityName">
+		                  <span class="option-style">{{item.CityName}} - ({{item.CountryName}}) </span>
+		                </mat-option>
+		              </mat-autocomplete>
+		            </div>
+			      </span>
+                    <span class="arrow"><i class="material-icons">arrow_right_alt</i></span>
+                    <span>
+			      	<div class="form-group form-black label-floating custom-form">
+		              <!-- <label class="control-label">From City</label> -->
+		              <input type="text" class="form-control"
+                         name="airline"
+                         autofocus
+                         placeholder="Cebu"
+                         class="text-left"
+                         [disabled]="update"
+                         [(ngModel)]="card.to"
+                         (blur)="initData()"
+                         (input)="getCities($event.target.value,'to')"
+                         [matAutocomplete]="auto2"
+                  >
+		            <mat-autocomplete #auto2="matAutocomplete"
+                                  (optionSelected)="card.to = $event.option.value;changeTo($event.option.value);toSelected()">
+		              <mat-option *ngIf="loader">
+		                  <div class="text-center actionBtn">
+		                    <i class="fa fa-spinner fa-pulse fa-fw"></i>
+		                  </div>
+		                </mat-option>
+		                <mat-option *ngFor="let item of cityToList" [value]="item.CityName">
+		                  <span class="option-style">{{item.CityName}} - ({{item.CountryName}})</span>
+		                </mat-option>
+		              </mat-autocomplete>
+		            </div>
+			      </span>
+                  </div>
+                  <!--<div class="row">-->
+                  <div class="col-md-12 all-padding">
+                    <div class="itenerary-days">
+                      <div class="itenerary-each-day"
+                           *ngFor="let day of card.days;let i = index;let count = index"
+                           [attr.step-no]="count+1">
+                        <ul class="day-wrp">
+                          <li class="date-time">
+                            <ul class="wrp">
+                              <li class="">
+			                    <span class="day-main-date-icon">
+			                      <i class="material-icons">date_range</i>
+			                      	<mat-form-field class="day-date-mat">
+										<input
+                      matInput
+                      [matDatepicker]="i"
+                      [(ngModel)]="day.date"
+                      [min]="today"
+                      (ngModelChange)="generateDay(day,count)"
+                      [matDatepickerFilter]="checkValidDate"
+                    >
+										<mat-datepicker-toggle
+                      matSuffix
+                      [for]="i"
+                    ></mat-datepicker-toggle>
+										<mat-datepicker #i></mat-datepicker>
+									</mat-form-field>
+			                    </span>
+                                <span class="day-main-date">
+			                      <!-- <mat-form-field *ngIf="bare" class="initial-date">
+					                  <input matInput [matDatepicker]="i"
+		                               class="date" name="picker1"
+		                               style="width: 70px;float: left;">
+					                  <mat-datepicker-toggle matSuffix [for]="i"></mat-datepicker-toggle>
+					                  <mat-datepicker #i></mat-datepicker>
+					                </mat-form-field> -->
+                                  {{day.date}}
+			                    </span>
+                                <div class="pull-right acs" (click)="sortByTime(day)">
+                                  <a class="sort ">
+                                    <i class="material-icons">compare_arrows</i>
+                                  </a>
+                                  <div class="actions" (click)="deleteDay(count,day)">
+																<span>
+																		<i class="material-icons">delete</i>
+																</span>
+                                  </div>
+                                </div>
+                              </li>
+                              <li [cdkDropListConnectedTo]="getConnectedDrop(count)"
+                                  [id]="'cdk-drop-list-'+count"
+                                  cdkDropList
+                                  (cdkDropListDropped)="componentDropped($event,count)">
+                                <div *ngIf="day.events?.length">
+		                      		<span *ngFor="let event of day.events;let eventIndex = index" cdkDrag
+                                    class="relative-position">
+		                    		<div class="custom-placeholder" *cdkDragPlaceholder></div>
+                                <div class="drag-preview" *cdkDragPreview>
+                                  <app-event-drag [event]="event"></app-event-drag>
+                                </div>
+			                      	<div class="time">
+			                        <span class="">
+			                        	<i class="material-icons">access_time</i>
+                                {{event.time}}
+			                      	</span>
+			                     	 </div>
+			                      	<div class="details">
+				                        <div class="each-detail">
+                                  <div class="flexRow">
+				                          <span>
+                                    <span>{{getCountOfEvent(event)}}</span>
+				                            <i class="material-icons"
+                                       *ngIf="event.type==='AIRPLANE'&&!event.arrival">flight_takeoff</i>
+                                    <i class="material-icons"
+                                       *ngIf="event.type==='AIRPLANE'&&event.arrival">flight_land</i>
+                                    <!--<i class="material-icons"-->
+                                    <!--*ngIf="event.type==='AIRPLANE'&&event.pair">rotate_left</i>-->
+				                            <i class="material-icons hotels-icon" *ngIf="event.type==='hotel-room'">hotel</i>
+				                            <i class="material-icons"
+                                       *ngIf="event.type==='van-driver'">airport_shuttle</i>
+				                          </span>
+                                  <div *ngIf="event.type==='AIRPLANE'">
+                                    <span class="airport">
+					                          <!-- MNL -->
+                                      {{event.details.from}}
+					                        </span>
+				                          <span><i class="material-icons">arrow_right_alt</i></span>
+				                          <span class="airport">
+					                          <!-- BRO -->
+                                    {{event.details.to}}
+					                      </span>
+                                  </div>
+                                    <div *ngIf="event.type==='van-driver'&&event.temp">
+                                    <span class="airport">
+					                          <!-- MNL -->
+                                      {{event.details.to}}
+					                        </span>
+				                          <span><i class="material-icons">arrow_right_alt</i></span>
+				                          <span class="airport">
+					                          <!-- BRO -->
+                                    {{event.details.from}}
+					                      </span>
+                                  </div><div *ngIf="event.type==='van-driver'&&!event.temp">
+                                    <span class="airport">
+					                          <!-- MNL -->
+                                      {{event.details.from}}
+					                        </span>
+				                          <span><i class="material-icons">arrow_right_alt</i></span>
+				                          <span class="airport">
+					                          <!-- BRO -->
+                                    {{event.details.to}}
+					                      </span>
+                                  </div>
+
+                                  <div *ngIf="event.type==='hotel-room'">
+                                    <span class="airport hotels-text">
+                                      {{event.temp ? 'Checkout' : 'Checkin'}}
+					                        </span>
+				                          <span><i class="material-icons">arrow_right_alt</i></span>
+				                          <span class="airport">
+					                          <!-- BRO -->
+                                    {{event.details.to}}
+					                      </span>
+                                  </div>
+                                    <span *ngIf="event.type!=='hotel-room'">{{event.quantity}}</span>
+
+
+                                  </div>
+				                        </div>
+				                        <div class="each-detail" style="display: none">
+				                          <span *ngIf="role!='company'">
+				                            <i class="material-icons">location_on</i>
+																	</span>
+                                  <!-- <span class="location" (click)="getCroods(event.details)"></span> -->
+				                          <span *ngIf="role!='company'" class="location"
+                                        (click)="openMap(event.location)">
+				                            <!-- Manila airport -->
+                                    {{event.location.address}}
+				                          </span>
+																</div>
+
+                                        <div class="each-detail tools right-icons"
+                                             *ngIf="event.type==='hotel-room'&&!event.temp">
+                                             <div *ngIf="event.type==='hotel-room'">
+                                        <i class="fa fa-plus" title="Add Adult"
+                                           (click)="addQuantityToHotel('Adult',event)"></i>
+                                          <span>{{event.adult}}</span>
+                                        <i class="fa fa-minus" title="Delete Adult" *ngIf="adultExtra.length>0"
+                                           (click)="removeQuantityHotel('Adult',event)"></i>
+                                          <i class="fa fa-plus" title="Add Children"
+                                             (click)="addQuantityToHotel('Children',event)"></i>
+                                          <span>{{event.children}}</span>
+                                        <i class="fa fa-minus" title="Delete Children" *ngIf="childExtra.length>0"
+                                           (click)="removeQuantityHotel('Children',event)"></i>
+                                          <i class="fa fa-plus" title="Add Infant"
+                                             (click)="addQuantityToHotel('Infant',event)"></i>
+                                          <span>{{event.infant}}</span>
+                                        <i class="fa fa-minus" title="Delete Infant" *ngIf="infantExtra.length>0"
+                                           (click)="removeQuantityHotel('Infant',event)"></i>
+                                      </div>
+                                        </div>
+																<div class="each-detail actions right-icons"
+                                     (click)="deleteEvent(event)">
+																	<span>
+																			<i class="material-icons">delete</i>
+																	</span>
+																</div>
+								             </div>
+                              <div class="photos"
+                                   *ngIf="event.images.length>0">
+          <i class="fa fa-ellipsis-v"></i>
+          <img class="photos-item" *ngFor="let item of event.images.slice(0,4);let i=index"
+               (click)="tmpImages=event.images;changeswap(i)" [src]="'http://'+item"
+               [ngStyle]="{'background-image': 'url(' + item + ')'}">
+        </div>
+
+								          </span>
+                                </div>
+                                <!-- <div class="custom-placeholder" *cdkDragPlaceholder></div> -->
+                              </li>
+
+                              <li *ngIf="!day.events?.length">
+                                <div class="event-selector">
+			                  		<span class="airfare" *ngIf="canAirplane" (click)="getComponents(day,'airfare')">
+
+			                  		</span>
+                                  <span class="hotel"
+                                        (click)="getComponents(day,'hotel')">
+
+			                  		</span>
+                                  <span class="van"
+                                        (click)="getComponents(day,'van')">
+
+			                  		</span>
+                                </div>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="itenerary-each-day" step-no="•">
+                        <ul class="day-wrp">
+                          <li class="date-time bare">
+                            <ul class="wrp">
+                              <li class="bare"
+                                  [cdkDropListConnectedTo]="getConnectedDrop(-1)"
+                                  [id]="'cdk-drop-list-'+(-1)"
+                                  cdkDropList
+                                  (cdkDropListDropped)="componentDropped($event)">
+			                    <span class="day-main-date-icon">
+			                      <i class="material-icons">date_range</i>
+			                    </span>
+                                <div class="custom-placeholder"
+                                     *cdkDragPlaceholder></div>
+
+                                <span class="day-main-date bare">
+									<mat-form-field>
+										<input
+                      matInput
+                      [matDatepicker]="myDatepicker"
+                      [(ngModel)]="newDay"
+                      (ngModelChange)="generateNewDay()"
+                      [min]="today"
+                      [matDatepickerFilter]="checkValidDate">
+										<mat-datepicker-toggle
+                      matSuffix
+                      [for]="myDatepicker"
+                    ></mat-datepicker-toggle>
+										<mat-datepicker #myDatepicker></mat-datepicker>
+									</mat-form-field>
+			                    </span>
+                              </li>
+                              <li>
+			                    <span>
+			                      <div class="time">
+			                        <span class="bare">
+			                        	<i class="material-icons">access_time</i>
+			                      	</span>
+			                      </div>
+			                      <div class="details">
+			                        <div class="each-detail">
+			                          <span>
+			                            <i class="material-icons">flight_takeoff</i>
+			                          </span>
+			                          <span class="airport bare">
+				                          <!-- MNL -->
+				                      </span>
+			                          <span><i class="material-icons">arrow_right_alt</i></span>
+			                          <span class="airport bare">
+				                          <!-- BRO -->
+				                      </span>
+			                        </div>
+			                        <div class="each-detail">
+			                          <span>
+			                            <i class="material-icons">location_on</i>
+			                          </span>
+			                          <span class="location bare">
+			                            <!-- Manila airport -->
+			                          </span>
+			                        </div>
+			                      </div>
+			                    </span>
+                              </li>
+                            </ul>
+
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!--</div>-->
+                </div>
+              </div>
+
+              <!--<div class="pricing" >-->
+              <!--{{memory.getActiveCurrency() ? memory.getActiveCurrency() : 'PHP'}} {{math.round(totalPackagePrice * 100) / 100}}-->
+
+              <!--<button type="submit" class="btn btn-danger pull-right" (click)="goToStep2()">next</button>-->
+              <!--</div>-->
+            </div>
+          </div>
+        </div>
+        <div class="pricing" *ngIf="totalPackagePrice>0"
+             [ngStyle]="{'padding-left':checkSideBarSize() ==='large-card' ? '88px' : '327px' }">
+          <div class="total-price">
+            <i class="fas fa-cash-register"></i>
+            {{memory.getActiveCurrency() ? memory.getActiveCurrency() : 'PHP'}} {{math.round(totalPackagePrice * 100) / 100}}
+          </div>
+          <div class="stepper-actions">
+            <button type="submit" class="btn btn-primary pull-right next" (click)="goToStep2()">next
+            </button>
+          </div>
+        </div>
+
+      </mat-step>
+      <mat-step [stepControl]="false" errorMessage="Address is required.">
+        <ng-template matStepLabel>
+          <p class="icons step-name" social="" *ngIf="role!=='company'">Package Details</p>
+          <p class="icons step-name" social="" *ngIf="role==='company'">Passengers</p>
+
+        </ng-template>
+
+        <div *ngIf="agencyDetails &&role!=='company'" class="card card-stats itenerary">
+          <div>
+            <div class=" col-md-12">
+              <div class="row custom-margin" *ngIf="role!=='company'">
+                <div class="">
+                  <div class="col-md-3  text-left top-space slide-toggle">
+                    <mat-slide-toggle [(ngModel)]="card.isDraft" color="primary" social="">Draft
+                    </mat-slide-toggle>
+                  </div>
+                </div>
+                <div class="">
+                  <div class="col-md-3  text-left top-space slide-toggle">
+                    <mat-slide-toggle [(ngModel)]="card.isFeatured" color="primary" social="">
+                      Featured
+                    </mat-slide-toggle>
+                  </div>
+                </div>
+              </div>
+              <div class="row custom-margin">
+                <div class="col-md-4 text-left">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Trip Name</label>
+                    <input [(ngModel)]="card.name" class="form-control" type="text" name="tripName"
+                           [maxlength]="50">
+                  </div>
+                </div>
+                <div class="col-md-4 text-left" *ngIf="role!=='company'">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Discount</label>
+                    <input [(ngModel)]="card.discount" [max]="99" [min]="0" [maxlength]="2"
+                           class="form-control"
+                           type="number" name="discount">
+                  </div>
+                </div>
+                <div class="col-md-4 text-left" *ngIf="role==='company'">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Passenger</label>
+                    <input [(ngModel)]="passenger" [max]="99" [min]="0" [maxlength]="2"
+                           class="form-control"
+                           type="number" name="discount">
+                  </div>
+                </div>
+              </div>
+              <div class="row custom-margin">
+                <div class="col-md-4 text-left" *ngIf="card.days.length>0">
+                  <mat-form-field>
+                    <input matInput [min]="today" [max]="getMaxDeadlineDate()"
+                           [matDatepicker]="picker1"
+                           placeholder="Trip Deadline"
+                           [(ngModel)]="card.deadline.date" name="tripDeadline" class="date">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <input matInput name="time-picker1" atp-time-picker value="00:00"
+                           [(ngModel)]="card.deadline.time" class="time time-input"
+                           placeholder="Time"
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row custom-margin custom-padding">
+                <ckeditor [(ngModel)]="card.remarks" [editor]="Editor" [config]="{wordcount: {
+			            showCharCount: true,
+			            maxCharCount: 20
+			        }}"
+                          class="custom-margin editor"></ckeditor>
+              </div>
+
+
+            </div>
+            <div class="pricing"
+                 [ngStyle]="{'padding-left':checkSideBarSize() ==='large-card' ? '88px' : '327px' }">
+              <div class="total-price">
+                <i class="fas fa-cash-register"></i>
+                {{memory.getActiveCurrency() ? memory.getActiveCurrency() : 'PHP'}} {{math.round(totalPackagePrice * 100) / 100}}
+              </div>
+              <div class="stepper-actions">
+                <button type="submit" class="btn btn-primary pull-right next" (click)="goToStep3()">
+                  next
+                </button>
+                <button type="submit" class="btn btn-danger pull-right prev" matStepperPrevious
+                        (click)="goToStep1(stepper)">previous
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="role==='company'&&passenger>0">
+
+          <div class="col-md-12">
+            <div class="row">
+              <div class="panel">
+                <div class="panel-body">
+                  <div *ngFor="let item of passengers;">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h4 class="bold">{{item.type}} {{item.index}}</h4>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Given name</mat-label>
+                          <input matInput type="text" name="discount" [(ngModel)]="item.name">
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-4">
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Family name/Surname</mat-label>
+                          <input matInput type="text" name="discount"
+                                 [(ngModel)]="item.family">
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="row">
+                          <div class="col-md-8" *ngIf="item.type=='Adult'">
+                            <mat-form-field appearance="outline" class="full-width">
+                              <input matInput [max]="maxDateAdult"
+                                     [matDatepicker]="picker4"
+                                     placeholder="Birth Date"
+                                     [(ngModel)]="item.birthDate" name="tripDeadline"
+                                     class="date">
+                              <mat-datepicker-toggle matSuffix
+                                                     [for]="picker4"></mat-datepicker-toggle>
+                              <mat-datepicker #picker4></mat-datepicker>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-8" *ngIf="item.type=='Children'">
+                            <mat-form-field appearance="outline" class="full-width">
+                              <input matInput [max]="maxDateChildren"
+                                     [min]="minDateChildren" [matDatepicker]="picker4"
+                                     placeholder="Birth Date"
+                                     [(ngModel)]="item.birthDate" name="tripDeadline"
+                                     class="date">
+                              <mat-datepicker-toggle matSuffix
+                                                     [for]="picker4"></mat-datepicker-toggle>
+                              <mat-datepicker #picker4></mat-datepicker>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-8" *ngIf="item.type=='Infant'">
+                            <mat-form-field appearance="outline" class="full-width">
+                              <input matInput [max]="today" [min]="minDateInfant"
+                                     [matDatepicker]="picker4"
+                                     placeholder="Birth Date"
+                                     [(ngModel)]="item.birthDate" name="tripDeadline"
+                                     class="date">
+                              <mat-datepicker-toggle matSuffix
+                                                     [for]="picker4"></mat-datepicker-toggle>
+                              <mat-datepicker #picker4></mat-datepicker>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="radio-item-space">
+                              <mat-radio-group aria-label="Select an option"
+                                               [(ngModel)]="item.gender">
+                                <mat-radio-button value="male">Male</mat-radio-button>
+                                <br>
+                                <mat-radio-button value="female">Female
+                                </mat-radio-button>
+                              </mat-radio-group>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Nationality</mat-label>
+                          <input matInput name="discount" [(ngModel)]="item.nationality"
+                                 (input)="getCountries($event.target.value)"
+                                 [matAutocomplete]="auto1">
+                          <mat-autocomplete #auto1="matAutocomplete"
+                                            (optionSelected)="countrySelected($event,item)">
+                            <mat-option *ngFor="let item of searchResult" [value]="item">
+                              {{item}}
+                            </mat-option>
+                            <mat-option *ngIf="loader">
+                              <div class="text-center actionBtn">
+                                <i class="fa fa-spinner fa-pulse fa-fw"></i>
+                              </div>
+                            </mat-option>
+                            <mat-option *ngIf="noDataNationality">
+                              <p>no data</p>
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--<div class="col-md-12">-->
+              <!--<div class="row">-->
+              <!--<button type="submit" class="btn btn-primary pull-right" (click)="submitCompanyPackage1()">Submit</button>-->
+              <!--<button type="submit" class="btn btn-primary pull-right" matStepperPrevious>back</button>-->
+              <!--</div>-->
+              <!--</div>-->
+            </div>
+
+
+          </div>
+          <div class="pricing"
+               [ngStyle]="{'padding-left':checkSideBarSize() ==='large-card' ? '88px' : '327px' }">
+            <div class="total-price">
+              <i class="fas fa-cash-register"></i>
+              {{memory.getActiveCurrency() ? memory.getActiveCurrency() : 'PHP'}} {{math.round(totalPackagePrice * 100) / 100}}
+            </div>
+            <div class="stepper-actions">
+              <button type="submit" class="btn btn-primary pull-right next"
+                      (click)="submitCompanyPackage1()">next
+              </button>
+              <button type="submit" class="btn btn-danger pull-right prev" matStepperPrevious>previous
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="role==='company'&&passenger===0">
+          <button type="submit" class="btn btn-primary pull-right" (click)="submitCompanyPackage1()">Submit
+          </button>
+          <button type="submit" class="btn btn-primary pull-right" matStepperPrevious>back</button>
+
+        </div>
+
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>
+          <p class="icons step-name" social="" *ngIf="role!=='company'">Social</p>
+          <p class="icons step-name" social="" *ngIf="role==='company'">Summary</p>
+        </ng-template>
+        <app-itinerary-social *ngIf="role!=='company'" [totalPackagePrice]="totalPackagePrice"
+                              [agencyDetails]="agencyDetails" [social]="social"
+                              (back)="goToStep2From3()"
+                              (submit)="convertDataToPackage($event)"></app-itinerary-social>
+
+        <div *ngIf="role==='company'">
+          <!--<button type="submit" class="btn btn-primary pull-right" (click)="submitCompanyPackage()">Submit</button>-->
+          <!--<button type="submit" class="btn btn-primary pull-right" matStepperPrevious>back</button>-->
+          <div class="summary-wrp">
+            <div class="summary-scnd-wrp">
+              <div class="days-wrp">
+                <div class="each-day">
+                  <div class="date-wrp">
+                    <ul class="month-year">
+                      <li class="month">Jun</li>
+                      <li class="year">2019</li>
+                    </ul>
+                    <ul class="day-week">
+                      <li class="week">Sun</li>
+                      <li class="day">16</li>
+                    </ul>
+                  </div>
+                  <div class="info-wrp">
+                    <div class="events">
+                      <div class="each-event">
+                        <div class="time">
+                          00:00
+                        </div>
+                        <div class="icon">
+                          <i class="material-icons">flight_takeoff</i>
+                        </div>
+                        <div class="event-details">
+                          <div class="route">
+
+                            MNL - MPH
+                          </div>
+                        </div>
+                      </div>
+                      <div class="each-event">
+                        <div class="time">
+                          01:45
+                        </div>
+                        <div class="icon">
+                          <i class="material-icons">flight_land</i>
+                        </div>
+                        <div class="event-details">
+                          <div class="route">
+
+                            MNL - MPH
+                          </div>
+                        </div>
+                      </div>
+                      <div class="each-event">
+                        <div class="time">
+                          02:15
+                        </div>
+                        <div class="icon">
+                          <i class="fas fa-shuttle-van"></i>
+                        </div>
+                        <div class="event-details">
+                          <div class="route">
+
+                            MNL - MPH
+                          </div>
+                        </div>
+                      </div>
+                      <div class="each-event">
+                        <div class="time">
+                          06:00
+                        </div>
+                        <div class="icon">
+                          <i class="fas fa-hotel"></i>
+                        </div>
+                        <div class="event-details">
+                          <div class="route">
+
+                            Basic Hotel Cebu
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="each-day">
+                  <div class="date-wrp">
+                    <ul class="month-year">
+                      <li class="month">Jun</li>
+                      <li class="year">2019</li>
+                    </ul>
+                    <ul class="day-week">
+                      <li class="week">Mon</li>
+                      <li class="day">17</li>
+                    </ul>
+                  </div>
+                  <div class="info-wrp">
+                    <div class="events">
+                      <div class="each-event">
+                        <div class="time">
+                          00:00
+                        </div>
+                        <div class="icon">
+                          <i class="material-icons">flight_takeoff</i>
+                        </div>
+                        <div class="event-details">
+                          <div class="route">
+
+                            MNL - MPH
+                          </div>
+                          <div class="details-breakdown-wrp1">
+                            <ul class="details-breakdown-wrp2">
+                              <li class="each-break">
+                                <div class="topic">
+                                  <i class="material-icons">place</i>
+                                </div>
+                                <div class="detailed-info">
+                                  <b>Location</b>
+                                  <div>NINOY AQUINO INTERNATIONAL AIRPORT NAIA
+                                       TERMINAL 3
+                                  </div>
+                                </div>
+                              </li>
+                              <li class="each-break">
+                                <div class="topic">
+                                  <i class="material-icons">fastfood</i>
+                                </div>
+                                <div class="detailed-info">
+                                  Free snacks
+                                </div>
+                              </li>
+                              <li class="each-break">
+                                <div class="topic">
+                                  <i class="material-icons">fastfood</i>
+                                </div>
+                                <div class="detailed-info">
+                                  Free snacks
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="each-event">
+                        <div class="time">
+                          01:45
+                        </div>
+                        <div class="icon">
+                          <i class="material-icons">flight_land</i>
+                        </div>
+                        <div class="event-details">
+                          <div class="route">
+
+                            MNL - MPH
+                          </div>
+                        </div>
+                      </div>
+                      <div class="each-event">
+                        <div class="time">
+                          02:15
+                        </div>
+                        <div class="icon">
+                          <i class="fas fa-shuttle-van"></i>
+                        </div>
+                        <div class="event-details">
+                          <div class="route">
+
+                            MNL - MPH
+                          </div>
+                        </div>
+                      </div>
+                      <div class="each-event">
+                        <div class="time">
+                          06:00
+                        </div>
+                        <div class="icon">
+                          <i class="fas fa-hotel"></i>
+                        </div>
+                        <div class="event-details">
+                          <div class="route">
+
+                            Basic Hotel Cebu
+                          </div>
+                          <div class="images">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pricing">
+            {{memory.getActiveCurrency() ? memory.getActiveCurrency() : 'PHP'}} {{math.round(totalPackagePrice * 100) / 100}}
+            <div class="stepper-actions">
+              <button type="submit" class="btn btn-primary pull-right next"
+                      (click)="submitCompanyPackage()">next
+              </button>
+              <button type="submit" class="btn btn-danger pull-right prev" matStepperPrevious>previous
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</div>
+<div *ngIf="popUpMap" (click)="popUpMap = false" class="close">X</div>
+<app-maps [ltLn]="coordinates" *ngIf="popUpMap" [show]="true"></app-maps>
+
+<app-slider *ngIf="tmpImages.length > 0" [tmpImages]="tmpImages"></app-slider>

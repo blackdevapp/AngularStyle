@@ -1,0 +1,618 @@
+<app-loading *ngIf="memory.getLoading()"></app-loading>
+<div class="container-fluid">
+    <div>
+        <mat-tab-group animationDuration="0ms">
+            <mat-tab label="Base Info">
+                <div class="col-md-12">
+                    <h3>Base Info</h3>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group form-black label-floating"
+                                 [ngClass]="!user.firstName ? 'is-empty' : ''">
+                                <label class="control-label">Name</label>
+                                <!--[ngClass]="validation.checkString(user.firstName,26)?'':'has-error'"-->
+                                <input type="text" class="form-control " [(ngModel)]="user.firstName"
+                                       (ngModelChange)="userValidation.fields.firstName.originalValue=user.firstName"
+                                       name="firstName">
+                                <p class="alert" *ngIf="!userValidation.fields.firstName.isValid">required(min length
+                                    2character - max
+                                    length 26 character) </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group form-black label-floating"
+                                 [ngClass]="!user.lastName ? 'is-empty' : ''">
+                                <label class="control-label">LastName</label>
+                                <input type="text" class="form-control" [(ngModel)]="user.lastName"
+                                       (ngModelChange)="userValidation.fields.lastName.originalValue=user.lastName"
+                                       name="lastName">
+                                <p class="alert" *ngIf="!userValidation.fields.lastName.isValid">required(min length
+                                    2character - max
+                                    length 26 character) </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group form-black label-floating" [ngClass]="!user.email ? 'is-empty' : ''">
+                                <label class="control-label">Email Address</label>
+                                <input type="text" class="form-control" [(ngModel)]="user.email" name="emailAddress"
+                                       disabled
+                                       (ngModelChange)="userValidation.fields.email.originalValue=user.email">
+                                <p class="alert" *ngIf="!userValidation.fields.email.isValid">required(min length
+                                    2character - max length
+                                    26 character &format be nj@gmail.com) </p>
+
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6">
+                          <div class="form-group form-black label-floating" [ngClass]="!agencyDetails ? 'is-empty' : ''" *ngIf="agencyDetails">
+                            <label class="control-label" >Company Name</label>
+                            <input type="text" class="form-control" name="companyName" disabled [(ngModel)]="agencyDetails.company_name">
+                          </div>
+                        </div> -->
+                        <div class="col-md-4">
+                            <div class="form-group form-black label-floating" [ngClass]="!user.city ? 'is-empty' : ''">
+                                <label class="control-label">City</label>
+                                <input type="text" class="form-control" [(ngModel)]="user.city" name="city">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group form-black label-floating"
+                                 [ngClass]="!user.mobileNo ? 'is-empty' : ''">
+                                <label class="control-label">Mobile No</label>
+                                <input type="text" class="form-control" [(ngModel)]="user.mobileNo" name="mobileNo">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group form-black label-floating" [ngClass]="!user.state ? 'is-empty' : ''">
+                                <label class="control-label">State</label>
+                                <input type="text" class="form-control" [(ngModel)]="user.state" name="state">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- <div class="col-md-6">
+                          <div class="form-group form-black label-floating" [ngClass]="!user.city ? 'is-empty' : ''">
+                            <label class="control-label">City</label>
+                            <input type="text" class="form-control" [(ngModel)]="user.city" name="city">
+                          </div>
+                        </div> -->
+                    </div>
+                    <button type="submit" class="btn btn-danger pull-right btn-full-width"
+                            [disabled]="memory.getLoading()"
+
+                            (click)="submit()">
+                        <i class="fa fa-spinner" *ngIf="memory.getLoading()"></i>
+                        Submit Profile
+                    </button>
+                    <div class="clearfix"></div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Change Password">
+                <div class="col-md-12">
+                    <h3>Change Password</h3>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <!--<div class="col-md-12 config-padding">-->
+                        <!--<div class="row">-->
+                        <div class="col-md-6">
+                            <div class="form-group form-black label-floating" [ngClass]="!password ? 'is-empty' : ''">
+                                <label class="control-label">Password</label>
+                                <input class="form-control" [attr.type]="showPass1 ? 'password' : 'text'"
+                                       [(ngModel)]="password" name="pass">
+                                <i class="material-icons show-hide" [ngClass]="{'hide-arrow': showPass1}"
+                                   (click)="showPass1 = !showPass1">remove_red_eye</i>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-black label-floating"
+                                 [ngClass]="!confirmPassword ? 'is-empty' : ''">
+                                <label class="control-label">Confirm Password</label>
+                                <input class="form-control" [attr.type]="showPass ? 'password' : 'text'"
+                                       [(ngModel)]="confirmPassword" name="cPass">
+                                <i class="material-icons show-hide" [ngClass]="{'hide-arrow': showPass}"
+                                   (click)="showPass = !showPass">remove_red_eye</i>
+
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-danger pull-right btn-full-width"
+                            [disabled]="(!password||!confirmPassword)||password!==confirmPassword ||password.length<6 || memory.getLoading()"
+                            (click)="changePass()">
+                        <i class="fa fa-spinner" *ngIf="memory.getLoading()"></i>
+
+                        Change Password
+                    </button>
+                    <div class="clearfix"></div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Configuration"
+                     *ngIf="role ==='admin'&&(memory.getPermission()?memory.getPermission()['agencyConfig']==true:true)">
+                <div class="col-md-12">
+                    <h3>Configuration</h3>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4 col-xs-12 config-padding section-height">
+                            <div class="dropdown ">
+                                <button class="btn btn-primary btn-full-width dropdown-toggle" type="button"
+                                        data-toggle="dropdown">{{memory.getActiveCurrency() ? memory.getActiveCurrency() : 'Currency'}}
+                                    <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a (click)="memory.setActiveCurrency('USD');setCurrency('USD')">USD</a></li>
+                                    <li><a (click)="memory.setActiveCurrency('PHP');setCurrency('PHP')">PHP</a></li>
+                                    <li><a (click)="memory.setActiveCurrency('EUR');setCurrency('EUR')">EUR</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <div class="form-group form-black label-floating"
+                                 [ngClass]="!agencyDetails?.config?.max_quantity ? 'is-empty' : ''">
+                                <label class="control-label">Max Quantity</label>
+                                <input type="number" class="form-control "
+                                       [(ngModel)]="agencyDetails.config.max_quantity"
+                                       name="max_quantity">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                                <button type="submit" class="btn btn-danger pull-right btn-full-width" (click)="editAgency()">
+                                    update max
+                                </button>
+                        </div>
+                    </div>
+                </div>
+                <hr class="inline-hr">
+                <div class="col-md-12">
+                    <h3>Amadeus Api</h3>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-black label-floating"
+                                         [ngClass]="!password ? 'is-empty' : ''">
+                                        <label class="control-label">Client Id</label>
+                                        <input class="form-control" [(ngModel)]="amadeus.clientId" name="clientId">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group form-black label-floating"
+                                         [ngClass]="!confirmPassword ? 'is-empty' : ''">
+                                        <label class="control-label">Client Secret</label>
+                                        <input class="form-control" [(ngModel)]="amadeus.clientSecret"
+                                               name="clientSecret">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <div class="row">
+                        <button type="submit" class="btn btn-danger pull-right btn-full-width"
+                                [disabled]="!amadeus.clientSecret || !amadeus.clientId"
+                                (click)="editAmadeusApi()">Submit
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Employees"
+                     *ngIf="role ==='admin'&&(memory.getPermission()?memory.getPermission()['agencyEmployees']==true:true)">
+                <div>
+                    <div class="col-md-12">
+                        <h3>Employees</h3>
+                    </div>
+
+
+                    <div class="box-padding-vertical">
+
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <app-tile-table [data]="employeeList" [config]="config"
+                                                (dropdown)="changeStatus($event)"
+                                                [loading]="memory.getLoading()"
+                                                (toDelete)="deleteEmployee($event)" (toEdit)="editUser($event)">
+                                </app-tile-table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-danger pull-right btn-full-width"
+                                        (click)="addNewEmployee()">Add New Employee
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </mat-tab>
+            <mat-tab label="Agency Information" *ngIf="role=='admin'">
+                <div>
+                    <div class="col-md-12">
+                        <h3 (click)="goToMode('agency')">Agency Information</h3>
+                    </div>
+                    <div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <div class="form-group form-black label-floating "
+                                     [ngClass]="[!agencyDetails.company_name ? 'is-empty' : '']">
+                                    <label class="control-label">Company Name</label>
+                                    <input class="form-control" type="text" [(ngModel)]="agencyDetails.company_name"
+                                           name="companyName">
+                                    <span class="form-control-feedback">
+                <i class="material-icons">priority_high</i>
+              </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <div class="form-group form-black label-floating"
+                                     [ngClass]="[!agencyDetails.city ? 'is-empty' : '']">
+                                    <label class="control-label">City</label>
+                                    <input class="form-control" [(ngModel)]="agencyDetails.city" type="text"
+                                           name="city">
+                                    <span class="form-control-feedback">
+                <i class="material-icons">priority_high</i>
+              </span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <div class="form-group form-black label-floating"
+                                     [ngClass]="[!agencyDetails.website ? 'is-empty' : '']">
+                                    <label class="control-label">Website</label>
+                                    <input class="form-control" [(ngModel)]="agencyDetails.website"
+                                           type="text" name="website">
+                                    <span class="form-control-feedback">
+                <i class="material-icons">priority_high</i>
+              </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-12 text-center">
+                                <input style="display: none" type="file" (change)="fileChangeListener($event)"
+                                       #fileInput>
+                                <div class="avatar text-center" (click)="fileInput.click()">
+                                    <img [src]="agencyDetails.logo?agencyDetails.logo:'../../assets/img/faces/upload.svg'"
+                                         alt="Avatar" class="image">
+                                    <div class="overlay">
+                                        <div class="text">Uplaod</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group form-black label-floating "
+                                     [ngClass]="[!agencyDetails.officialRepresentative ? 'is-empty' : '']">
+                                    <label class="control-label">Official Responsive</label>
+                                    <input class="form-control" [(ngModel)]="agencyDetails.officialRepresentative"
+                                           type="text" name="official">
+                                    <span class="form-control-feedback">
+                <i class="material-icons">priority_high</i>
+              </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="col-md-12"
+                                     *ngFor="let item of agencyDetails.alternative_representative;trackBy:indexTracker;trackBy:indexTracker;let i=index">
+                                    <div class="col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0">
+                                        <div class="form-group form-black label-floating "
+                                             [ngClass]="!agencyDetails.alternative_representative[i] ? 'is-empty' : ''">
+                                            <label class="control-label">Alternative Representative {{i + 1}}</label>
+                                            <input class="form-control" type="text"
+                                                   [(ngModel)]="agencyDetails.alternative_representative[i]"
+                                                   name="alternative_representative">
+                                        </div>
+                                        <span class="icon-position">
+                  <div class="ico-back" *ngIf="i>0" (click)="remove(agencyDetails.alternative_representative,i)">
+                    <i class="fa fa-trash-o ico" title="Delete"></i>
+                  </div>
+                  <div class="ico-back" (click)="agencyDetails.alternative_representative.push('')">
+                    <i class="fa fa-plus ico" title="Add"></i>
+                  </div>
+
+
+                </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12"
+                                     *ngFor="let item of agencyDetails.telephone_number;trackBy:indexTracker;let i=index">
+                                    <div class="col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0">
+                                        <div class="form-group form-black label-floating"
+                                             [ngClass]="!agencyDetails.telephone_number[i] ? 'is-empty' : ''">
+                                            <label class="control-label">TelePhone Number {{i + 1}}</label>
+                                            <input class="form-control" [(ngModel)]="agencyDetails.telephone_number[i]"
+                                                   currencyMask
+                                                   [options]="{ prefix: '', thousands: '',precision: 0}" type="text"
+                                                   name="TelePhoneNumber">
+                                        </div>
+                                        <span class="icon-position">
+                  <div class="ico-back" *ngIf="i>0" (click)="remove(agencyDetails.telephone_number,i)">
+                    <i class="fa fa-trash-o ico" title="Delete"></i>
+                  </div>
+                  <div class="ico-back" (click)="agencyDetails.telephone_number.push('')">
+                    <i class="fa fa-plus ico" title="Add"></i>
+                  </div>
+
+
+                </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12"
+                                     *ngFor="let item of agencyDetails.mobile_number;trackBy:indexTracker;let i=index">
+                                    <div class="col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0">
+                                        <div class="form-group form-black label-floating"
+                                             [ngClass]="!agencyDetails.mobile_number[i] ? 'is-empty' : ''">
+                                            <label class="control-label">Mobile No {{i + 1}}</label>
+                                            <input class="form-control" [(ngModel)]="agencyDetails.mobile_number[i]"
+                                                   currencyMask
+                                                   [options]="{ prefix: '', thousands: '',precision: 0}" maxlength="11"
+                                                   type="text" name="Mobile No">
+                                        </div>
+                                        <span class="icon-position">
+                  <div class="ico-back" *ngIf="i>0" (click)="remove(agencyDetails.mobile_number,i)">
+                    <i class="fa fa-trash-o ico" title="Delete"></i>
+                  </div>
+                  <div class="ico-back" (click)="agencyDetails.mobile_number.push('')">
+                    <i class="fa fa-plus ico" title="Add"></i>
+                  </div>
+
+
+                </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="col-md-12"
+                                     *ngFor="let item of agencyDetails.fax_number;trackBy:indexTracker;let i=index">
+                                    <div class="col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0">
+                                        <div class="form-group form-black label-floating"
+                                             [ngClass]="!agencyDetails.fax_number[i] ? 'is-empty' : ''">
+                                            <label class="control-label">Fax Number {{i + 1}}</label>
+                                            <input class="form-control " [(ngModel)]="agencyDetails.fax_number[i]"
+                                                   currencyMask
+                                                   [options]="{ prefix: '', thousands: '',precision: 0}" type="text"
+                                                   name="FaxNum">
+                                        </div>
+                                        <span class="icon-position">
+                  <div class="ico-back" *ngIf="i>0" (click)="remove(agencyDetails.fax_number,i)">
+                    <i class="fa fa-trash-o ico" title="Delete"></i>
+                  </div>
+                  <div class="ico-back" (click)="agencyDetails.fax_number.push('')">
+                    <i class="fa fa-plus ico" title="Add"></i>
+                  </div>
+
+
+                </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12"
+                                     *ngFor="let item of agencyDetails.email_address;trackBy:indexTracker;let i=index">
+                                    <div class="col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0">
+                                        <div class="form-group form-black label-floating"
+                                             [ngClass]="!agencyDetails.email_address[i] ? 'is-empty' : ''">
+                                            <label class="control-label">Email {{i + 1}}</label>
+                                            <input class="form-control" [(ngModel)]="agencyDetails.email_address[i]"
+                                                   type="email" name="email">
+                                        </div>
+                                        <span class="icon-position">
+                  <div class="ico-back" *ngIf="i>0" (click)="remove(agencyDetails.email_address,i)">
+                    <i class="fa fa-trash-o ico" title="Delete"></i>
+                  </div>
+                  <div class="ico-back" (click)="agencyDetails.email_address.push('')">
+                    <i class="fa fa-plus ico" title="Add"></i>
+                  </div>
+
+
+                </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12"
+                                     *ngFor="let item of agencyDetails.office_address;trackBy:indexTracker;let i=index">
+                                    <div class="col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0">
+                                        <div class="form-group form-black label-floating"
+                                             [ngClass]="!agencyDetails.office_address[i] ? 'is-empty' : ''">
+                                            <label class="control-label">address {{i + 1}}</label>
+                                            <input class="form-control  input-width"
+                                                   [(ngModel)]="agencyDetails.office_address[i]" type="text"
+                                                   name="address">
+                                        </div>
+                                        <span class="icon-position">
+                  <div class="ico-back" *ngIf="i>0" (click)="remove(agencyDetails.office_address,i)">
+                    <i class="fa fa-trash-o ico" title="Delete"></i>
+                  </div>
+                  <div class="ico-back" (click)="agencyDetails.office_address.push('')">
+                    <i class="fa fa-plus ico" title="Add"></i>
+                  </div>
+                  <div class="ico-back" (click)="openMap()">
+                    <i class="fa fa-map-marker ico" title="location"></i>
+                  </div>
+
+
+                </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-success pull-right"
+                                        [disabled]="memory.getLoading()"
+                                        (click)="editAgency()">
+                                    <i class="fa fa-spinner" *ngIf="memory.getLoading()"></i>
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+
+<div id="telegram" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Telegram Access Integration</h4>
+            </div>
+            <div class="modal-body">
+                <!-- <app-registration (newUser)="getRegisteredUser($event)" [associated_agency]="user.associated_agency"
+                [mode]="user.role ==='admin'?'admin':''"></app-registration> -->
+                <app-telegram *ngIf="agencyDetails" [agencyDetails]="agencyDetails">
+
+                </app-telegram>
+
+            </div>
+            <div class="modal-footer text-center">
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add New Employee</h4>
+            </div>
+            <div class="modal-body">
+                <app-registration (newUser)="getRegisteredUser($event)" [associated_agency]="user.associated_agency"
+                                  [mode]="user.role ==='admin'?'admin':''"></app-registration>
+
+            </div>
+            <div class="modal-footer text-center">
+                <!--<button type="button" class="btn btn-danger submit-btn" data-dismiss="modal">Submit</button>-->
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="fbPages" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Facebook Pages</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6" *ngFor="let item of pages">
+                        <label>
+                            <input type="checkbox" (change)="onCheck($event)" [value]="item.id"
+                                   name="optionsCheckboxes">
+                            {{item.name}}
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-danger submit-btn" data-dismiss="modal" (click)="editAccessPage()">
+                    Submit
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="complete" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Complete Detail</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-black label-floating" [ngClass]="!user.firstName ? 'is-empty' : ''">
+                            <label class="control-label">Name</label>
+                            <!--[ngClass]="validation.checkString(user.firstName,26)?'':'has-error'"-->
+                            <input type="text" class="form-control " [(ngModel)]="user.firstName" name="firstName">
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-black label-floating" [ngClass]="!user.lastName ? 'is-empty' : ''">
+                            <label class="control-label">LastName</label>
+                            <input type="text" class="form-control" [(ngModel)]="user.lastName"
+                                   name="lastName">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-black label-floating" [ngClass]="!user.email ? 'is-empty' : ''">
+                            <label class="control-label">Email Address</label>
+                            <input type="text" class="form-control" [(ngModel)]="user.email" name="emailAddress"
+                                   disabled
+                            >
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-black label-floating">
+                            <label class="control-label">Company Name</label>
+                            <input type="text" class="form-control" name="companyName">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-black label-floating" [ngClass]="!user.mobileNo ? 'is-empty' : ''">
+                            <label class="control-label">Mobile No</label>
+                            <input type="text" class="form-control" [(ngModel)]="user.mobileNo" name="mobileNo">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-black label-floating" [ngClass]="!user.state ? 'is-empty' : ''">
+                            <label class="control-label">State</label>
+                            <input type="text" class="form-control" [(ngModel)]="user.state" name="state">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-danger submit-btn" data-dismiss="modal" (click)="submit()">Submit
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,140 @@
+
+<app-header  *ngIf="agency" [agency]="agency"></app-header>
+
+<section class="section1Back" *ngIf="package"
+         style="background: url(../../../assets/img/landingTour/section1Back.png) center center no-repeat">
+  <div class=" top_space">
+    <div class="container  form-inline">
+      <span class="section1_main_title">{{package.packageData.name}}</span>
+      <!--<div class="photo_box_body" *ngIf="!showPerson">-->
+        <!--<div class="photo_box" (click)="goToProfile()"></div>-->
+        <!--<div class="photo_box"></div>-->
+        <!--<div class="photo_box_more" (click)="showPerson=true">-->
+          <!--<span class="photo_box_more_text"> + 3</span>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div  class="photo_box_body" *ngIf="showPerson">-->
+      <!--<div class="photo_box_full"></div>-->
+      <!--<div class="photo_box_full"></div>-->
+      <!--<div class="photo_box_full"></div>-->
+      <!--<div class="photo_box_full"></div>-->
+      <!--<div class="photo_box_full"></div>-->
+      <!--</div>-->
+    </div>
+
+    <div class="col-md-12 slider_box" >
+      <ngx-slick-carousel class="carousel"
+                          #slickModal="slick-carousel"
+                          [config]="slideConfig"
+                          (init)="slickInit($event)"
+                          (breakpoint)="breakpoint($event)"
+                          (afterChange)="afterChange($event)"
+                          (beforeChange)="beforeChange($event)">
+        <div ngxSlickItem *ngFor="let slide of package.packageData.images" class="slide">
+          <img src="{{ slide }}" alt="" width="100%" height="380px">
+        </div>
+      </ngx-slick-carousel>
+    </div>
+
+    <div class="col-md-12 form-inline">
+      <div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4 sectionBtnMargin" >
+        <button class="sectionBtn" [routerLink]="['booking']" *ngIf="role!=='admin' && role !=='agent'" [disabled]="!bookingDisable">
+          BOOK NOW
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section2Back" *ngIf="package">
+  <!--<div class="slide">-->
+  <app-timeline [package]="package"></app-timeline>
+  <!--<div class="price" >-->
+  <!--<div class="top-red-section">-->
+  <!--&lt;!&ndash;{{packagePrice(package)}}&ndash;&gt;asdsa 21333-->
+  <!--<i class="material-icons">flight_takeoff</i>-->
+
+  <!--<div class="more-info">-->
+  <!--<div *ngIf="package.componentsData[0].details.from">-->
+  <!--{{package.componentsData[0].details.from.city}}-->
+  <!--</div>-->
+  <!--<i class="material-icons">arrow_right_alt</i>-->
+  <!--<div *ngIf="package.componentsData[0].details.to">-->
+  <!--{{package.componentsData[0].details.to.city}}-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <!--<ul class="deep-info">-->
+  <!--&lt;!&ndash; <div  class="addon-pack"> &ndash;&gt;-->
+  <!--<li *ngFor="let component of package.componentsData" class="each-info">-->
+  <!--<div class="icon">-->
+  <!--<i class="material-icons">date_range</i>-->
+  <!--{{cleanDate(component.details.from.departure.date)}} - {{component.details.from.departure.time}}-->
+
+  <!--<div style="display: inline-flex;margin-left:30px">-->
+  <!--<div><img (click)="goToProfile()" class="timeline_photo_box" src="../../../assets/img/landingTour/profile.png"></div>-->
+  <!--<div><img class="timeline_photo_box" src="../../../assets/img/landingTour/profile.png"></div>-->
+  <!--<div class="timeline_photo_box">-->
+  <!--<span class="photo_box_more"> + 14</span>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <!--<div class="description">-->
+  <!--<div *ngIf="component.mode === 'transport'">-->
+  <!--&lt;!&ndash; <i class="material-icons">{{component.icon}}</i> &ndash;&gt;-->
+  <!--<i class="material-icons info-ico">{{component.icon}}</i>-->
+  <!--<div class="itemText" *ngIf="component.details.from">-->
+  <!--{{component.details.from.city}}-->
+  <!--</div>-->
+  <!--<i class="material-icons">arrow_right_alt</i>-->
+  <!--<div *ngIf="component.details.to">-->
+  <!--{{component.details.to.city}}-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--<div class="itemText" *ngIf="component.mode === 'accomodation'">-->
+  <!--<i class="material-icons info-ico">{{component.icon}}</i>-->
+  <!--{{component.company}}-->
+
+  <!--</div>-->
+
+  <!--</div>-->
+  <!--</li>-->
+  <!--&lt;!&ndash; <app-addons *ngFor="let addon of component.details.addons" [addon]="addon"></app-addons> &ndash;&gt;-->
+  <!--&lt;!&ndash; </div> &ndash;&gt;-->
+  <!--</ul>-->
+  <!--</div>-->
+  <!--</div>-->
+
+
+</section>
+
+<section class="section3Back"
+         style="background: url(../../../assets/img/landingTour/section3Back.png) center center no-repeat">
+  <div class="container">
+    <div class="col-md-12">
+      <p class="section3Title">
+        This trip is visa required from the country of your origin
+      </p>
+    </div>
+    <div class="col-md-12">
+      <div class="col-md-5 padding">
+        <p class="section3MainText">
+          ut euismod odio augue quis nisl. In tempus risus ac mauris ultrices cursus. Cras vel posuere lectus.
+          Pellentesque tristique tincidunt ipsum. Vestibulum malesuada nunc id turpis fringilla condimentum. Aenean quis
+          tellus justo. Vivamus non quam a nibh.
+        </p>
+      </div>
+      <div class="col-md-3"></div>
+      <div class="col-md-4">
+        <button class="sectionBtn btn_top_space">
+          PROCESS VISA NOW
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer  *ngIf="agency" [agency]="agency"></footer>

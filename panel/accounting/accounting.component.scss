@@ -1,0 +1,151 @@
+
+.table-header ul {// @Zeinab -  Be hich vajh intori nanevis. inja scss na css ul bere dakhel
+  display: flex;
+  width: 100%;
+  list-style-type: none;
+  flex-wrap: wrap;
+  box-shadow: 0 11px 13px -13px grey;
+  height: 100px;
+  margin-bottom: 31px;
+  li {
+    // @Zeinab -  For loop bezan, Dar morede in ghablan sohbat kardim
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    text-transform: capitalize;
+    &:nth-child(1){
+      width: 20%;
+    }
+    &:nth-child(2){
+      width: 20%;
+    }
+    &:nth-child(3){
+      width: 20%;
+    }
+    &:nth-child(4){
+      width: 15%;
+    }
+    &:nth-child(5){
+      width: 15%;
+    }
+    &:nth-child(6){
+      width: 5%;
+    }
+    &:nth-child(7){
+      width: 5%;
+    }
+    span{
+      padding: 17px 0;
+    }
+  }
+}
+
+.table-body ul {
+  height: 65px;
+  background: #F7F9F9;
+  width: 100%;
+  display: flex;
+  list-style-type: none;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  border-left: 2px solid red;
+
+  &:hover {
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+    background: white;
+    cursor: pointer;
+    color: #0d47a1;
+  }
+
+  li {
+    // @Zeinab -  loop bezan
+    &:nth-child(1){
+      width: 20%;
+    }
+    &:nth-child(2){
+      width: 20%;
+    }
+    &:nth-child(3){
+      width: 20%;
+    }
+    &:nth-child(4){
+      width: 15%;
+      color: #00a039;
+    }
+    &:nth-child(5){
+      width: 15%;
+      color: red;
+    }
+    &:nth-child(6){
+      width: 5%;
+    }
+    &:nth-child(7){
+      width: 5%;
+    }
+  }
+}
+
+.custom-table-responsive{
+  overflow-x: auto;
+  width: 100%;
+}
+
+
+// .sub-footer ul{
+//   display: flex;
+//   width: 100%;
+//   list-style-type: none;
+
+//   li{
+//     padding: 5px;
+//     &:nth-child(1){
+//       width: 60%;
+//     }
+//     &:nth-child(2){
+//       width: 15%;
+//       background: white;
+//     }
+//     &:nth-child(3){
+//       width: 15%;
+//       background: white;
+//     }
+//     &:nth-child(4){
+//       width: 10%;
+//       background: white;
+//     }
+//   }
+// }
+
+.sub-footer-body ul {
+  display: flex;
+  width: 100%;
+  list-style-type: none;
+  height: 65px;
+  background: #F7F9F9;
+  align-items: center;
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+    height: unset;
+    align-items: flex-start;
+  }
+  li{
+    font-weight: bold;
+    padding: 5px;
+
+    &:nth-child(1){
+      width: 60%;
+    }
+    &:nth-child(2){
+      width: 15%;
+      color: #00a039;
+    }
+    &:nth-child(3){
+      width: 15%;
+      color: red;
+    }
+    &:nth-child(4){
+      width: 10%;
+    }
+  }
+}

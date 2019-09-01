@@ -1,0 +1,99 @@
+<div class="logo">
+    <a [routerLink]="['dashboard']" class="simple-text">
+        <div class="logo-img">
+            <img src="/assets/img/logo.png" width="23" />
+        </div>
+        NextJourney
+
+    </a>
+  <a *ngIf="role!=='company'" (click)="goNavigate('panel/privacy')" style="z-index: 123">
+    <i class="material-icons notification-icon top-info-ico" >!</i>
+  </a>
+</div>
+<div class="sidebar-wrapper">
+    <!--<form class="navbar-form navbar-right" role="search" *ngIf="isMobileMenu()">-->
+        <!--<div class="form-group form-black is-empty">-->
+            <!--<input type="text" class="form-control" placeholder="Search">-->
+            <!--<span class="material-input"></span>-->
+        <!--</div>-->
+        <!--<button type="submit" class="btn btn-white btn-round btn-just-icon">-->
+            <!--<i class="material-icons">search</i><div class="ripple-container"></div>-->
+        <!--</button>-->
+    <!--</form>-->
+<!--<ul>-->
+  <!--<form class="form-inline desktop-search" role="search">-->
+    <!--<div class="form-group form-black is-empty">-->
+      <!--<input type="text" class="form-control" [ngModelOptions]="{standalone: true}" (keyup)="filter()"-->
+             <!--[(ngModel)]="searchInput" [matAutocomplete]="auto1"  placeholder="Search">-->
+      <!--<mat-autocomplete #auto1="matAutocomplete" (optionSelected)="goTo($event.option.value)">-->
+        <!--<mat-option *ngFor="let item of searchResult" [value]="item.path" (click)="goTo(item.path)">-->
+          <!--{{item.title}}-->
+        <!--</mat-option>-->
+      <!--</mat-autocomplete>-->
+      <!--<span class="material-input"></span>-->
+    <!--</div>-->
+    <!--<button type="submit" class="btn btn-white btn-round btn-just-icon">-->
+      <!--<i class="material-icons">search</i><div class="ripple-container"></div>-->
+    <!--</button>-->
+  <!--</form>-->
+<!--</ul>-->
+
+    <ul class="nav nav-mobile-menu" *ngIf="isMobileMenu()">
+        <li>
+            <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="material-icons">dashboard</i>
+                <p class="hidden-lg hidden-md">Dashboard</p>
+            </a>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="material-icons">notifications</i>
+                <span class="notification" *ngIf="inqueryCount>0">{{inqueryCount}}</span>
+                <p class="hidden-lg hidden-md">Notifications</p>
+            </a>
+            <ul class="dropdown-menu">
+                <!--<li><a href="#">Mike John responded to your email</a></li>-->
+                <!--<li><a href="#">You have 5 new tasks</a></li>-->
+                <!--<li><a href="#">You're now friend with Andrew</a></li>-->
+                <!--<li><a href="#">Another Notification</a></li>-->
+                <!--<li><a href="#">Another One</a></li>-->
+              <li *ngFor="let item of allInqueries">
+                <div class="col-md-12 hover-effect" (click)="goToInquery(item._id)">
+                  <div class="col-md-3 col-sm-4 col-xs-4">
+                    <img src="../../assets/img/faces/marc.jpg" class="avatar-img">
+                  </div>
+                  <div class="col-md-9 col-sm-8 col-xs-8 padding">
+                    <h6>{{item.type=='BOOK'?'Booking from '+item.inquirer:'Visa Process from '+item.inquirer}}</h6>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                    </p>
+                  </div>
+                </div>
+                <!--<a (click)="goToInquery(item._id)">{{item.special_inst}}</a>-->
+              </li>
+              <li *ngIf="allInqueries.length==0" class="item-width"><div *ngIf="allInqueries.length==0" style="padding-left: 5px">No data to show</div></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+               <i class="material-icons">person</i>
+               <p class="hidden-lg hidden-md">Profile</p>
+            </a>
+        </li>
+    </ul>
+
+    <div class="nav-container">
+        <ul class="nav">
+          <ng-container *ngFor="let menuItem of menuItems">
+                <li *ngIf="hasAccess(menuItem)"  class="{{menuItem.class}}" routerLinkActive="active">
+                    <a  [routerLink]="[menuItem.path]">
+                        <i class="material-icons">{{menuItem.icon}}</i>
+                        <p>{{menuItem.title}}
+                            <i *ngIf="menuItem.path === 'profile' && role!=='admin'&& role!=='van-driver' && role!=='user' && role!=='superadmin'&&role!=='company'" class="material-icons notification-icon">!</i>
+                        </p>
+                    </a>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+</div>

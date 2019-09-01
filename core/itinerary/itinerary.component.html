@@ -1,0 +1,131 @@
+
+<div class="col-md-12">
+  <div class="card card-stats itenerary">
+    <div>
+      <div class="cover">
+        <!--<i class="material-icons" (click)="picture.click()">photo_camera</i>-->
+        <ngx-slick-carousel *ngIf="this.card.cover?.length" class="carousel"
+                            #slickModal="slick-carousel"
+                            [config]="mainSlideConfig">
+          <div ngxSlickItem class="slide" *ngFor="let image of card.cover">
+            <!-- <img src="{{image}}" alt=""> -->
+            <div class="content" [ngStyle]="{'background-image': 'url(' + image + ')'}">
+            </div>
+          </div>
+        </ngx-slick-carousel>
+      </div>
+      <div class="agency-logo bare"
+           [ngStyle]="{'background-image': 'url('+ card.logo + ')'}">
+      </div>
+      <div class="scroller col-md-12">
+        <div class="itenerary-info">
+			      <span>
+			      	<div class="form-group form-black label-floating custom-form">
+		              <!-- <label class="control-label">From City</label> -->
+		              <input type="text" class="form-control"
+                         name="airline" disabled
+                         style="text-transform: capitalize;"
+                         [value]="packageItem?.details.from.city">
+		            </div>
+			      </span>
+          <span class="arrow"><i class="material-icons">arrow_right_alt</i></span>
+          <span>
+			      	<div class="form-group form-black label-floating custom-form">
+		              <!-- <label class="control-label">From City</label> -->
+		              <input type="text" class="form-control"
+                         name="airline" disabled
+                         style="text-transform: capitalize;"
+                         [value]="packageItem?.componentsData[packageItem.componentsData.length-1].details.to.city"
+                         class="text-left">
+		            </div>
+			      </span>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="itenerary-days">
+              <div class="itenerary-each-day">
+                <ul class="day-wrp">
+                  <li class="date-time">
+                    <ul class="wrp">
+                      <li class="">
+			                    <span class="day-main-date-icon">
+			                      <i class="material-icons">date_range</i>
+			                      <span>
+                              {{card.days[0].date}}
+                            </span>
+			                    </span>
+                        <span class="day-main-date">
+			                      <!-- <mat-form-field *ngIf="bare" class="initial-date">
+					                  <input matInput [matDatepicker]="i"
+		                               class="date" name="picker1"
+		                               style="width: 70px;float: left;">
+					                  <mat-datepicker-toggle matSuffix [for]="i"></mat-datepicker-toggle>
+					                  <mat-datepicker #i></mat-datepicker>
+					                </mat-form-field> -->
+                          <!--{{day.date}}-->
+			                    </span>
+                        <div class="pull-right acs">
+                          <a class="sort ">
+                            <i class="material-icons">compare_arrows</i>
+                          </a>
+                        </div>
+                      </li>
+                      <li *ngFor="let day of card.days">
+                        <div *ngFor="let event of day.events">
+		                      		<span cdkDrag>
+		                    		<div class="custom-placeholder"></div>
+			                      	<div class="time">
+			                        <span class="">
+			                        	<i class="material-icons">access_time</i>
+                                {{event.time}}
+			                      	</span>
+			                     	 </div>
+			                      	<div class="details">
+				                        <div class="each-detail">
+				                          <span>
+				                            <!--<i class="material-icons"-->
+                                    <!--*ngIf="event.type==='AIRPLANE'&&!event.arrival">flight_takeoff</i>-->
+                                    <!--<i class="material-icons"-->
+                                    <!--*ngIf="event.type==='AIRPLANE'&&event.arrival">flight_land</i>-->
+                                    <!--&lt;!&ndash;<i class="material-icons"&ndash;&gt;-->
+                                    <!--&lt;!&ndash;*ngIf="event.type==='AIRPLANE'&&event.pair">rotate_left</i>&ndash;&gt;-->
+                                    <!--<i class="material-icons" *ngIf="event.type==='hotel-room'">hotel</i>-->
+				                          </span>
+				                          <span class="airport">
+					                          <!-- MNL -->
+                                    {{event.details.from}}
+					                      </span>
+				                          <span><i class="material-icons">arrow_right_alt</i></span>
+				                          <span class="airport">
+					                          <!-- BRO -->
+                                    {{event.details.to}}
+					                      </span>
+				                        </div>
+				                        <div class="each-detail">
+				                          <span>
+				                            <i class="material-icons">location_on</i>
+																	</span>
+                                  <!-- <span class="location" (click)="getCroods(event.details)"></span> -->
+				                          <span class="location">
+				                            <!-- Manila airport -->
+                                    {{event.location.address}}
+				                          </span>
+																</div>
+								   </div>
+								</span>
+                        </div>
+                        <!-- <div class="custom-placeholder" *cdkDragPlaceholder></div> -->
+                      </li>
+
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

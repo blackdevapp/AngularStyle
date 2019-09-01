@@ -1,0 +1,149 @@
+.drop-btn{
+  border: 2px solid #ef5350;
+  background: transparent;
+  color: #757575;
+}
+
+.open > .btn.dropdown-toggle{
+  border: 2px solid #ef5350;
+  background: transparent;
+  color: #757575;
+}
+.nav-tabs{
+  background-color: transparent;
+}
+
+
+.custom-margin{
+  margin-top: 15px!important;
+}.custom-margin2{
+  margin-top: 8px!important;
+}
+a,i{
+  cursor: pointer;
+}
+
+.sort-icon-dir{
+  float:right!important;
+  .sort-icon-dir-padding-top{
+    padding-top: 10px;
+     ul li a{
+       color: black!important;
+     }
+  }
+}
+.scroll{
+  display:block;
+  height:60vh;
+  overflow-y:auto;
+  overflow-x: hidden;
+}
+.table-custom-width{
+  tr{
+    td{
+      &:nth-child(1){
+        width: 20%;
+      }
+      &:nth-child(2){
+        width: 20%;
+      }
+      &:nth-child(3){
+        width: 20%;
+      }
+      &:nth-child(4){
+        width: 30%;
+      }
+      &:nth-child(5){
+        width: 10%;
+      }
+    }
+  }
+}
+a{
+  cursor: pointer!important;
+}
+.border-li{
+  border: 1px solid #fff;
+  border-radius: 2px;
+  cursor: pointer!important;
+}
+
+.card-header{
+  //height: 55px;
+  .sort-ico{
+    margin-top: 8px;
+    float: right;
+  }
+}
+
+.modal-dialog{
+  //width: 800px;
+}
+.font-size-close{
+  font-size: 30px;
+}
+
+.item-back{
+  background: #ffffff3b;
+  border-radius: 4px;
+  i{
+    font-size: 13px;
+    &:hover{
+      color: rgba(217, 0, 0, 0.69);
+    }
+  }
+}
+.btn-all{
+  background: #ef4e47;
+  border-radius: 4px;
+  margin-top: -6px;
+  width: 90px;
+  border: none;
+  color: white;
+  &:hover{
+    background: rgba(255, 255, 255, 0.20);
+  }
+
+  span{
+    font-size: 14px;
+    position: relative;
+    left: 5px;
+    top: -2px;
+  }
+
+  i{
+    position: relative;
+    top: 4px;
+    left: -6px;
+  }
+}
+
+
+.line{
+  display: inline-block;
+  width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  /deep/.modal-backdrop{
+    z-index: -1;
+  }
+
+  /deep/.modal-backdrop.in{
+    opacity: 0;
+  }
+
+}
+
+.top{
+  z-index: 999999999;
+}
+
+
+.space{
+  margin-top: 5px;margin-bottom: 5px
+}
+
+.input-width{
+  width: 74px;float: left;
+}

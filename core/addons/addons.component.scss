@@ -1,0 +1,21 @@
+@import "../../../assets/sass/md/classes";
+
+.icon-selector{
+	margin-top: 46px;
+	@extend .vertical-center;
+	flex-direction: column;
+	cursor: pointer;
+	.row{
+		div{
+			font-size: 8px;
+			line-height: 10px;
+			cursor: pointer;
+			@extend .center;
+		}
+	}
+}
+.checked{
+	top: 40px;
+	right: -1px;
+	z-index: 2;
+}

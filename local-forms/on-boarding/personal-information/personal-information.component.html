@@ -1,0 +1,182 @@
+<div class="col-md-12 top-spacing2">
+  <div class="go-back" (click)="goBackToDash()">
+    <i class="material-icons">keyboard_arrow_left</i>
+    Back to Onboarding
+  </div>
+  <div class="card card-stats">
+    <div class="card-header" data-background-color="orange">
+      <!-- <i class="fa fa-arrow-left"></i> -->
+      Personal Information
+    </div>
+    <div class="card-content">
+      <div class="col-md-12">
+        <div class="col-md-4">
+          <div class="form-group form-black label-floating"  [ngClass]="[!info.email ? 'is-empty' : '']">
+            <label class="control-label">Email Address</label>
+            <input  class="form-control" [(ngModel)]="info.email" disabled type="email" name="email">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group form-black label-floating" [ngClass]="[!info.mobileNo ? 'is-empty' : '']">
+            <label class="control-label">Mobile No</label>
+            <input class="form-control" [(ngModel)]="info.mobileNo" disabled type="text" name="mobile">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-4">
+          <div class="form-group form-black label-floating" [ngClass]="[getValidationClass('name'),!info.name ? 'is-empty' : '']">
+            <label class="control-label">Name</label>
+            <input  class="form-control" [(ngModel)]="info.name" type="text" name="name"
+                    (ngModelChange)="infoValidation.fields.name.originalValue=info.name">
+            <span class="form-control-feedback">
+				<i class="material-icons">priority_high</i>
+				</span>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group form-black label-floating" [ngClass]="!info.middleName ? 'is-empty' : ''">
+            <label class="control-label">Middle Name</label>
+            <input class="form-control" [(ngModel)]="info.middleName" type="text" name="middleName">
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group form-black label-floating" [ngClass]="[getValidationClass('lastName'),!info.lastName ? 'is-empty' : '']">
+            <label class="control-label">Last Name</label>
+            <input  class="form-control" [(ngModel)]="info.lastName" type="text" name="lastName"
+                    (ngModelChange)="infoValidation.fields.lastName.originalValue=info.lastName">
+            <span class="form-control-feedback">
+				<i class="material-icons">priority_high</i>
+				</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-4 col-sm-5 col-xs-12 dropdown text-center">
+          <a class="dropdown-toggle drop-width" style="width:100%;text-align:left;height:100%" data-toggle="dropdown">
+            <span class="notification">{{info.title?info.title:'Title'}}</span>
+            <i class="fa fa-angle-down"></i>
+            <!--<p class="hidden-lg hidden-md">Notifications</p>-->
+          </a>
+          <ul class="dropdown-menu">
+            <li><a (click)="info.title='Mr.';infoValidation.fields.title.originalValue='Mr.'">Mr.</a></li>
+            <li><a (click)="info.title='Ms.';infoValidation.fields.title.originalValue='Ms.'">Ms.</a></li>
+            <li><a (click)="info.title='Dr.';infoValidation.fields.title.originalValue='Dr.'">Dr.</a></li>
+            <li><a (click)="info.title='Attny';infoValidation.fields.title.originalValue='Attny'">Attny</a></li>
+          </ul>
+          <!--<div class="form-group form-black label-floating" [ngClass]="!info.title ? 'is-empty' : ''">-->
+            <!--<label class="control-label">Title</label>-->
+            <!--<input  class="form-control" [(ngModel)]="info.title" type="text" name="title"-->
+                    <!--(ngModelChange)="infoValidation.fields.title.originalValue=info.title">-->
+          <!--</div>-->
+        </div>
+        <div class="col-md-8 col-sm-7 col-xs-12">
+          <div class="form-group form-black label-floating" [ngClass]="[getValidationClass('address'),!info.address ? 'is-empty' : '']">
+            <label class="control-label">Address</label>
+            <input  class="form-control" [(ngModel)]="info.address" type="text" name="address"
+                    (ngModelChange)="infoValidation.fields.address.originalValue=info.address">
+            <span class="form-control-feedback">
+				<i class="material-icons">priority_high</i>
+				</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="form-group form-black label-floating" [ngClass]="[getValidationClass('city'),!info.city ? 'is-empty' : '']">
+            <label class="control-label">City</label>
+            <input  class="form-control" [(ngModel)]="info.city" type="text" name="city"
+                    (ngModelChange)="infoValidation.fields.city.originalValue=info.city">
+            <span class="form-control-feedback">
+				<i class="material-icons">priority_high</i>
+				</span>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="form-group form-black label-floating" [ngClass]="[getValidationClass('state'),!info.state ? 'is-empty' : '']">
+            <label class="control-label">State</label>
+            <input  class="form-control" [(ngModel)]="info.state" type="text" name="state"
+                    (ngModelChange)="infoValidation.fields.state.originalValue=info.state">
+            <span class="form-control-feedback">
+				<i class="material-icons">priority_high</i>
+				</span>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 dropdown text-center">
+          <a class="dropdown-toggle drop-width" style="width:100%;text-align:left;height:100%" data-toggle="dropdown">
+            <span class="notification">{{info.gender?info.gender:'Gender'}}</span>
+            <i class="fa fa-angle-down"></i>
+            <!--<p class="hidden-lg hidden-md">Notifications</p>-->
+          </a>
+          <ul class="dropdown-menu">
+            <li><a (click)="info.gender='Male';infoValidation.fields.gender.originalValue='Male'">Male</a></li>
+            <li><a (click)="info.gender='Female';infoValidation.fields.gender.originalValue='Female'">Female</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <!--<div class="form-group form-black label-floating" [ngClass]="[getValidationClass('age'),!info.age ? 'is-empty' : '']">-->
+            <!--<label class="control-label">age</label>-->
+            <!--<input class="form-control" [(ngModel)]="info.age" type="text" maxlength="3" name="age"-->
+                   <!--(ngModelChange)="infoValidation.fields.age.originalValue=info.age">-->
+            <!--<span class="form-control-feedback">-->
+				<!--<i class="material-icons">priority_high</i>-->
+				<!--</span>-->
+          <!--</div>-->
+          <div class="form-group form-black label-floating" style="margin-top:16px" [ngClass]="!info.birthDate ? 'is-empty' : ''">
+            <mat-form-field style="width: 100%;">
+              <input matInput [matDatepicker]="picker" [max]="maxDate" placeholder="BirthDate"
+                     [(ngModel)]="info.birthDate" name="arrival" style="float: left;">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker ></mat-datepicker>
+            </mat-form-field>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="form-group form-black label-floating" [ngClass]="[getValidationClass('officialTelephone'),!info.officialTelephone ? 'is-empty' : '']">
+            <label class="control-label">Official Telephone</label>
+            <input class="form-control" [(ngModel)]="info.officialTelephone" type="text" name="officialTelephone"
+                   (ngModelChange)="infoValidation.fields.officialTelephone.originalValue=info.officialTelephone">
+            <span class="form-control-feedback">
+				<i class="material-icons">priority_high</i>
+				</span>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="form-group form-black label-floating" [ngClass]="[getValidationClass('password'),!info.password ? 'is-empty' : '']">
+            <label class="control-label">Password</label>
+            <input class="form-control" [(ngModel)]="info.password" [attr.type]="showPass ? 'password' : 'text'"
+                    name="password1"
+                   (ngModelChange)="infoValidation.fields.password.originalValue=info.password">
+            <i class="material-icons show-hide" [ngClass]="{'hide-arrow': showPass}" (click)="showPass = !showPass">remove_red_eye</i>
+            <p class="alert" *ngIf="!infoValidation.fields.password.isValid">required(min length 8character - max
+              length 16 character) </p>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="form-group form-black label-floating" [ngClass]="[getValidationClass('confirmPassword'),!info.confirmPassword ? 'is-empty' : '']">
+            <label class="control-label">Confirm Password</label>
+            <input class="form-control" [(ngModel)]="info.confirmPassword" [attr.type]="showPass1 ? 'password' : 'text'" name="confirmPassword"
+                   (ngModelChange)="infoValidation.fields.confirmPassword.originalValue=info.confirmPassword">
+            <i class="material-icons show-hide" [ngClass]="{'hide-arrow': showPass1}" (click)="showPass1 = !showPass1">remove_red_eye</i>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-success pull-right" (click)="submit()">Submit</button>
+
+          <!--<button type="submit" class="btn btn-danger pull-right" (click)="goBackToDash()">Back</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

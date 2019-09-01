@@ -1,0 +1,275 @@
+<div *ngIf="preloading">
+  <content-loader>
+    <svg:rect x="17" y="38" rx="2" ry="2" width="370" height="16" />
+    <svg:rect x="17" y="65" rx="2" ry="2" width="370" height="20" />
+  </content-loader>
+</div>
+
+
+
+<div class="main-content" *ngIf="!preloading">
+  <div class="container-fluid">
+    <app-filter *ngIf="!isUser" [typeOfFilter]="typeOfFilter" (updated)="search($event)"></app-filter>
+    <!--(scroll)="onScroll()"-->
+    <app-tile-table [data]="allInqueries" [config]="isUser?config1:(role=='company'?configCompany:(role==='superadmin'?configSuperAdmin:config))"  (dropdown)="changeStatus($event)" [loading]="memory.getLoading()"
+               (toDelete)="deleteInquery($event)" (toEdit)="editInquery($event)" (image)="imageClicked($event)"
+                (button)="buttonClicked($event)">
+      <!--<div class="row">-->
+        <!--<div class="col-md-3 col-xs-6">-->
+          <!--<ul class="nav nav-tabs">-->
+            <!--<li class="active border-li">-->
+              <!--<a (click)="allInquery()">-->
+                <!--<i class="material-icons">view_comfy</i>-->
+                <!--<span>All</span>-->
+                <!--<div class="ripple-container"></div></a>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</div>-->
+        <!--<div class="col-md-6">-->
+          <!--&lt;!&ndash;<button class="item-back">&ndash;&gt;-->
+              <!--&lt;!&ndash;{{filter.type}}&ndash;&gt;-->
+              <!--&lt;!&ndash;<i class="material-icons" (click)="getInqueriesByFilter('','type')">clear</i>&ndash;&gt;-->
+          <!--&lt;!&ndash;</button>&ndash;&gt;-->
+          <!--&lt;!&ndash;<button class="item-back">&ndash;&gt;-->
+              <!--&lt;!&ndash;{{filter.status}}&ndash;&gt;-->
+              <!--&lt;!&ndash;&lt;!&ndash;<div class="ripple-container"></div>&ndash;&gt;&ndash;&gt;-->
+              <!--&lt;!&ndash;<i class="material-icons" (click)="getInqueriesByFilter('','status')">clear</i>&ndash;&gt;-->
+          <!--&lt;!&ndash;</button>&ndash;&gt;-->
+
+        <!--</div>-->
+        <!--<div class="col-md-2 col-xs-3 custom-margin2">-->
+          <!--<div *ngIf="getSelectedCount()>0">-->
+            <!--<a href="#settings" data-toggle="tab">-->
+              <!--{{getSelectedCount()}} item selected-->
+              <!--<i class="material-icons" (click)="multipleDelete()">delete_sweep-->
+              <!--</i>-->
+              <!--<div class="ripple-container"></div>-->
+            <!--</a>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-md-1  col-xs-3 custom-margin2">-->
+          <!--<i class="material-icons sort-ico" [matMenuTriggerFor]="filter">sort-->
+          <!--</i>-->
+          <!--<mat-menu #filter="matMenu">-->
+            <!--<button mat-menu-item [matMenuTriggerFor]="status">Status</button>-->
+            <!--<button mat-menu-item [matMenuTriggerFor]="type">Type</button>-->
+          <!--</mat-menu>-->
+          <!--<mat-menu #status="matMenu">-->
+            <!--<button mat-menu-item (click)="getInqueriesByFilter('PENDING','status')">PENDING</button>-->
+            <!--<button mat-menu-item (click)="getInqueriesByFilter('APPROVED','status')">APPROVED</button>-->
+            <!--<button mat-menu-item (click)="getInqueriesByFilter('REJECTED','status')">REJECTED</button>-->
+            <!--<button mat-menu-item (click)="getInqueriesByFilter('ESCALATED','status')">ESCALATED</button>-->
+          <!--</mat-menu>-->
+          <!--<mat-menu #type="matMenu">-->
+            <!--<button mat-menu-item (click)="getInqueriesByFilter('BOOK','type')">Booking</button>-->
+            <!--<button mat-menu-item (click)="getInqueriesByFilter('VISAPROCESS','type')">Visa Process</button>-->
+          <!--</mat-menu>-->
+
+        <!--</div>-->
+      <!--</div>-->
+    </app-tile-table>
+  </div>
+</div>
+
+
+<div id="editInquery" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit Inqueries</h4>
+      </div>
+      <div class="modal-body" *ngIf="package">
+        <app-timeline [package]="package" [mode]="'inquery'"></app-timeline>
+
+      </div>
+      <div class="modal-body" *ngIf="noData">
+        <h5>packages data does not exist</h5>
+      </div>
+      <div class="modal-footer text-center">
+        <!--<button type="button" class="btn btn-danger submit-btn" data-dismiss="modal">Submit</button>-->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="from" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Person Info</h4>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-6">
+          <p>First Name: {{current.firstName}}</p>
+        </div>
+
+        <div class="col-md-6">
+          <p>State: {{current.state}}</p>
+        </div>
+
+        <div class="col-md-6">
+          <p>Last Name: {{current.lastName}}</p>
+        </div>
+
+        <div class="col-md-6">
+          <p>City: {{current.city}}</p>
+        </div>
+
+
+        <div class="col-md-6">
+          <p>Email: {{current.email}}</p>
+        </div>
+
+        <div class="col-md-6">
+          <p>Mobile No: {{current.mobileNo}}</p>
+        </div>
+
+        <div class="col-md-6">
+          <div>isPaid: <p *ngIf="currentInquery?.is_paid">yes</p><p *ngIf="!currentInquery?.is_paid">no</p></div>
+        </div>
+        <div class="col-md-6" *ngIf="!currentInquery?.is_paid&&currentInquery?.details?.payCheck">
+          <button type="button" class="btn btn-danger submit-btn" data-dismiss="modal" (click)="goForPay(currentInquery)">Go To Pay</button>
+        </div>
+
+
+
+        <hr class="line">
+
+
+        <app-table [data]="userInqueries" [config]="config1" (scroll)="onScroll()">
+          <div class="row">
+            <div class="col-md-12">
+              <p >User Inqueries</p>
+            </div>
+          </div>
+        </app-table>
+      </div>
+      <div class="modal-footer text-center">
+        <!--<button type="button" class="btn btn-danger submit-btn" data-dismiss="modal">Submit</button>-->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="form" class="modal fade top" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{currentForm.name}}</h4>
+      </div>
+      <div class="modal-body">
+        <h3>General Information</h3>
+        <div class="row">
+          <div class="col-md-12 space" *ngFor="let item of currentForm.form.items;let i=index">
+            <div *ngIf="item.type=='Checkbox'">
+              <div class="col-md-2" >
+                <h4> {{item.label}} :</h4>
+              </div>
+              <div class="col-md-3 check-display" *ngFor="let sub of item.data">
+                <div class="checkbox input-top-space">
+                  <label>
+                    <input type="checkbox" disabled [checked]="item.value.indexOf(sub)>-1"  [value]="sub" name="optionsCheckboxes">
+                  </label>
+                  {{sub}}
+                </div>
+              </div>
+            </div>
+            <div *ngIf="item.type=='Radio'">
+
+              <div class="col-md-2" >
+                <h4> {{item.label}} :</h4>
+              </div>
+              <div class="col-md-3" *ngFor="let sub of item.data">
+                <div class="radio input-top-space">
+                  <label>
+                    <input type="radio" disabled [checked]="item.value==sub" [value]="sub" name="optionsCheckboxes">
+                  </label>
+                  {{sub}}
+                </div>
+
+              </div>
+            </div>
+            <div *ngIf="item.type=='Attachment'">
+
+              <div class="col-md-2" >
+                <h4> {{item.label}} :</h4>
+              </div>
+              <div class="col-md-3" *ngFor="let sub of item.value;let j=index">
+                <!--<img [src]="sub" alt="">-->
+                <button type="button" class="btn btn-danger submit-btn" (click)="download(sub)">File {{j+1}}</button>
+
+
+                <!--<form>-->
+                  <!--<input type="file" name="fileupload" value="fileupload" id="fileupload{{i}}" class="custom-file-input input-top-space">-->
+                <!--</form>-->
+
+              </div>
+            </div>
+            <div *ngIf="item.type=='Input'">
+
+              <div class="col-md-4" >
+                <div class="form-group label-floating">
+                  <label class="control-label">{{item.label}}</label>
+                  <input type="text" class="form-control" [(ngModel)]="item.value" disabled  name="{{item.label}}{{i}}" />
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="item.type=='DatePicker'">
+
+              <div class="col-md-4" >
+                <div class="form-group form-black label-floating is-empty datepicker-space">
+                  <mat-form-field>
+                    <input matInput placeholder="{{item.label}}" disabled [(ngModel)]="item.value" name="picker" class="date input-width">
+                    <!--<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
+                    <!--<mat-datepicker #picker ></mat-datepicker>-->
+                  </mat-form-field>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!--<div class="col-md-3">-->
+          <!--<div class="form-group label-floating has-success">-->
+          <!--<label class="control-label">First Name</label>-->
+          <!--<input type="text" class="form-control" name="firstname" [(ngModel)]="user.firstName" />-->
+          <!--<span class="form-control-feedback">-->
+          <!--<i class="material-icons">done</i>-->
+          <!--</span>-->
+          <!--</div>      -->
+          <!--</div>-->
+          <!--<div class="col-md-3">-->
+          <!--<div class="form-group label-floating has-success">-->
+          <!--<label class="control-label">Last Name</label>-->
+          <!--<input type="text" class="form-control"  name="lastname" [(ngModel)]="user.lastName"/>-->
+          <!--<span class="form-control-feedback">-->
+          <!--<i class="material-icons">done</i>-->
+          <!--</span>-->
+          <!--</div>      -->
+          <!--</div>-->
+        </div>
+      </div>
+      <div class="modal-footer text-center">
+        <!--<button type="button" class="btn btn-danger submit-btn" data-dismiss="modal">Submit</button>-->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+

@@ -1,0 +1,711 @@
+<div class="social-media">
+    <mat-accordion class="col-md-6">
+        <mat-expansion-panel *ngIf="agencyDetails?.social_media?.linkedin">
+            <mat-expansion-panel-header class="linkedin">
+                <mat-panel-title>
+                    <i class="fab fa-linkedin"></i>&nbsp; Linkedin
+                </mat-panel-title>
+                <!-- <mat-panel-description>
+                Type your name and age
+              </mat-panel-description> -->
+            </mat-expansion-panel-header>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <div class="img-info">
+                                                <img src="../../assets/images/photo1.jpg" class="img">
+
+                                                <div class="img-text-info">
+                                                    <p>Next Journey</p>
+                                                    <p>--</p>
+                                                    <p>6d</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 text-right">
+                                            <!--<i class="fa fa-ellipsis-h"></i>-->
+                                            <i class="fa fa-ellipsis-v" type="button" data-toggle="dropdown"></i>
+                                            <ul class="dropdown-menu">
+                                                <li *ngIf="!lnTags" (click)="lnTags=true">
+                                                    tags
+                                                </li>
+                                                <li *ngIf="lnTags" (click)="lnTags=false">
+                                                    description
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12 details">
+                                            <textarea class="form-control" [(ngModel)]="social.linkedin.description"></textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-----------------tags fetching box---------------------------->
+                                <div class="col-md-12">
+                                    <div class="row">
+                                    <app-loading *ngIf="tagLoader"></app-loading>
+                                    <div class="tagBox" [ngClass]="{'opec' : submittTags }">
+                                        <button (click)="lnTags = true" *ngIf="!lnTags">
+                      <span>Fetch Tags</span>
+                      <i class="material-icons">
+                        input
+                      </i>
+                    </button>
+                                        <div *ngIf="lnTags && !submittTags" class="getTagStep">
+                                            <input class="form-control" placeholder="Your Hashtag list basis eg Monilla " [(ngModel)]="tag">
+                                            <button type="submit" class="btn btn-danger pull-right" (click)="getTags('linkedin')">Get <i class="material-icons">
+                        keyboard_arrow_right
+                      </i></button>
+                                        </div>
+                                        <div *ngIf="submittTags" class="chipsBox">
+                                            <!--<button>Submitt !</button>-->
+                                            <span *ngFor="let item of social.linkedin.tags; let i=index" class="tag">
+                        <span>{{item}}</span>
+                                            <i class="material-icons" (click)="social.linkedin.tags.splice(i,1)">cancel</i>
+
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <!-----------------End tags fetching box------------------------>
+                                <div class="col-md-12 upload">
+                                    <div class="inner" [ngClass]="{'hasPhoto' : social.linkedin.images[0] }" (click)="triggerUpload('ln-social-image')" [ngStyle]="{'background-image': 'url('+social.linkedin.images[0]+ ')'}">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                    </div>
+                                </div>
+                                <image-upload url="{{appSetting.UPLOAD_URL}}/api/upload/5c15efb47b741fff2044ec26" [max]="1"  class="image-upload cover-image ln-social-image" [extensions]="['jpg','png','jpeg']" [maxFileSize]="3048576" buttonCaption="Upload Cover" [partName]="'image'"
+                                    dropBoxMessage="" clearButtonCaption="" (uploadStateChanged)="socialState = !socialState" (uploadFinished)="socialUploadFinished($event,'linkedin')" (removed)="onRemoved($event)" [uploadedFiles]="images1">
+                                </image-upload>
+
+                                <!-- <div class="col-md-12">
+                  <div class="row">
+                    <img src="../../../assets/img/default-profile.png" class="big-img">
+                  </div>
+                </div> -->
+
+                                <div class="col-md-12">
+                                    <div class="row details-back">
+                                        <div class="col-md-10">
+                                            <h4>Lets go Boracay</h4>
+                                            <h6>nextjourney.co</h6>
+                                        </div>
+                                        <div class="col-md-2 text-right">
+                                            <i class="fa fa-bookmark-o icons"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="row item-icon">
+                                        <div class="col-md-12 Row ">
+                                            <div class="item-icon-left">
+                                                <i class="fa fa-thumbs-o-up"></i>
+                                                <span>
+                                                        like
+                                                </span>
+                                            </div>
+
+                                            <div class="item-icon-left">
+                                                <i class="fas fa-comment"></i>
+                                                <span>
+                                                        Comment
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-share "></i>
+                                                <span>
+                                                    share
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="row  padding">
+                                        <div class="col-md-12">
+                                            <i class="fa fa-area-chart"></i>
+                                            <span class="view">&nbsp;13 views</span>
+                                            <span>of your post in the feed</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="agencyDetails?.social_media?.twitter" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header class="twitter">
+                <mat-panel-title>
+                    <i class="fab fa-twitter"></i>&nbsp; Twitter
+                </mat-panel-title>
+                <!-- <mat-panel-description>
+                Currently I am {{panelOpenState ? 'open' : 'closed'}}
+              </mat-panel-description> -->
+            </mat-expansion-panel-header>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-body twiiter">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- <div class="col-md-2">
+                    <div class="row">
+                      <img [src]="agencyDetails?.social_media?.twitter?'https://twitter.com/'+agencyDetails?.social_media?.twitter?.screen_name+'/profile_image?size=original':'../../../assets/img/default-profile.png'" class="img">
+                    </div>
+                  </div> -->
+
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="">
+
+
+                                                <span class="id-info">
+                          {{agencyDetails?.social_media?.twitter?.screen_name}}
+                        </span>
+
+                                                <span class="arrow-icon">
+                           <i class="fa fa-ellipsis-v" type="button" data-toggle="dropdown"></i>
+                      <ul class="dropdown-menu">
+                        <li *ngIf="!ttTags" (click)="ttTags=true">
+                          tags
+                        </li>
+                        <li *ngIf="ttTags" (click)="ttTags=false">
+                          description
+                        </li>
+
+                      </ul>
+                        </span>
+                                            </div>
+                                            <div class="">
+                                                <label class="control-label">description</label>
+                                                <textarea class="form-control" [(ngModel)]="social.twitter.description"></textarea>
+                                            </div>
+                                            <!-----------------tags fetching box---------------------------->
+                                            <div class="col-md-12">
+                                            <div class="row">
+                                                <app-loading *ngIf="tagLoader"></app-loading>
+                                                <div class="tagBox tag-box-twitter" [ngClass]="{'opec' : submittTagsT }">
+                                                    <button (click)="ttTags = true" *ngIf="!ttTags">
+                                                         <span>Fetch Tags</span>
+                                                              <i class="material-icons">
+                                                                      input
+                                                              </i>
+                                                         </button>
+                                                      <div *ngIf="ttTags && !submittTagsT" class="getTagStep">
+                                                        <input class="form-control" placeholder="Your Hashtag list basis eg Monilla " [(ngModel)]="tag">
+                                                        <button type="submit" class="btn btn-danger pull-right" (click)="getTags('twitter')">Get <i class="material-icons">
+                              keyboard_arrow_right
+                            </i></button>
+                                                    </div>
+                                                    <div *ngIf="submittTagsT" class="chipsBox">
+                                                        <!--<button>Submitt !</button>-->
+                                                        <span *ngFor="let item of social.twitter.tags; let i=index" class="tag">
+                        <span>{{item}}</span>
+                                                        <i class="material-icons" (click)="social.twitter.tags.splice(i,1)">cancel</i>
+
+                                                        </span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 upload">
+                                                    <div class="inner" [ngClass]="{'hasPhoto' : social.twitter.images[0] }" (click)="triggerUpload('tt-social-image')" [ngStyle]="{'background-image': 'url('+social.twitter.images[0]+ ')'}">
+                                                        <i class="fas fa-cloud-upload-alt"></i>
+                                                    </div>
+                                                </div>
+                                                <image-upload url="{{appSetting.UPLOAD_URL}}/api/upload/5c15efb47b741fff2044ec26" [max]="1"  class="image-upload cover-image tt-social-image" [extensions]="['jpg','png','jpeg']" [maxFileSize]="3048576" buttonCaption="Upload Cover" [partName]="'image'"
+                                                    dropBoxMessage="" clearButtonCaption="" (uploadStateChanged)="socialState = !socialState" (uploadFinished)="socialUploadFinished($event,'twitter')" (removed)="onRemoved($event)" [uploadedFiles]="images1">
+                                                </image-upload>
+                                            </div>
+                                            <div class="col-md-12  footer-icon">
+                                                <div class="items">
+                                                    <i class="fas fa-comment"></i>
+                                                    <span>1245</span>
+                                                </div>
+                                                <div class="items">
+                                                    <i class="fas fa-retweet"></i>
+                                                    <span>889</span>
+                                                </div>
+                                                <div class="items">
+                                                    <i class="far fa-heart"></i>
+                                                    <span>889</span>
+                                                </div>
+                                                <div class="items">
+                                                    <i class="fas fa-envelope"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="agencyDetails?.social_media?.facebook" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header class="facebook">
+                <mat-panel-title>
+                    <i class="fab facebook"></i>&nbsp; Facebook
+                </mat-panel-title>
+                <!-- <mat-panel-description>
+                Currently I am {{panelOpenState ? 'open' : 'closed'}}
+              </mat-panel-description> -->
+            </mat-expansion-panel-header>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-body face-book">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <div class="row">
+                                            <div class="img-info">
+                                                <img *ngIf="fbData?.img" [attr.src]="getFbData()" class="img">
+
+                                                <div class="img-text-info">
+                                                    <h5 *ngIf="fbData?.title">{{fbData?.title}}</h5>
+                                                    <i class="fa fa-globe"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 text-right">
+                                        <div class="row">
+                                            <i class="fa fa-ellipsis-v" type="button" data-toggle="dropdown"></i>
+                                            <ul class="dropdown-menu">
+                                                <li *ngIf="!fbTags" (click)="fbTags=true">
+                                                    tags
+                                                </li>
+                                                <li *ngIf="fbTags" (click)="fbTags=false">
+                                                    description
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label class="control-label">Description</label>
+                                        <textarea class="form-control" [(ngModel)]="social.facebook.description"></textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-----------------tags fetching box---------------------------->
+                            <div class="col-md-12">
+                            <div class="row">
+                                <app-loading *ngIf="tagLoader"></app-loading>
+                                <div class="tagBox tag-box-facebook" [ngClass]="{'opec' : submittTagsFB }">
+                                    <button (click)="fbTags = true" *ngIf="!fbTags">
+                    <span>Fetch Tags</span>
+                    <i class="material-icons">
+                      input
+                    </i>
+                  </button>
+                                    <div *ngIf="fbTags && !submittTagsFB" class="getTagStep">
+                                        <input class="form-control" placeholder="Your Hashtag list basis eg Monilla " [(ngModel)]="tag">
+                                        <button type="submit" class="btn btn-danger pull-right" (click)="getTags('facebook')">Get <i class="material-icons">
+                      keyboard_arrow_right
+                    </i></button>
+                                    </div>
+                                    <div *ngIf="submittTagsFB" class="chipsBox">
+                                        <!--<button>Submitt !</button>-->
+                                        <span *ngFor="let item of social.facebook.tags; let i=index" class="tag">
+                        <span>{{item}}</span>
+                                        <i class="material-icons" (click)="social.facebook.tags.splice(i,1)">cancel</i>
+
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <!-----------------End tags fetching box------------------------>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <!-- <img src="../../assets/images/photo2.jpg" class="big-img"> -->
+                                        <!-- <image-upload [extensions]="['jpeg','png']" (uploadFinished)="onUploadFinished($event)" url="http://mockbin.org/request" (removed)="social.facebook.images = []"></image-upload> -->
+                                        <div class="col-md-12 upload">
+                                            <div class="inner" [ngClass]="{'hasPhoto' : social.facebook.images[0] }" (click)="triggerUpload('fb-social-image')" [ngStyle]="{'background-image': 'url('+social.facebook.images[0]+ ')'}">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                            </div>
+                                        </div>
+                                        <image-upload url="{{appSetting.UPLOAD_URL}}/api/upload/5c15efb47b741fff2044ec26" [max]="1"  class="image-upload cover-image fb-social-image" [extensions]="['jpg','png','jpeg']" [maxFileSize]="3048576" buttonCaption="Upload Cover" [partName]="'image'"
+                                            dropBoxMessage="" clearButtonCaption="" (uploadStateChanged)="socialState = !socialState" (uploadFinished)="socialUploadFinished($event,'facebook')" (removed)="onRemoved($event)" [uploadedFiles]="images1">
+                                        </image-upload>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="col-md-12 details">-->
+                            <!--<div class="row">-->
+                            <!--<div class="form-group form-black label-floating is-empty">-->
+                            <!--<label class="control-label">Title</label>-->
+                            <!--<input  class="form-control" [(ngModel)]="social.facebook.title"  type="text" name="fbTitle">-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <div class="col-md-12 footer">
+                                <div class="row footer-row">
+                                    <div class="col1">
+                                        <img src="../../../assets/img/like.png" class="emoji">
+                                        <img src="../../../assets/img/heart.png" class="emoji">
+                                        <img src="../../../assets/img/wow.png" class="emoji">
+                                    </div>
+                                    <div class="col2">
+                                        <span>
+                        135
+                        Comment
+                      </span> &nbsp; &nbsp;
+                                        <span>
+                        148
+                        shared
+                      </span> &nbsp; &nbsp;
+                                        <span>
+                        7.1M
+                        Views
+                      </span>
+                                    </div>
+                                </div>
+
+
+                                <div class="row footer-icon">
+                                    <div>
+                                        <i class="far fa-thumbs-up"></i>
+                                        <span> like</span>
+                                    </div>
+
+                                    <div>
+                                        <i class="fas fa-comment"></i>
+                                        <span> comment</span>
+                                    </div>
+
+
+                                    <div>
+                                        <i class="fas fa-share"></i>
+                                        <span> share</span>
+                                    </div>
+
+                                    <div>
+                                        <img src="../../../assets/img/default-profile.png" class="profile-img">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="agencyDetails?.social_media?.telegram" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header class="telegram">
+                <mat-panel-title>
+                    <i class="fab fa-telegram"></i>&nbsp; Telegram
+                </mat-panel-title>
+                <!-- <mat-panel-description>
+                Currently I am {{panelOpenState ? 'open' : 'closed'}}
+              </mat-panel-description> -->
+            </mat-expansion-panel-header>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-body ">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="row">
+                                            <div class="avatar-img">
+                                                <span>NJ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <a class="name">NJTest</a>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="form-group form-black label-floating is-empty">
+                                                        <label class="control-label">Description</label>
+                                                        <textarea class="form-control" [(ngModel)]="social.telegram.description"></textarea>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!-----------------tags fetching box---------------------------->
+                                            <div class="col-md-12">
+                                            <div class="row">
+                                                <app-loading *ngIf="tagLoader"></app-loading>
+                                                <div class="tagBox tag-box-telegram" [ngClass]="{'opec' : submittTagsTel }">
+                                                    <button (click)="telTags = true" *ngIf="!telTags">
+                            <span>Fetch Tags</span>
+                            <i class="material-icons">
+                              input
+                            </i>
+                          </button>
+                                                    <div *ngIf="telTags && !submittTagsTel" class="getTagStep">
+                                                        <input class="form-control" placeholder="Your Hashtag list basis eg Monilla " [(ngModel)]="tag">
+                                                        <button type="submit" class="btn btn-danger pull-right" (click)="getTags('telegram')">Get <i class="material-icons">
+                              keyboard_arrow_right
+                            </i></button>
+                                                    </div>
+                                                    <div *ngIf="submittTagsTel" class="chipsBox">
+                                                        <!--<button>Submitt !</button>-->
+                                                        <span *ngFor="let item of social.telegram.tags; let i=index" class="tag">
+                        <span>{{item}}</span>
+                                                        <i class="material-icons" (click)="social.telegram.tags.splice(i,1)">cancel</i>
+
+                                                        </span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="col-md-12 upload">
+                                                <div class="inner" [ngClass]="{'hasPhoto' : social.telegram.images[0] }" (click)="triggerUpload('tl-social-image')" [ngStyle]="{'background-image': 'url('+social.telegram.images[0]+ ')'}">
+                                                    <i class="fas fa-cloud-upload-alt"></i>
+                                                </div>
+                                            </div>
+                                            <image-upload url="{{appSetting.UPLOAD_URL}}/api/upload/5c15efb47b741fff2044ec26" [max]="1"  class="image-upload cover-image tl-social-image" [extensions]="['jpg','png','jpeg']" [maxFileSize]="3048576" buttonCaption="Upload Cover" [partName]="'image'"
+                                                dropBoxMessage="" clearButtonCaption="" (uploadStateChanged)="socialState = !socialState" (uploadFinished)="socialUploadFinished($event,'telegram')" (removed)="onRemoved($event)" [uploadedFiles]="images1">
+                                            </image-upload>
+
+                                            <!-----------------End tags fetching box------------------------>
+
+                                            <!--<div class="massage-details">-->
+                                            <!--<div class="title">-->
+                                            <!--Airplane on <strong>15 Mar 2019</strong>-->
+                                            <!--</div>-->
+                                            <!--&nbsp;&nbsp;&nbsp;&nbsp;<strong>From: Manila - To: Boracay</strong>-->
+                                            <!--<br>-->
+                                            <!--<br>-->
+                                            <!--For as low as 10-->
+                                            <!--<br>-->
+                                            <!--<a class="more">-->
+                                            <!--<br>-->
+                                            <!--More Info ...-->
+                                            <!--</a>-->
+                                            <!--</div>-->
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-md-1 text-right">-->
+                                    <!--<div class="row">-->
+                                    <!--<i class="fa fa-ellipsis-v" type="button" data-toggle="dropdown"></i>-->
+                                    <!--<ul class="dropdown-menu">-->
+                                    <!--<li *ngIf="!telTags" (click)="telTags=true">-->
+                                    <!--tags-->
+                                    <!--</li>-->
+                                    <!--<li *ngIf="telTags" (click)="telTags=false">-->
+                                    <!--description-->
+                                    <!--</li>-->
+
+                                    <!--</ul>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="agencyDetails?.social_media?.youtube" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header class="youtube">
+                <mat-panel-title>
+                    <i class="fab fa-youtube"></i>&nbsp; Youtube
+                </mat-panel-title>
+                <!-- <mat-panel-description>
+                Currently I am {{panelOpenState ? 'open' : 'closed'}}
+              </mat-panel-description> -->
+            </mat-expansion-panel-header>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-body ">
+                            <div class="row">
+                                <img src="../../../assets/img/default-profile.png" class="top-img">
+
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <h5>title</h5>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="row action">
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <span class="views">
+                            82 views
+                          </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-9">
+                                        <div class="row footer-icon">
+                                            <div>
+                                                <i class="far fa-thumbs-up"></i>
+                                                <span> 50</span>
+                                            </div>
+                                            <div>
+                                                <i class="far fa-thumbs-down"></i>
+                                                <span> 40</span>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-share"></i>
+                                                <span> SHARE</span>
+                                            </div>
+
+                                            <div>
+                                                <i class="fas fa-bookmark"></i>
+                                                <span> SAVE</span>
+                                            </div>
+
+                                            <div>
+                                                <i class="fa fa-ellipsis-h"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="row">
+                                            <img src="../../../assets/img/default-profile.png" class="user-avatar">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="row">
+                                            <strong>zeinab salehi</strong>
+                                            <h6>Published on 19 Mar 2019</h6>
+                                        </div>
+
+
+                                    </div>
+                                    <!-----------------tags fetching box---------------------------->
+                                    <div class="col-md-12">
+                                    <div class="row">
+                                        <app-loading *ngIf="tagLoader"></app-loading>
+                                        <div class="tagBox tag-box-youtube" [ngClass]="{'opec' : submittTagsY }">
+                                            <button (click)="youTags = true" *ngIf="!youTags">
+                        <span>Fetch Tags</span>
+                        <i class="material-icons">
+                          input
+                        </i>
+                      </button>
+                                            <div *ngIf="youTags && !submittTagsY" class="getTagStep">
+                                                <input class="form-control" placeholder="Your Hashtag list basis eg Monilla " [(ngModel)]="tag">
+                                                <button type="submit" class="btn btn-danger pull-right" (click)="getTags('youtube')">Get <i class="material-icons">
+                          keyboard_arrow_right
+                        </i></button>
+                                            </div>
+                                            <div *ngIf="submittTagsY" class="chipsBox">
+                                                <!--<button>Submitt !</button>-->
+                                                <span *ngFor="let item of social.youtube.tags; let i=index" class="tag">
+                        <span>{{item}}</span>
+                                                <i class="material-icons" (click)="social.youtube.tags.splice(i,1)">cancel</i>
+
+                                                </span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <!-----------------End tags fetching box------------------------>
+
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <button class="btn btn-red">
+                        subscribe 66k
+                      </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <div class="row" *ngIf="!agencyDetails?.social_media?.linkedin
+                          &&!agencyDetails?.social_media?.twitter
+                          &&!agencyDetails?.social_media?.facebook
+                          &&!agencyDetails?.social_media?.telegram
+                          &&!agencyDetails?.social_media?.youtube">
+        <h3 *ngIf="role==='admin'">You haven't sync your Agency's social medias! Please go to <a (click)="goToMarketing()">Marketing</a> to have them attached.</h3>
+        <h3 *ngIf="role!='admin'">You haven't sync your Agency's social medias! Please ask your administrator to have them attached.</h3>
+    </div>
+    <div class="pricing">
+        {{memory.getActiveCurrency() ? memory.getActiveCurrency() : 'PHP'}} {{math.round(totalPackagePrice * 100) / 100}}
+        <div class="stepper-actions">
+            <button type="submit" class="btn btn-primary pull-right next" (click)="submitPackage()">Submit
+            </button>
+            <button type="submit" class="btn btn-danger pull-right prev" (click)="goBack()">previous
+            </button>
+
+        </div>
+    </div>
+    <div class="result">
+      <mat-accordion class="col-md-6">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header class="linkedin">
+                <mat-panel-title>
+                    <i class="fab fa-linkedin"></i>&nbsp; Result
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="media-wrp">
+              <ul class="media-second-wrapper">
+                <li class="each-media"  *ngIf="agencyDetails?.social_media?.linkedin">
+                  <i class="fab fa-linkedin"></i>&nbsp; Linkedin
+                </li>
+                <li class="each-media"  *ngIf="agencyDetails?.social_media?.twitter">
+                  <i class="fab fa-twitter"></i>&nbsp; Twitter
+                </li>
+                <li class="each-media"  *ngIf="agencyDetails?.social_media?.facebook">
+                  <i class="fab fa-facebook"></i>&nbsp; Facebook
+                </li>
+                <li class="each-media"  *ngIf="agencyDetails?.social_media?.telegram">
+                  <i class="fab fa-telegram"></i>&nbsp; Telegram
+                </li>
+                <li class="each-media"  *ngIf="agencyDetails?.social_media?.youtube">
+                  <i class="fab fa-youtube"></i>&nbsp; Youtube
+                </li>
+
+              </ul>
+            </div>
+            <button _ngcontent-c27="" class="btn btn-primary pull-right" type="submit">Submit <div class="ripple-container"></div></button>
+          </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+
+</div>

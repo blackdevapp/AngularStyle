@@ -1,0 +1,69 @@
+.scroll{
+  display:block;
+  height:60vh;
+  overflow-y:auto;
+  overflow-x: hidden;
+}
+.sort-icon-dir{
+  float:right!important;
+  .sort-icon-dir-padding-top{
+    padding-top: 10px;
+    ul li a{
+      color: black!important;
+    }
+  }
+}
+.margin-bottom{
+  margin-bottom: 90px!important;
+}
+.dropdown-width{
+  min-width: 140px;
+}
+
+.card-header{
+  //height: 50px;
+  float: none;
+  .sort-ico{
+    margin-top: 8px;
+    float: right;
+  }
+}
+.drop-btn{
+  border: 2px solid #ef5350;
+  background: transparent;
+  color: #757575;
+}
+
+.open > .btn.dropdown-toggle{
+  border: 2px solid #ef5350;
+  background: transparent;
+  color: #757575;
+}
+
+
+.profile-img{
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.action-row{
+  display:inline-flex;
+
+  div{
+    cursor: pointer
+  }
+
+  .close{
+    margin-left: 10px
+  }
+}
+
+.dropdown-menu{
+  li{
+    a{
+      text-transform: capitalize;
+    }
+  }
+}

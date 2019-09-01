@@ -1,0 +1,121 @@
+<div class="row">
+	<div  class="col-md-12" *ngIf="step === 'one'">
+		<div class="radio input-top-space">
+		  <label (click)="telegram = 'hasChannel';step = 'two'">
+		    <input name="optionsCheckboxes" type="radio"><span class="circle"></span><span class="check"></span>
+		  </label>
+	      <span class="radio-lable">
+	        I have a Telegram Channel already
+	      </span>
+		</div>
+		<div class="radio input-top-space">
+		  <label (click)="telegram = 'noChannel';step = 'end'">
+		    <input name="optionsCheckboxes" type="radio"><span class="circle"></span><span class="check"></span>
+		  </label>
+		  <span class="radio-lable">
+		    I don't have any Telegram Channel at this moment
+		  </span>
+		</div>
+		<div class="start" *ngIf="telegram === 'noChannel'">
+			User Has no Channel
+		</div>
+	</div>	
+	<div class="row" *ngIf="step === 'two'">
+			<div  class="col-md-12">
+					<button class="pull-left btn btn-default" (click)="step = 'one'">
+							<i class="fa fa-angle-left"></i>
+							Back to Options
+						</button>
+					<div class="start" *ngIf="telegram === 'hasChannel'">
+							<div class="form-group form-black is-empty col-md-12">
+								<input
+									type="text"
+									class="form-control"
+									(input)="getChannels('@'+$event.target.value)"
+									[matAutocomplete]="auto1"
+									placeholder="Search for your Channel"
+									>
+									<mat-autocomplete #auto1="matAutocomplete" (optionSelected)="channelName = $event.option.value;step = 'three';checkStatus('@'+channelName)">
+										<mat-option *ngFor="let item of searchResult" [value]="item.username">
+											@{{item.username}}
+										</mat-option>
+									</mat-autocomplete>
+									<span class="material-input"></span>
+							</div>
+						</div>
+			</div>
+			<!-- <div class="col-md-12">
+				<button type="submit" class="btn btn-danger pull-left"
+					(click)="step = 'one'">Back to Options
+				</button>
+			</div> -->
+	</div>
+	<div class="row" *ngIf="step === 'three'">
+			<div  class="col-md-12">
+					<button class="pull-left btn btn-default" (click)="step = 'two'">
+							<i class="fa fa-angle-left"></i>
+							Back to Options
+						</button>
+					<div *ngIf="!njIsAdmin">
+							<p class="note">
+								<i class="material-icons">info</i>Please give 
+								<a href="https://t.me/@NextJourneyBot" target="_blank">
+									<span class="blue"><i>@NextJourneyBot</i></span>
+								</a> 
+								 admin access to your channel name
+								 <a href="https://t.me/@{{channelName}}" target="_blank">
+									<span class="blue"><i>
+											@{{channelName}}
+									</i></span>
+								</a>
+								
+							</p>
+							<!-- {{channelName}} doesn't have admin yet -->
+							<button type="submit" class="btn btn-warning pull-left disabled"
+								>NextJourney Seeking Admin Permission from {{channelName}} 
+								<img src="../../../assets/img/ball.gif" width="30" alt="">
+							</button>
+					</div>
+					<div *ngIf="njIsAdmin">
+							<button type="submit" class="btn btn-success pull-left disabled"
+							>NextJourney is now the admin of {{channelName}}
+							</button>
+							<!-- {{channelName}} is now an admin -->
+					</div>
+			</div>
+			<!-- <div class="col-md-12">
+					<button type="submit" class="btn btn-danger pull-left"
+						(click)="step = 'two'">Back to Options
+					</button>
+			</div> -->
+		<!-- <div (click)="step = 'one'">Back</div> -->
+	</div>
+	<div class="row" *ngIf="step === 'four'">
+		<div class="col-md-12">
+				All Set, Trips are now sharable in your Telegram channel.
+		</div>
+		<div class="col-md-12">
+				<!-- <button type="submit" class="btn btn-danger pull-left"
+					(click)="step = 'two'">Add Another Channel
+				</button> -->
+				<button type="submit" data-dismiss="modal" class="btn btn-danger pull-right"
+					>Close
+				</button>
+		</div>
+	</div>
+	<div class="row" *ngIf="step === 'end'">
+			<div class="col-md-12">
+					<button class="pull-left btn btn-default" (click)="step = 'one'">
+							<i class="fa fa-angle-left"></i>
+							Back
+						</button>
+			</div>
+		
+				<div class="col-md-12">
+					<span>			<a style="cursor:pointer" (click)="goToTel()">Use instructions here to create a new channel for yourself.</a>
+						</span>
+				</div>
+			<!-- <div (click)="step === 'one'">Back</div> -->
+	</div>
+</div>
+

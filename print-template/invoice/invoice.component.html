@@ -1,0 +1,190 @@
+<div id="printTemplate" >
+  <div class="wrap" *ngIf="agency">
+    <div class="item-padding">
+      <div class="col-md-12 padding top-section">
+        <div class="col-md-8 padding">
+          <div class="site-logo">
+            <img src="../../../assets/img/logo.png" class="logo">
+            <h4>Next Journey</h4>
+          </div>
+  
+        </div>
+        <div class="col-md-4  padding">
+          <div class="site-info">
+            <h4>
+              {{agency.official_address?agency.official_address.join(' , '):null}}
+              {{agency.city}}
+            </h4>
+            <p>
+              <i class="fa fa-phone-square"></i>
+              {{agency.telephone_number?agency.telephone_number.join(' , '):null}}
+            </p>
+  
+            <p>
+              <i class="fa fa-envelope"></i>
+              {{agency.email_address?agency.email_address.join(' , '):null}}
+            </p>
+  
+            <p>
+              <i class="fa fa-globe"></i>
+              {{agency.website}}
+            </p>
+  
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 padding bottom-section">
+        <div class="col-md-8 padding">
+  
+          <div class="info">
+            <ul>
+              <h4>
+                Bill to
+              </h4>
+              <h4>
+                {{user.username}}
+              </h4>
+              <li>
+                {{agency.official_address?agency.official_address.join(' , '):null}}
+              </li>
+              <!-- <li>
+                State,Country 556
+              </li> -->
+              <li>
+                p:{{agency.telephone_number?agency.telephone_number.join(' , '):null}}
+              </li>
+              <li>
+                M:{{agency.email_address?agency.email_address.join(' , '):null}}
+              </li>
+            </ul>
+          </div>
+        </div>
+  
+        <div class="col-md-4 padding">
+          <h1>
+            invoice
+          </h1>
+          <div class="invoice-box">
+            <p>
+              Invoice No # <span>0012345</span>
+            </p>
+            <p>
+              Date : <span>{{today}}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-md-12 padding table-section">
+      <div class="">
+        <div class="table-header">
+          <ul class="item-padding">
+            <li>
+              item description
+            </li>
+            <li>
+              price
+            </li>
+            <li>
+              qty
+            </li>
+            <li>
+              total
+            </li>
+          </ul>
+        </div>
+  
+        <div class="table-body">
+          <ul class="item-padding" *ngFor="let item of transactions">
+            <li>
+              <h4>
+                {{package.name}}
+              </h4>
+              <p [innerHtml]="package.remark">
+                
+              </p>
+            </li>
+            <li>
+              {{memory.getActiveCurrency()?memory.getActiveCurrency():'PHP'}} {{item.credit}}
+            </li>
+            <li>
+              1
+            </li>
+            <li>
+              {{memory.getActiveCurrency()?memory.getActiveCurrency():'PHP'}} {{item.credit}}
+            </li>
+          </ul>
+          <!-- <ul class="item-padding">
+            <li>
+              <h4>
+                Web Design
+              </h4>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+              </p>
+            </li>
+            <li>
+              $954,000
+            </li>
+            <li>
+              2
+            </li>
+            <li>
+              $150,000
+            </li>
+          </ul> -->
+        </div>
+      </div>
+  
+      <div class="col-md-12 padding item-padding sum-box">
+        <div class="col-md-8 padding">
+          <div class="info">
+            <ul class="item-padding">
+              <!-- <h4>
+                Payment method
+              </h4> -->
+              <h4 class="without-margin-bottom">
+                Bank Account
+              </h4>
+  
+              <li *ngFor="let sub of agency.bankAccounts">
+                {{sub.type}}   :   {{sub.accountNo}}
+              </li>
+              <h3>
+                Thank you for your business
+              </h3>
+              <p>
+                Terms :
+                <a>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+  
+                </a>
+              </p>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-4 padding item-padding">
+          <div class="table-header">
+            <ul>
+              <li>
+                Grand total
+              </li>
+              <li>
+                {{memory.getActiveCurrency()?memory.getActiveCurrency():'PHP'}} {{transactions[0].credit}}
+              </li>
+            </ul>
+          </div>
+  
+          <p class="text-center">Account Manager</p>
+  
+          <h4 class="name">
+            {{userCreator.username}}
+
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

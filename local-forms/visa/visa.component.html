@@ -1,0 +1,24 @@
+
+<form autocomplete="off">
+	<h3>General Information</h3>
+	<div class="row">	
+	  <div class="col-md-6">
+			<div class="form-group label-floating has-success">
+				<label class="control-label">First Name</label>
+				      <input type="text" class="form-control" name="firstname" [(ngModel)]="user.firstName" />
+				<span class="form-control-feedback">
+				<i class="material-icons">done</i>
+				</span>
+			</div>	  	
+	  </div>
+	  <div class="col-md-6">
+			<div class="form-group label-floating has-success">
+				<label class="control-label">Last Name</label>
+				      <input type="text" class="form-control"  name="lastname" [(ngModel)]="user.lastName"/>
+				<span class="form-control-feedback">
+				<i class="material-icons">done</i>
+				</span>
+			</div>	  	
+	  </div>
+	</div>
+</form>

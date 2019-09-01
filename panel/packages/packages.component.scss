@@ -1,0 +1,253 @@
+@import "../../../assets/sass/md/classes";
+
+a{
+	cursor: pointer;
+}
+.card{
+	.card-header{
+		font-size: 34px;
+	}
+	.card-footer{
+		div{
+			display: block!important;
+		}
+	}
+}
+.sticky{
+	position: fixed;
+	top: 21px;
+	width: 77%;
+	z-index: 9999999;
+	padding: 0;
+	margin: 0;
+	height: auto;
+	app-trip-viewer /deep/{
+		.card{
+			margin: 0;
+		}
+	}
+}
+.scroll {
+  display: block;
+  height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.sticky-drop{
+	position: fixed;
+	top: 21px;
+	width: 39%;
+	z-index: 99;
+	padding: 0;
+	margin: 0;
+	right: 20px;
+    height: 91vh;
+    .itenerary{
+    	// margin: 0;
+    }
+}
+.draft{
+	margin-top:5px;padding-left:20px
+}
+.package-not-valid{
+	/deep/ app-trip-builder{
+		.trip-wrp{
+			&:before{
+				content: "";
+				  background-color: #c9c9c9f2;
+				  width: 100%;
+				  height: 100%;
+				  position: absolute;
+				  left: 0;
+				  top: 0;
+				  border-radius: 2px;
+				  z-index: 9;
+			  }
+			  &:after{
+				content: "This trip is not valid anymore! Please consider editting this trip.";
+				z-index: 999;
+				position: absolute;
+				left: 6%;
+				top: 37%;
+				font-size: 14px;
+				font-weight: bold;
+			  }
+			.actions{
+				z-index: 999;
+			}
+
+		}
+	}
+}
+
+.trip-images{
+	.each-photo{
+		width: 50px;
+		height: 50px;
+		float: left;
+		border-radius: 50%;
+		margin: 0px;
+		background-repeat: no-repeat;
+		background-size: cover;
+		border: 1px solid #e7e7e7;
+		transform: scale(0.7);
+		transition: 0.2s all ease;
+		&:hover{
+			transform: scale(1);
+		}
+	}
+}
+
+.full-width{
+  width: 100%;
+}
+.toolbar1{
+	/deep/ mat-slide-toggle{
+		width: 300px;
+		height: 40px;
+		display: flex;
+		overflow: hidden;
+		border: 1px solid #ababab;;
+		border-radius: 4px;
+		justify-content: center;
+		padding-left: 34px;
+		label{
+		  display: flex;
+		  justify-content: space-evenly;
+		  span{
+			font-size: 10px;
+			letter-spacing: 1px;
+			float: right;
+			display: inline-block;
+		  }
+		}
+		&:after {
+		  content: attr(social);
+		  font-family: 'Font Awesome\ 5 Free';
+font-weight: 900;
+		  position: absolute;
+		  left: 27px;
+		  font-size: 17px;
+		  top: 8px;
+		  color: #ababab;
+		}
+		&.mat-checked{
+		  border: 1px solid green;
+		  &:before{
+			transform: scale(0.9);
+		  }
+		  span{
+			color: green;
+		  }
+		  &:after{
+			color: green;
+		  }
+		}
+		&:before{
+		  content: "\f00c";
+		  font-family: 'Font Awesome\ 5 Free';
+font-weight: 900;
+		  position: absolute;
+		  left: 0px;
+		  top: -10px;
+		  border-radius: 50%;
+		  border: 1px solid green;
+		  width: 30px;
+		  height: 30px;
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  transform: scale(0);
+		  transition: all 0.2s ease;
+		  background-color: green;
+		  color: #fff;
+		}
+		.mat-slide-toggle-bar{
+		  display: none;
+		}
+	  }
+		
+	.search{
+		.search-wrp{
+			border: 1px solid green;
+			margin: 20px 0;
+			border-radius: 3px;
+			// height: 130px;
+			padding: 13px;
+			.dates{
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 24px 18px;
+			}
+		}
+	}
+}
+
+/deep/.mat-tab-body-content{
+  overflow-x: hidden!important;
+}
+
+.content{
+  // width: 400px;
+  z-index: 1;
+  height: 203px;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.slider-back{
+  background: #b7b9b88f;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 22222;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  .white-back{
+    background: white;
+    width: 80%;
+    min-height: 40vh;
+    border-radius: 5px;
+    z-index: 999999999999999999;
+    .img{
+      height: 500px;width: 100%;
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+  }
+}
+
+.dropdown-toggle{
+  cursor: pointer;
+}
+
+.close-icon{
+  font-size: 20px;
+  padding: 10px;
+}
+
+/deep/.slick-prev {
+  left: 20px;
+  z-index: 999;
+}
+
+/deep/.slick-next {
+  right: 20px;
+}
+.card.card-stats{
+	display: block;
+    margin: 26px auto;
+    float: none;
+    width: 94%;
+}
+
+.nav-space{
+	padding-bottom: 0px;margin-bottom: 0px;
+}

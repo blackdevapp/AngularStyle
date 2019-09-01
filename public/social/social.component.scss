@@ -1,0 +1,53 @@
+.container-fluid{
+    padding-top: 20px;
+  .main-text{
+    color: #D00000;
+    text-align: left;
+    font-size: 33px;
+    margin-top: 50px;
+  }
+  
+  .link-text{
+    text-align: left!important;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  span{
+    position: relative;
+    top: 10px;
+  }
+
+ 
+  }
+  .padding-space{
+    padding-right: 60px;
+  }
+  .black-side{
+    height: 100vh;
+    width: 100%;
+    //background: black;
+    background: linear-gradient(to right, black 85%, #343434 15%);
+  
+  }
+  
+  .padding{
+    padding-right: 0;
+    padding-left: 0;
+  }
+  
+  .one{
+    font-size: 60px;
+    color: #F0BEBF;
+  }
+  
+  .two{
+    font-size: 60px;
+    color: #E48888;
+  }
+  
+  .three{
+    font-size: 60px;
+    color: #CD3432;
+  }
+  

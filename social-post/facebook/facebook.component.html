@@ -1,0 +1,122 @@
+<!--<p>-->
+  <!--facebook works!-->
+<!--</p>-->
+
+<div class="container-fluid social-media">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-body face-book">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-11 ">
+              <div class="row">
+                <div class="img-info">
+
+                  <img *ngIf="fbInfo.logo" [src]="fbInfo.link" class="img profile_img">
+                  <div class="img-text-info">
+                    <h4 *ngIf="fbInfo.pageName">{{fbInfo.pageName}}</h4>
+                    <a href="{{fbInfo.link}}" >Associated agency</a>
+                    <i class="fa fa-globe"></i>
+                    <small>{{fbInfo.publishedDate| date:'medium'}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1 text-right">
+              <div class="row">
+                <i class="fa fa-ellipsis-h"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <img src="https://fakeimg.pl/200x100/?retina=1&text=こんにちは&font=noto" class="big-img">
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group form-black label-floating is-empty">
+              <div class="control-label">Description</div>
+              <br>
+              <p  >{{fbInfo.message}}</p>
+              <br>
+            </div>
+            <div >
+              <small class="tag" *ngFor="let tag of fbInfo.tags  |slice:0:10"> <a>{{tag}}</a> </small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!--<div class="col-md-12 details">-->
+        <!--<div class="row">-->
+        <!--<div class="form-group form-black label-floating is-empty">-->
+        <!--<label class="control-label">Title</label>-->
+        <!--<input  class="form-control" [(ngModel)]="social.facebook.title"  type="text" name="fbTitle">-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="col-md-12 footer">
+          <div class="row footer-row">
+            <div class="col1">
+              <img src="../../../assets/images/like.png" class="emoji">
+              <img src="../../../assets/images/heart.png" class="emoji">
+              <img src="../../../assets/images/wow.png" class="emoji">
+            </div>
+            <div class="col2">
+				              <span>
+				                {{fbInfo.comments.summary.total_count}}
+				                Comments
+				              </span>
+              &nbsp;
+              &nbsp;
+              <span>
+				                {{fbInfo.likes.summary.total_count}}
+				                Likes
+				              </span>
+              &nbsp;
+              &nbsp;
+              <span>
+				                7.1M
+				                Views
+				              </span>
+            </div>
+          </div>
+
+
+          <div class="row footer-icon">
+
+            <button (click)="reShare()" class="btn btn-danger">Reshare</button>
+            <!--<div>-->
+              <!--<i class="fa fa-thumbs-o-up"></i>-->
+              <!--<span> like</span>-->
+            <!--</div>-->
+
+            <!--<div>-->
+              <!--<i class="fa fa-comment-o"></i>-->
+              <!--<span> comment</span>-->
+            <!--</div>-->
+
+
+            <!--<div>-->
+              <!--<i class="fa fa-share"></i>-->
+              <!--<span> share</span>-->
+            <!--</div>-->
+
+            <!--<div>-->
+              <!--<img src="../../assets/images/photo2.jpg" class="profile-img">-->
+            <!--</div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

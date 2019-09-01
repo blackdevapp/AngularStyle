@@ -1,0 +1,525 @@
+<app-theme-one-header [agency]="agency" [headerItem]="headerItem"></app-theme-one-header>
+<div class="section-one" *ngIf="packagesFeature">
+  <ngx-slick-carousel class="carousel big-carousel"
+                      #slickModal="slick-carousel"
+                      [config]="mainSlideConfig"
+                      (init)="slickInit($event)"
+                      (breakpoint)="breakpoint($event)"
+                      (afterChange)="afterChange($event)"
+                      (beforeChange)="beforeChange($event)">
+    <div ngxSlickItem *ngFor="let slide of packagesFeature" class="slide">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="image-over-text">
+            <div class="intro">
+              <h1>
+              <span>
+                 {{slide.packageData?.name}}
+              </span>
+              </h1>
+              <h6 [innerHTML]="slide.packageData?.remarks">
+
+              </h6>
+            </div>
+
+            <div class="card-box">
+              <div class="box1">
+                <p>
+                  book now your hotel
+                </p>
+              </div>
+
+              <div class="box2">
+                <div class="dropdown">
+                  <button class="btn btn-select dropdown-toggle" type="button" data-toggle="dropdown">
+                    select hotel
+                    <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li><a>Glades Hotel</a></li>
+                    <li><a>Mint Hotel</a></li>
+                    <li><a>Luma Hotel</a></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="box3">
+                <!--14 | <span>Aug</span>-->
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker" [value]="date">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <p>to</p>
+
+              <div class="box3">
+                16 | <span>Aug</span>
+              </div>
+
+              <div class="box4">
+                <p>Do you have a </p>
+                <p>promotion code?</p>
+              </div>
+
+              <div>
+                <button class="box5">
+                  <p>Check availability</p>
+                  <p>best price guaranteed</p>
+                </button>
+
+              </div>
+            </div>
+
+
+            <div class="sub-text text-center">
+              <h4>best price online guaranteed</h4>
+              <h6>booking us only has advantages</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--<img-->
+      <!--[src]="slide.packageData?.images.length>0?slide.packageData?.images[0]:'https://pixabay.com/get/ea3cb60c2ff3073ed1584d05fb1d4797e673ead619b40c4090f5c071afecb1b9d0_640.jpg'"-->
+      <!--alt="" width="100%">-->
+
+      <div class="img-slider-first" [ngStyle]="{'background-image': 'url(' + slide.packageData.images[0] + ')'}">
+
+      </div>
+      <!--<img src="https://picsum.photos/900/500" alt="" width="100%">-->
+    </div>
+  </ngx-slick-carousel>
+</div>
+
+<div class="triangle">
+  <div class="row">
+  </div>
+</div>
+
+<div class="section-two" *ngIf="packages">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="section-two">
+      <ngx-slick-carousel class="carousel big-carousel"
+                          #slickModal2="slick-carousel"
+                          [config]="mainSlideConfig2"
+                          (init)="slickInit($event)"
+                          (breakpoint)="breakpoint($event)"
+                          (afterChange)="afterChange($event)"
+                          (beforeChange)="beforeChange($event)">
+        <div ngxSlickItem *ngFor="let slide2 of packages" class="slide">
+          <div class="image-over-text">
+            <div class="intro">
+              <p>{{slide2.packageData?.name}}</p>
+            </div>
+          </div>
+          <div [ngStyle]="{'background-image': 'url(' + slide2.packageData.images[0] + ')'}" class="img-slider">
+          </div>
+        </div>
+      </ngx-slick-carousel>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12 section-three text-center" *ngIf="packages">
+  <div *ngFor="let slide3 of lightPackages">
+    <div class="row">
+      <div class="trip-details">
+        <h4>
+          {{slide3.packageData?.name}}
+        </h4>
+        <p [innerHTML]="slide3.packageData?.remarks">
+
+        </p>
+
+        <p>
+          <span class="sub1">from</span>
+          <span class="sub2">php{{slide3.packageData.totalPrice}}</span>
+        </p>
+
+        <button class="btn btn-more" (click)="details(slide3.packageData._id,stepper)">
+          Book now
+        </button>
+
+        <button class="btn btn-more" [routerLink]="['/public/1/'+ agencyId +'/trip-details/'+slide3.packageData._id]">
+          Details
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6 col-xs-6 sectionTwo background-img text-center"
+               [ngStyle]="{'background-image': 'url('+slide3.packageData.images[0]+')'}">
+          </div>
+          <div class="col-md-6 col-xs-6 sectionTwo background-img text-center"
+               [ngStyle]="{'background-image': 'url('+slide3.packageData.images[1]+')'}">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4 col-sm-4 sectionThree background-img text-center"
+               (click)="details(slide3.packageData._id,stepper)"
+               [ngStyle]="{'background-image': 'url('+slide3.packageData.images[2]+')'}">
+          </div>
+          <div class="col-md-4 col-sm-4 sectionThree background-img text-center"
+               (click)="details(slide3.packageData._id,stepper)"
+               [ngStyle]="{'background-image': 'url('+slide3.packageData.images[3]+')'}">
+          </div>
+          <div class="col-md-4 col-sm-4 sectionThree background-img text-center"
+               (click)="details(slide3.packageData._id,stepper)"
+               [ngStyle]="{'background-image': 'url('+slide3.packageData.images[4]+')'}">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="col-md-12 section-four text-center">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <h6>discover our</h6>
+      <h4>
+        tui blue hotels destinations
+      </h4>
+
+      <div class="col-md-12">
+        <div class="col-md-4 col-sm-4 card-box" [routerLink]="['/public/theme/city-details/'+ item.packageData._id]"
+             *ngFor="let item of bestSellerPackage">
+          <div [ngStyle]="{'background-image':'url('+ item.packageData.images[0]+')'}" class="box-img"></div>
+          <p>{{item.componentsData[0].details.to.city}}</p>
+          <div class="more-item">
+            <h3>{{item.componentsData[0].details.to.city}}</h3>
+            <h5 [innerHTML]="item.packageData?.remarks"></h5>
+            <div class="circle">
+              <i class="fa fa-angle-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <app-theme-one-footer [agency]="agency"></app-theme-one-footer>
+</div>
+
+<div class="modal fade" id="booking" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-8 left-box">
+            <mat-horizontal-stepper [linear]="true" #stepper>
+              <mat-step [stepControl]="firstFormGroup">
+                <form [formGroup]="firstFormGroup">
+                  <ng-template matStepLabel>Booking</ng-template>
+                  <div>
+                    <div class="col-md-12">
+                      <div class="row">
+                        <h3 class="title">
+                          Book your Stay
+                        </h3>
+                      </div>
+                      <div class="row row-space">
+                        <div class="col-md-4">
+                          <div class="row full-width" *ngIf="item?.componentsData.length>0">
+                            <mat-form-field class="custom-input">
+                              <input matInput placeholder="Departure Date" disabled
+                                     [value]="formatDate(item.componentsData[0].details.from.departure.date)"
+                                     name="picker1" class="date">
+                              <mat-datepicker-toggle class="date-font-size" matPrefix #picker2
+                                                     [for]="picker2"></mat-datepicker-toggle>
+                              <mat-datepicker #picker2></mat-datepicker>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="row full-width" *ngIf="item?.componentsData.length>0">
+                            <mat-form-field class="custom-input">
+                              <input matInput placeholder="Arrival Date" disabled
+                                     [value]="formatDate(item.componentsData[item.componentsData.length-1].details?.from.arrival.date)"
+
+                                     name="picker1" class="date">
+                              <mat-datepicker-toggle matPrefix class="date-font-size" #picker1
+                                                     [for]="picker1"></mat-datepicker-toggle>
+                              <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="row row-space">
+                        <div class="col-md-4">
+                          <div class="row full-width">
+                            <mat-form-field class="custom-input">
+                              <input matInput placeholder="No. of Adult" [(ngModel)]="trip.adultCount"
+                                     name="adult" class="date" formControlName="adult" maxlength="9">
+                              <mat-icon class="icons icon-position" matPrefix>people</mat-icon>
+                            </mat-form-field>
+                            <p class="alert"
+                               *ngIf="!firstFormGroup.controls['adult'].valid && (firstFormGroup.controls['adult'].touched)">
+                              required (min length 1character - max length 9 character)
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="row full-width">
+                            <mat-form-field class="custom-input">
+                              <input matInput placeholder="No. of Child" [(ngModel)]="trip.childCount"
+                                     name="child" class="date" formControlName="child" maxlength="9">
+                              <mat-icon class="icons icon-position" matPrefix>face</mat-icon>
+                            </mat-form-field>
+
+                            <p class="alert"
+                               *ngIf="!firstFormGroup.controls['child'].valid && (firstFormGroup.controls['child'].touched)">
+                              required (min length 1character - max length 9 character)
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="row full-width">
+                            <mat-form-field class="custom-input">
+                              <input matInput placeholder="No. of Infant" [(ngModel)]="trip.infantCount"
+                                     name="infant" class="date" formControlName="infant" maxlength="9">
+                              <mat-icon class="icons icon-position" matPrefix>child_friendly</mat-icon>
+                            </mat-form-field>
+
+                            <p class="alert"
+                               *ngIf="!firstFormGroup.controls['infant'].valid && (firstFormGroup.controls['infant'].touched)">
+                              required (min length 1character - max length 9 character)
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--<div class="row row-space">-->
+                    <!--<div class="col-md-5 ">-->
+                    <!--<div class="row drop">-->
+                    <!--<div class="dropdown">-->
+                    <!--<button class="btn light dropdown-toggle" type="button" data-toggle="dropdown">-->
+                    <!--Add Extras-->
+                    <!--<span class="caret"></span></button>-->
+                    <!--<ul class="dropdown-menu">-->
+                    <!--<li><a href="#">hotel</a></li>-->
+                    <!--<li><a href="#">food</a></li>-->
+                    <!--</ul>-->
+                    <!--</div>-->
+
+                    <!--<i class="fa fa-plus-circle circle-ico"></i>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="row ">-->
+                    <!--<div class="col-md-11 row-space">-->
+                    <!--<p>-->
+                    <!--Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et-->
+                    <!--dolore magna aliqua.-->
+                    <!--</p>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="col-md-12">
+                      <br>
+                      <br>
+                      <div class="row">
+                        <button class="btn btn-right margin-right"
+                                [disabled]="!firstFormGroup.valid || (trip.adultCount + trip.childCount + trip.infantCount ) < 1"
+                                mat-button matStepperNext>
+                          Next Step
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <!--<button mat-button matStepperNext>Next</button>-->
+                    </div>
+                  </div>
+                </form>
+              </mat-step>
+              <mat-step [stepControl]="secondFormGroup" [optional]="isOptional">
+                <form [formGroup]="secondFormGroup">
+                  <ng-template matStepLabel>Login</ng-template>
+                  <div>
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-md-8 col-md-offset-2" *ngIf="loginMode=='A'">
+                          <div class="card">
+                            <div class="card-content">
+                              <div class="col-md-12">
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <div class="row top-section">
+                                      <img src="../../../assets/img/logo.png" class="agency-logo">
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-12">
+                                        <div class="form-group form-black label-floating is-empty">
+                                          <label class="control-label">Email</label>
+                                          <input [(ngModel)]="email" class="form-control" [ngModelOptions]="{standalone: true}" type="email" name="email">
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-12">
+                                        <div class="form-group form-black label-floating is-empty">
+                                          <label class="control-label">Password</label>
+                                          <input class="form-control" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" type="password" name="password">
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary full" (click)="login()">Login</button>
+                                      </div>
+                                      <div class="col-md-12 text-center">
+                                        <a class="full password-link" (click)="mode='B'">
+                                          Forget Password</a>
+                                      </div>
+                                      <div class="col-md-12 text-center">
+                                        <a class="full create-account-link">
+                                          Do you have an account? <a (click)="signup()" class="click">Create?</a>
+                                        </a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-8 col-md-offset-2" *ngIf="loginMode=='B'">
+                          <div class="card">
+                            <div class="card-content">
+                              <div class="col-md-12">
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <div class="row top-section">
+                                      <img src="../../../assets/img/logo.png" class="agency-logo">
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-12">
+                                        <h4>You are logged in</h4>
+                                      </div>
+                                      <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary full" (click)="logout()">Log Out</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="row">
+                        <button mat-button matStepperPrevious class="btn btn-left" >Previous Step</button>
+
+                        <button mat-button matStepperNext class="btn btn-right" [disabled]="!memory.getUserIdStorage()">Next Step</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </mat-step>
+              <mat-step>
+                <ng-template matStepLabel>Confirmation</ng-template>
+                <div>
+                  <div class="col-md-6 col-md-offset-3">
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+                        <p>Departure Date:{{formatDate(item?.componentsData[0]?.details?.from.departure.date)}}</p>
+                        <p>Arrival Date:{{formatDate(item?.componentsData[0]?.details?.from.arrival.date)}}</p>
+
+                        <p>No. Of Adult: {{trip.adultCount}}</p>
+                        <p>No. Of Child :{{trip.childCount}}</p>
+                        <p>No. Of Infant :{{trip.infantCount}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="row">
+                      <button class="btn btn-left" mat-button (click)="backToPre()">
+                        Previous Step
+                      </button>
+
+
+                      <button class="btn btn-right" (click)="sendInquery()">
+                        Book Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </mat-step>
+            </mat-horizontal-stepper>
+          </div>
+          <div class="col-md-4 right-box" *ngIf="item">
+            <div class="text-right">
+              <i class="fa fa-times close-icon" data-dismiss="modal"></i>
+            </div>
+            <div class="col-img" [ngStyle]="{'background-image':'url('+ item.packageData.images[0] +')'}">
+
+            </div>
+
+            <div class="hotel-details">
+              <i class="fa fa-info-circle"></i>
+              <span>
+                Trip Details
+              </span>
+            </div>
+
+            <div class="top-box">
+              <h3>
+                {{item.packageData.name}}
+              </h3>
+            </div>
+
+            <br>
+            <div class="col-md-12">
+              <div class="row hotel-info">
+                <p class="type">Trip:</p>
+                <div class="more-info">
+                  <i class="fa fa-info-circle"></i>&nbsp;
+
+                  <h4 [innerHTML]="item.packageData.remarks">
+                  </h4>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 bottom-row">
+              <!--<div class="col-md-12">-->
+              <div class="price-box">
+                <span class="total">
+                  <h5 class="title">Total</h5>
+                  <p class="sub-title">price</p>
+                </span>
+                <span class="last-item">
+                  PHP
+                </span>
+                <h3>
+                  {{(checkSoloPrice() * trip.adultCount) + (checkSoloChildPrice() * trip.childCount) + (checkSoloChildPrice() * trip.infantCount)}}
+                  <!--{{item.packageData.totalPrice}}-->
+                </h3>
+                <!--</div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

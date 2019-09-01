@@ -1,0 +1,337 @@
+<h2>
+  Car / Van
+</h2>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8">
+      <form>
+        <div class="row">
+          <div class="col-md-4">
+            <h3>General Info</h3>
+          </div>
+          <div class="col-md-7">
+            <div class="form-group form-black label-floating" [ngClass]="trip.company === '' ? 'is-empty' : ''">
+              <label class="control-label">Rental Company</label>
+              <input type="text" class="form-control" [(ngModel)]="trip.company"
+                     (ngModelChange)="tripValidation.fields.company.originalValue=trip.company" name="airline"
+                     autofocus>
+              <p class="alert" *ngIf="!tripValidation.fields.company.isValid">Required (min length of 2 characters - max
+                length of 46 characters -must select from the list)</p>
+
+            </div>
+          </div>
+          <!--<div class="col-md-1" (click)="trip.details.roundTrip = !trip.details.roundTrip">-->
+            <!--<i class="material-icons" [ngClass]="trip.details.roundTrip ? 'checked' : 'hidden'">check_circle</i>-->
+            <!--<div class="form-group icon-selector">-->
+              <!--<i class="material-icons">repeat</i>-->
+              <!--<div class="row">-->
+                <!--<div class="col-md-12">-->
+                  <!--Round Trip-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+
+          <!--</div>-->
+        </div>
+        <div class="row" *ngIf="trip.company !== ''">
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-4">
+            <div class="form-group form-black label-floating"
+                 [ngClass]="trip.details.from.city === '' ? 'is-empty' : ''">
+              <label class="control-label">From</label>
+              <input type="text" name="from" class="form-control" [(ngModel)]="trip.details.from.city"
+                     (input)="getCitiesFrom($event.target.value,false)"
+                     [matAutocomplete]="auto1"
+                     (ngModelChange)="tripValidation.fields.from.originalValue=trip.details.from.city">
+              <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="trip.details.from.city = $event.option.value;
+                                                                            tripValidation.fields.from.originalValue=trip.details.from.city;
+                                                                            ">
+                <mat-option *ngFor="let item of fromResult" [value]="item.CityName" >
+                  {{item.CityName}}
+                </mat-option>
+              </mat-autocomplete>
+              <p class="alert" *ngIf="!tripValidation.fields.from.isValid">Required (min length of 2 characters - max
+                length of 86 characters)</p>
+
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group form-black label-floating" [ngClass]="trip.details.to.city === '' ? 'is-empty' : ''">
+              <label class="control-label">To</label>
+              <input type="text" name="to" class="form-control" [(ngModel)]="trip.details.to.city"
+                     (input)="getCitiesFrom($event.target.value,true)"
+                     [matAutocomplete]="auto2"
+                     (ngModelChange)="tripValidation.fields.to.originalValue=trip.details.to.city">
+              <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="trip.details.to.city = $event.option.value;
+                                                                            tripValidation.fields.city.originalValue=trip.details.to.city;
+                                                                            ">
+                <mat-option *ngFor="let item of toResult" [value]="item.CityName" >
+                  {{item.CityName}}
+                </mat-option>
+              </mat-autocomplete>
+              <p class="alert" *ngIf="!tripValidation.fields.to.isValid">required(min length 2character - max length 86
+                character) </p>
+            </div>
+          </div>
+        </div>
+        <!--<div class="row" *ngIf="trip.details.from.city !== '' && trip.details.to.city !== ''">-->
+          <!--<div class="col-md-2">-->
+            <!--<div class="form-group form-black label-floating is-empty">-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="col-md-1">-->
+            <!--&lt;!&ndash;<i class="material-icons" [ngClass]="trip.details.from.class === 'BUSINESS' ? 'checked' : 'hidden'">check_circle</i>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="form-group icon-selector" (click)="trip.details.from.class = 'BUSINESS'">&ndash;&gt;-->
+            <!--&lt;!&ndash;<i class="material-icons">airline_seat_legroom_extra</i>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="col-md-12">&ndash;&gt;-->
+            <!--&lt;!&ndash;Premium&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--</div>-->
+          <!--<div class="col-md-1">-->
+            <!--&lt;!&ndash;<i class="material-icons" [ngClass]="trip.details.from.class === 'ECONOMY' ? 'checked' : 'hidden'">check_circle</i>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="form-group icon-selector" (click)="trip.details.from.class = 'ECONOMY'">&ndash;&gt;-->
+            <!--&lt;!&ndash;<i class="material-icons">airline_seat_legroom_reduced</i>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="col-md-12">&ndash;&gt;-->
+            <!--&lt;!&ndash;Ordinary&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+          <!--</div>-->
+          <!--<div class="col-md-4">-->
+            <!--<div class="form-group form-black label-floating is-empty">-->
+              <!--<mat-form-field>-->
+                <!--<input matInput [matDatepicker]="picker1" [min]="today" placeholder="Pick up Date and Time"-->
+                       <!--[(ngModel)]="trip.details.from.departure.date" (ngModelChange)="changeMaxDate()" name="picker1" class="date"-->
+                       <!--style="width: 74px;float: left;">-->
+                <!--<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>-->
+                <!--<mat-datepicker #picker1 [startAt]="startDate"></mat-datepicker>-->
+                <!--<input matInput name="time-picker" atp-time-picker value="00:00"-->
+                       <!--[(ngModel)]="trip.details.from.departure.time" class="time" placeholder="Time"-->
+                       <!--style="width: 40px;padding-bottom: 1px;">-->
+
+              <!--</mat-form-field>-->
+
+            <!--</div>-->
+            <!--<p class="alert" *ngIf="!tripValidation.fields.departureFrom.isValid">Date must be in today and next year-->
+              <!--range</p>-->
+
+          <!--</div>-->
+          <!--<div class="col-md-4">-->
+            <!--<div class="form-group form-black label-floating is-empty">-->
+              <!--<mat-form-field>-->
+                <!--<input matInput [matDatepicker]="picker2" [min]="today" placeholder="Arrival Date and Time"-->
+                       <!--[(ngModel)]="trip.details.from.arrival.date" class="date" name="picker2"-->
+                       <!--style="width: 74px;float: left;">-->
+                <!--<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>-->
+                <!--<mat-datepicker #picker2 [startAt]="endDate"></mat-datepicker>-->
+                <!--<input matInput name="time-picker" atp-time-picker value="00:00"-->
+                       <!--[(ngModel)]="trip.details.from.arrival.time" class="time" placeholder="Time"-->
+                       <!--style="width: 40px;padding-bottom: 1px;">-->
+              <!--</mat-form-field>-->
+            <!--</div>-->
+            <!--<p class="alert" *ngIf="!tripValidation.fields.arrivalFrom.isValid">-->
+              <!--Date must be within 30 mins before departure and 3 days after departure range </p>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row" *ngIf="trip.details.from.city !== '' && trip.details.to.city !== '' && trip.details.roundTrip">-->
+          <!--<div class="col-md-2">-->
+            <!--<div class="form-group form-black label-floating is-empty">-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="col-md-1">-->
+            <!--&lt;!&ndash;<i class="material-icons" [ngClass]="trip.details.to.class === 'BUSINESS' ? 'checked' : 'hidden'">check_circle</i>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="form-group icon-selector" (click)="trip.details.to.class = 'BUSINESS'">&ndash;&gt;-->
+            <!--&lt;!&ndash;<i class="material-icons">airline_seat_legroom_extra</i>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="col-md-12">&ndash;&gt;-->
+            <!--&lt;!&ndash;Premium&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--</div>-->
+          <!--<div class="col-md-1">-->
+            <!--&lt;!&ndash;<i class="material-icons" [ngClass]="trip.details.to.class === 'ECONOMY' ? 'checked' : 'hidden'">check_circle</i>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="form-group icon-selector" (click)="trip.details.to.class = 'ECONOMY'">&ndash;&gt;-->
+            <!--&lt;!&ndash;<i class="material-icons">airline_seat_legroom_reduced</i>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="col-md-12">&ndash;&gt;-->
+            <!--&lt;!&ndash;Ordinary&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+          <!--</div>-->
+          <!--<div class="col-md-4">-->
+            <!--<div class="form-group form-black label-floating is-empty">-->
+              <!--<mat-form-field>-->
+                <!--<input matInput [matDatepicker]="picker3" [min]="today" placeholder="Pick up Date and Time"-->
+                       <!--[(ngModel)]="trip.details.to.departure.date" name="departure" style="width: 74px;float: left;">-->
+                <!--<mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>-->
+                <!--<mat-datepicker #picker3 [startAt]="startDate"></mat-datepicker>-->
+                <!--<input matInput name="time-picker" atp-time-picker value="00:00"-->
+                       <!--[(ngModel)]="trip.details.to.departure.time" class="time" placeholder="Time"-->
+                       <!--style="width: 40px;padding-bottom: 1px;">-->
+              <!--</mat-form-field>-->
+            <!--</div>-->
+            <!--<p class="alert" *ngIf="!tripValidation.fields.departureTo.isValid">date most be in today and next year-->
+              <!--range</p>-->
+          <!--</div>-->
+          <!--<div class="col-md-4">-->
+            <!--<div class="form-group form-black label-floating is-empty">-->
+              <!--<mat-form-field>-->
+                <!--<input matInput [matDatepicker]="picker4" [min]="today" placeholder="Arrival Date and Time"-->
+                       <!--[(ngModel)]="trip.details.to.arrival.date" name="arrival" style="width: 74px;float: left;">-->
+                <!--<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>-->
+                <!--<mat-datepicker #picker4 [startAt]="endDate"></mat-datepicker>-->
+                <!--<input matInput name="time-picker" atp-time-picker value="00:00"-->
+                       <!--[(ngModel)]="trip.details.to.arrival.time" class="time" placeholder="Time"-->
+                       <!--style="width: 40px;padding-bottom: 1px;">-->
+              <!--</mat-form-field>-->
+            <!--</div>-->
+            <!--<p class="alert" *ngIf="!tripValidation.fields.arrivalTo.isValid">-->
+              <!--Date must be within 30 mins before departure and 3 days after departure range </p>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <hr>
+        <h3>Car Info</h3>
+
+        <div class="row">
+          <div class="col-md-2">
+
+          </div>
+          <div class="col-md-3">
+            <div class="form-group form-black label-floating"
+                 [ngClass]="trip.details.carModel === '' ? 'is-empty' : ''">
+              <label class="control-label">Car Model</label>
+              <input type="text" class="form-control" name="solo-price" [(ngModel)]="trip.details.carModel"
+                     (ngModelChange)="tripValidation.fields.carModel.originalValue=trip.details.carModel">
+              <p class="alert" *ngIf="!tripValidation.fields.carModel.isValid">Required (min length of 2 characters -
+                max length of 46 characters -must select from the list)</p>
+
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group form-black label-floating"
+                 [ngClass]="trip.details.carNumber === '' ? 'is-empty' : ''">
+              <label class="control-label">Car Number</label>
+              <input type="text" class="form-control" name="bulk-price" [(ngModel)]="trip.details.carNumber"
+                     (ngModelChange)="tripValidation.fields.carNumber.originalValue=trip.details.carNumber">
+              <p class="alert" *ngIf="!tripValidation.fields.carNumber.isValid">Required (min length of 2 characters -
+                max length of 46 characters -must select from the list)</p>
+
+            </div>
+          </div>
+          <!--<div class="col-md-3">-->
+            <!--<div class="form-group form-black label-floating is-empty">-->
+              <!--<mat-form-field>-->
+                <!--<input matInput [matDatepicker]="picker5" [min]="today" [max]="maxDate" placeholder="Deadline Date/Time"-->
+                       <!--[(ngModel)]="trip.deadline.date" name="arrival" style="width: 74px;float: left;">-->
+                <!--<mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>-->
+                <!--<mat-datepicker #picker5 [startAt]="endDate"></mat-datepicker>-->
+                <!--<input matInput name="time-picker" atp-time-picker value="00:00"-->
+                       <!--[(ngModel)]="trip.details.to.arrival.time" class="time" placeholder="Time"-->
+                       <!--style="width: 40px;padding-bottom: 1px;">-->
+              <!--</mat-form-field>-->
+            <!--</div>-->
+            <!--<p class="alert" *ngIf="!tripValidation.fields.deadline.isValid">date most be in today and next year-->
+              <!--range</p>-->
+          <!--</div>-->
+
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+
+          </div>
+          <div class="col-md-3">
+            <div class="form-group form-black label-floating" [ngClass]="trip.quantity === '' ? 'is-empty' : ''">
+              <label class="control-label">Quantity</label>
+              <input type="text" class="form-control" name="solo-price" [(ngModel)]="trip.quantity"
+                     (ngModelChange)="tripValidation.fields.quantity.originalValue=trip.quantity">
+              <p class="alert" *ngIf="!tripValidation.fields.quantity.isValid">required </p>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-1" (click)="trip.asSolo = !trip.asSolo">
+              <i class="material-icons checked" *ngIf="trip.asSolo">check_circle</i>
+              <div class="form-group icon-selector">
+                <i class="material-icons">person</i>
+                <div class="row">
+                  <div class="col-md-12">
+                    Solo
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1" (click)="trip.asPackage = !trip.asPackage">
+              <i class="material-icons checked" *ngIf="trip.asPackage">check_circle</i>
+              <div class="form-group icon-selector">
+                <i class="material-icons">people</i>
+                <div class="row">
+                  <div class="col-md-12">
+                    Package
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <h3>Pricing Info</h3>
+
+        <div class="row">
+          <div class="col-md-2">
+            {{memory.getActiveCurrency()?memory.getActiveCurrency():'PHP'}}
+          </div>
+          <div class="col-md-3">
+            <div class="form-group form-black label-floating" [ngClass]="trip.soloPrice === '' ? 'is-empty' : ''">
+              <label class="control-label">Solo Price</label>
+              <input type="text" class="form-control" name="solo-price" [(ngModel)]="trip.soloPrice"
+                     currencyMask [options]="{ prefix: '', thousands: ',',precision: 2}"
+                     (ngModelChange)="tripValidation.fields.soloPrice.originalValue=trip.soloPrice">
+              <p class="alert" *ngIf="!tripValidation.fields.soloPrice.isValid">required(Number and greater than bulk
+                price) </p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group form-black label-floating" [ngClass]="trip.bulkPrice === '' ? 'is-empty' : ''">
+              <label class="control-label">Bulk Price</label>
+              <input type="text" class="form-control" name="bulk-price" [(ngModel)]="trip.bulkPrice" currencyMask
+                     [options]="{ prefix: '', thousands: ',',precision: 2}"
+                     (ngModelChange)="tripValidation.fields.bulkPrice.originalValue=trip.bulkPrice">
+              <p class="alert" *ngIf="!tripValidation.fields.bulkPrice.isValid">required(Number and less than solo
+                price) </p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group form-black label-floating" [ngClass]="trip.tax === '' ? 'is-empty' : ''">
+              <label class="control-label">Tax</label>
+              <input type="number" [max]="99" class="form-control" name="bulk-price" [(ngModel)]="trip.tax"
+                     (ngModelChange)="tripValidation.fields.tax.originalValue=trip.tax">
+              <p class="alert" *ngIf="!tripValidation.fields.tax.isValid">required </p></div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-danger pull-right btn-full-width" [disabled]="memory.getLoading()" (click)="submitComponent()">Submit Component
+          <i *ngIf="memory.getLoading()" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="color:rgba(0,0,0,0.84);;z-index: 999999999;"></i>
+        </button>
+        <div class="clearfix"></div>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <!--<app-detail-card *ngIf="trip" [trip]="trip"></app-detail-card>-->
+    </div>
+  </div>
+</div>

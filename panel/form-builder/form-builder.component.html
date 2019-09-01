@@ -1,0 +1,491 @@
+<div *ngIf="preloading">
+    <content-loader>
+        <svg:rect x="17" y="38" rx="2" ry="2" width="80" height="8" />
+        <svg:rect x="17" y="65" rx="2" ry="2" width="370" height="14" />
+    </content-loader>
+</div>
+
+
+<div class="main-content" *ngIf="!preloading">
+    <div class="container-fluid">
+        <app-circular-drop (clicked)="dropClicked($event)" [data]="dropData"></app-circular-drop>
+        <div class="row">
+            <div class="container-fluid" *ngIf="mode=='list'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Forms Information</p>
+                    </div>
+                </div>
+                <app-tile-table [data]="forms" [config]="config"
+                                (toDelete)="deleteForm($event)" (toEdit)="editForm($event)">
+
+                </app-tile-table>
+            </div>
+
+            <div class="container-fluid" *ngIf="mode=='A'">
+                <div class="icon-stepper">
+                    <br>
+                    <mat-horizontal-stepper #stepper labelPosition="bottom">
+                        <mat-step [stepControl]="firstFormGroup">
+                            <form [formGroup]="firstFormGroup">
+                                <ng-template matStepLabel>
+                                    <p class="icons" social=""> New Requirements</p>
+                                </ng-template>
+                                <div class="col-md-12 margin-bottom-space cityRow">
+                                    <div class="col1 c-field">
+                                        <div class="form-group  label-floating custom-form1">
+                                            <!-- <label class="control-label">From City</label> -->
+                                            <input type="text" class="form-control mobile-align capitalize"
+                                                   name="airline"
+                                                   autofocus
+                                                   id="from-city"
+                                                   placeholder="Philippines"
+                                                   [value]="visaProcess.passportName"
+                                                   formControlName="from" required
+                                                   (input)="getCountries($event.target.value)"
+                                                   [matAutocomplete]="auto1"
+                                            >
+                                            <mat-autocomplete #auto1="matAutocomplete"
+                                                              (optionSelected)="passport($event)">
+                                                <mat-option *ngFor="let item of searchResult"
+                                                            [value]="item['official_name_en']">
+                                                    {{item.official_name_en}}
+                                                </mat-option>
+                                                <mat-option *ngIf="loader">
+                                                    <div class="text-center actionBtn">
+                                                        <i class="fa fa-spinner fa-pulse fa-fw"></i>
+                                                    </div>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                    </div>
+                                    <div class="col2">
+                                        <i class="material-icons">arrow_right_alt</i>
+                                    </div>
+                                    <div class="col3 c-field">
+                                        <div class="form-group  label-floating custom-form1">
+                                            <!-- <label class="control-label">From City</label> -->
+                                            <input type="text" class="form-control mobile-align text-left"
+                                                   name="airline"
+                                                   autofocus
+                                                   placeholder="India"
+                                                   (input)="getCountries($event.target.value)"
+                                                   [matAutocomplete]="auto2"
+                                                   formControlName="to" required
+                                                   [value]="visaProcess.visaName"
+                                            >
+                                            <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="visa($event)">
+                                                <mat-option *ngFor="let item of searchResult"
+                                                            [value]="item['official_name_en']">
+                                                    {{item.official_name_en}}
+                                                </mat-option>
+                                                <mat-option *ngIf="loader">
+                                                    <div class="text-center actionBtn">
+                                                        <i class="fa fa-spinner fa-pulse fa-fw"></i>
+                                                    </div>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <p class="free" *ngIf="firstFormGroup.valid&&visaProcess.passportName&&visaProcess.visaName&&!loading&&visaRequire">"{{visaProcess.passportName}}, {{visaProcess.visaName}} Special Administrative Region” doesn't need visa!</p>
+
+                                </div>
+                                <div class="footer-container mobile-padding" *ngIf="!loading&&firstFormGroup.valid&&!visaRequire
+&&visaProcess.passportName &&visaProcess.visaName"
+                                     [ngStyle]="{'padding-left':checkSideBarSize() ==='large-card' ? '88px' : '327px' }">
+                                    <div class="total-price">
+                                        <i class="fas fa-cash-register"></i>
+                                        {{visaProcess.passportName}}
+                                        <span><i class="material-icons">arrow_right_alt</i></span>
+                                        {{visaProcess.visaName}}
+                                    </div>
+                                    <div class="stepper-actions">
+                                        <button type="submit" class="btn btn-primary pull-right next"
+                                                (click)="goToStep2()">next
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </mat-step>
+                        <mat-step [editable]="true">
+                            <form>
+                                <ng-template matStepLabel>
+                                    <p class="icons" social="">Requirements List</p>
+                                </ng-template>
+                                <div class="panel-body body-height">
+                                    <div class="black-bar">
+                                        <p>Visa requirements for passport holders of {{visaProcess.passportName}}
+                                            to {{visaProcess.visaName}}</p>
+                                    </div>
+                                    <div class="col-md-12 center-item"
+                                         *ngFor="let item of form.roles;trackBy:indexTracker;let i=index">
+                                        <div class="col-md-1 col-xs-2 ico-itself">
+
+                                        </div>
+                                        <div class="col-md-5 col-xs-8">
+                                            <div class="form-group form-black label-floating"
+                                                 [ngClass]="[!form.roles[i] ? 'is-empty' : '']">
+                                                <label class="control-label">Role/Requirement</label>
+                                                <input class="form-control" [(ngModel)]="form.roles[i]" maxlength="250"
+                                                       type="text" name="{{i}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-1  col-xs-2 padding-top">
+                                            <div class="ico-back" *ngIf="i>0" (click)="form.roles.splice(i,1)">
+                                                <i class="fas fa-trash ico trash-ico"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-12 center-item">
+
+                                        <div class="col-md-1 col-xs-2 ico-itself">
+
+                                        </div>
+                                        <div class="col-md-5 col-xs-8 plus-button">
+                                            <div class="icon-row">
+                                                <div class="ico-back" (click)="form.roles.push('')">
+                                                    <i class="fa fa-plus"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                                <div class="footer-container mobile-padding"
+                                     [ngStyle]="{'padding-left':checkSideBarSize() ==='large-card' ? '88px' : '327px' }">
+                                    <div class="total-price">
+                                        <i class="fas fa-cash-register"></i>
+                                        {{visaProcess.passportName}}
+                                        <span><i class="material-icons">arrow_right_alt</i></span>
+                                        {{visaProcess.visaName}}
+                                    </div>
+                                    <div class="stepper-actions">
+                                        <button type="submit" class="btn btn-primary pull-right next"
+                                                *ngIf="form.roles.length>0" (click)="goToStep3()">next
+                                        </button>
+                                        <button type="submit" *ngIf="!update" class="btn btn-primary pull-right prev"
+                                                matStepperPrevious>previous
+                                        </button>
+                                        <button type="submit" *ngIf="update" class="btn btn-primary pull-right prev"
+                                                (click)="mode='list';getForms()">cancel
+                                        </button>
+
+                                    </div>
+                                </div>
+
+                            </form>
+                        </mat-step>
+                        <mat-step [editable]="true">
+                            <ng-template matStepLabel>
+                                <p class="icons" social="">Form Builder</p>
+                            </ng-template>
+
+                            <div class="panel-body body-height">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-6 margin-top-row">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-light dropdown-toggle btn-light-width"
+                                                            type="button"
+                                                            data-toggle="dropdown">
+                                                        {{currentItem.type ? currentItem.type : 'Type'}}
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a (click)="currentItem.type='Checkbox'">Checkbox</a></li>
+                                                        <li><a (click)="currentItem.type='Radio'">Radio</a></li>
+                                                        <li><a (click)="currentItem.type='Attachment'">Attachment</a>
+                                                        </li>
+                                                        <li><a (click)="currentItem.type='Input'">Input</a></li>
+                                                        <li><a (click)="currentItem.type='DatePicker'">DatePicker</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 margin-top-row">
+                                                <div class="col-md-5 col-xs-12">
+                                                    <div class="form-group label-floating" *ngIf="currentItem.type">
+                                                        <label class="control-label">Placeholder</label>
+                                                        <input type="text" maxlength="250"
+                                                               [(ngModel)]="currentItem.label"
+                                                               class="form-control"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7 col-xs-12"
+                                                     *ngIf="currentItem.type=='Checkbox'||currentItem.type=='Radio'">
+                                                    <div class="row">
+                                                        <div class="row input-padding-mobile"
+                                                             *ngFor="let item of currentItem.data;trackBy:indexTracker;let i=index">
+                                                            <div class="col-md-8 col-xs-12 input-padding-mobile">
+                                                                <div class="form-group label-floating">
+                                                                    <label class="control-label">data {{i + 1}}</label>
+                                                                    <input type="text" class="form-control" maxlength="25"
+                                                                           [(ngModel)]="currentItem.data[i]"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2 col-xs-2 icon-row padding-top">
+                                                                <div class="row">
+                                                                    <div class="ico-back" *ngIf="i>0"
+                                                                         (click)="currentItem.data.splice(i,1)">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2 col-xs-2 icon-row padding-top">
+                                                                <div class="row">
+                                                                    <div class="ico-back" *ngIf="i===currentItem.data.length-1"
+                                                                         (click)="currentItem.data.push('')">
+                                                                        <i class="fa fa-plus"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-xs-12" *ngIf="currentItem.type">
+                                                    <button class="btn btn-success" [disabled]="!currentItem.label" (click)="addToForm()">Add to Form
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-builder">
+                                            <div class="col-md-12 inner">
+                                                <h4>Form Builder Preview</h4>
+
+                                            </div>
+                                            <div class="col-md-12 col-xs-12 lines"
+                                                 *ngFor="let item of form.items;let i=index">
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <div *ngIf="item.type=='Checkbox'">
+                                                            <div class="item-row">
+                                                                <div class="col-md-1 col-xs-2 number-box">
+                                                                    <span class="number-box-text">{{i + 1}}</span>
+                                                                </div>
+
+                                                                <div class="col-md-11 col-xs-10">
+                                                                    <h4> {{item.label}} :</h4>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12" *ngFor="let sub of item.data">
+                                                                <div class="checkbox input-top-space">
+                                                                    <label>
+                                                                        <input type="checkbox" disabled name="optionsCheckboxes">
+
+                                                                    </label>
+                                                                    {{sub}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="item.type=='Radio'">
+                                                            <div class="item-row">
+
+                                                                <div class="col-md-1 col-xs-2 number-box">
+                                                                    <span class="number-box-text">{{i + 1}}</span>
+                                                                </div>
+
+                                                                <div class="col-md-11 col-xs-10">
+                                                                    <h4> {{item.label}} :</h4>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12" *ngFor="let sub of item.data">
+                                                                <div class="radio input-top-space">
+                                                                    <label>
+                                                                        <input type="radio" disabled name="optionsCheckboxes">
+                                                                    </label>
+                                                                    <span class="radio-lable">
+                      {{sub}}
+                    </span>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="item.type=='Attachment'">
+                                                            <div class="item-row">
+                                                                <div class="col-md-1 col-xs-2 number-box">
+                                                                    <span class="number-box-text">{{i + 1}}</span>
+                                                                </div>
+
+                                                                <div class="col-md-11 col-xs-10">
+                                                                    <h4> {{item.label}} :</h4>
+                                                                </div>
+                                                            </div>
+                                                            <div class="item-row">
+                                                                <div class="col-md-12 col-xs-12">
+                                                                    <form>
+                                                                        <input type="file" name="fileupload"
+                                                                               value="fileupload" disabled
+                                                                               id="fileupload{{i}}"
+                                                                               class="custom-file-input input-top-space">
+                                                                    </form>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="item.type=='Input'">
+                                                            <div class="item-row">
+
+                                                                <div class="col-md-1 col-xs-2 number-box">
+                                                                    <span class="number-box-text">{{i + 1}}</span>
+                                                                </div>
+
+                                                                <div class="col-md-11 col-xs-10">
+                                                                    <h4> {{item.label}} :</h4>
+                                                                </div>
+                                                            </div>
+                                                            <div class="item-row">
+
+                                                                <div class="col-md-12 col-xs-12">
+                                                                    <div class="form-group label-floating input-margin">
+                                                                        <label class="control-label">{{item.label}}</label>
+                                                                        <input type="text" class="form-control" disabled
+                                                                               name="{{item.label}}{{i}}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="item.type=='DatePicker'">
+                                                            <div class="item-row">
+                                                                <div class="col-md-1 col-xs-2 number-box">
+                                                                    <span class="number-box-text">{{i + 1}}</span>
+                                                                </div>
+
+                                                                <div class="col-md-11 col-xs-10">
+                                                                    <h4> {{item.label}} :</h4>
+                                                                </div>
+                                                            </div>
+                                                                <div class="item-row">
+
+                                                                <div class="col-md-12 col-xs-12">
+                                                                    <div class="form-group form-black label-floating is-empty datepicker-space">
+                                                                        <mat-form-field class="full-width">
+                                                                            <input matInput [matDatepicker]="picker"
+                                                                                   placeholder="{{item.label}}"
+                                                                                   name="picker" disabled
+                                                                                   class="date">
+                                                                            <mat-datepicker-toggle matSuffix class="date-picker-icon"
+                                                                                                   [for]="picker"></mat-datepicker-toggle>
+                                                                            <mat-datepicker #picker></mat-datepicker>
+                                                                        </mat-form-field>
+
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1 col-xs-2">
+                                                        <div class="ico-back" *ngIf="!update">
+                                                            <i class="fa fa-edit ico trash-ico"
+                                                               (click)="currentItem=item;form.items.splice(i,1)"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1 col-xs-2">
+                                                        <div class="ico-back">
+                                                            <i class="fas fa-trash ico trash-ico"
+                                                               (click)="form.items.splice(i,1)"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="footer-container mobile-padding"
+                                     [ngStyle]="{'padding-left':checkSideBarSize() ==='large-card' ? '88px' : '327px' }">
+                                    <div class="total-price">
+                                        <i class="fas fa-cash-register"></i>
+                                        {{visaProcess.passportName}}
+                                        <span><i class="material-icons">arrow_right_alt</i></span>
+                                        {{visaProcess.visaName}}
+                                    </div>
+                                    <div class="stepper-actions">
+                                        <button type="submit" class="btn btn-primary pull-right next"
+                                                *ngIf="form.items.length>0" matStepperNext>next
+                                        </button>
+                                        <button type="submit" class="btn btn-primary pull-right prev"
+                                                matStepperPrevious>previous
+                                        </button>
+                                        <button type="submit" *ngIf="update" class="btn btn-primary pull-right prev"
+                                                (click)="mode='list';getForms()">cancel
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footer-container mobile-padding"
+                                 [ngStyle]="{'padding-left':checkSideBarSize() ==='large-card' ? '88px' : '327px' }">
+                                <div class="total-price">
+                                    <i class="fas fa-cash-register"></i>
+                                    {{visaProcess.passportName}}
+                                    <span><i class="material-icons">arrow_right_alt</i></span>
+                                    {{visaProcess.visaName}}
+                                </div>
+                                <div class="stepper-actions">
+                                    <button type="submit" class="btn btn-primary pull-right next" [disabled]="form.items.length==0" matStepperNext>
+                                        Next
+                                    </button>
+                                    <button type="submit" class="btn btn-primary pull-right prev" matStepperPrevious>
+                                        Previous
+                                    </button>
+                                    <button type="submit" *ngIf="update" class="btn btn-primary pull-right prev"
+                                            (click)="mode='list';getForms()">cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-step>
+                        <mat-step [editable]="true">
+                            <ng-template matStepLabel>
+                                <p class="icons" social="">Price Info</p>
+                            </ng-template>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group form-black label-floating"
+                                         [ngClass]="form.price == '' ? 'is-empty' : ''">
+                                        <label class="control-label">Price</label>
+                                        <input type="text" class="form-control" name="solo-price"
+                                               [(ngModel)]="form.price" maxlength="10"
+                                               currencyMask [options]="{ prefix: '', thousands: ',',precision: 2}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footer-container mobile-padding"
+                                 [ngStyle]="{'padding-left':checkSideBarSize() ==='large-card' ? '88px' : '327px' }">
+                                <div class="total-price">
+                                    <i class="fas fa-cash-register"></i>
+                                    {{visaProcess.passportName}}
+                                    <span><i class="material-icons">arrow_right_alt</i></span>
+                                    {{visaProcess.visaName}}
+                                </div>
+                                <div class="stepper-actions">
+                                    <button type="submit" class="btn btn-primary pull-right next" [disabled]="!form.price" (click)="submit()">
+                                        Submit
+                                    </button>
+                                    <button type="submit" class="btn btn-primary pull-right prev" matStepperPrevious>
+                                        previous
+                                    </button>
+                                    <button type="submit" *ngIf="update" class="btn btn-primary pull-right prev"
+                                            (click)="mode='list';getForms()">cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-step>
+                    </mat-horizontal-stepper>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,229 @@
+<div class="wrap">
+<div class="loading-wrap" *ngIf="loading">
+  <svg class="circular" viewBox="25 25 50 50">
+    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+  </svg>
+</div>
+
+
+<div class="signup-wrapper" *ngIf="mode=='A'">
+  <div class="card">
+    <div class="card-header" data-background-color="purple">
+      <h4 class="title">Register Company</h4>
+    </div>
+    <div class="card-content" style="padding: 40px!important;padding-top: 10px!important;">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group form-black label-floating is-empty">
+            <label class="control-label">Company Name</label>
+            <input class="form-control" [(ngModel)]="company.companyName" type="text" name="companyName">
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group form-black label-floating is-empty">
+            <label class="control-label">DTI Number</label>
+            <input class="form-control" [(ngModel)]="company.dtiNumber" type="text" name="dtiNumber">
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group form-black label-floating is-empty">
+            <label class="control-label">Representative</label>
+            <input class="form-control" [(ngModel)]="company.representative" type="text" name="representative">
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group form-black label-floating is-empty">
+            <label class="control-label">E-mail</label>
+            <input class="form-control" [(ngModel)]="company.email" type="email" name="email">
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group form-black label-floating is-empty">
+            <label class="control-label">Phone Number</label>
+            <!-- <input class="form-control" [attr.maxlength]="11" [(ngModel)]="company.mobile" type="number" name="number"> -->
+          </div>
+        </div>
+      </div>
+      <re-captcha (captchaResponse)="handleCorrectCaptcha($event)"
+                  site_key="6LdYMH4UAAAAAMPluqvLFv6lU37I-h1uXbZJZvBx"></re-captcha>
+
+
+      <button type="submit" class="btn btn-primary pull-right" [disabled]="!company.email
+|| !company.mobile||!company.companyName||!company.representative" (click)="registerCompany()">register Now
+      </button>
+
+      <div class="clearfix"></div>
+
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="mode=='B'">
+  <div class="container-fluid ">
+    <div class="row B">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="form-card">
+            <div class="col-md-10 col-sm-6">
+              <div class="row form-left-side" >
+                <!-- ../../../assets/gif/video.webm -->
+                <!-- <video loop muted autoplay poster="img/videoframe.jpg" class="fullscreen-bg__video">
+                    <source src="../../../assets/gif/video.webm" type="video/webm">
+                </video> -->
+                <div class="card-img"></div>
+                <div class="card-info">
+                  <div class="card-info-body">
+                  <div class="col-md-12">
+                    <h3 class="first-word">Next</h3>
+                    <h3 class="white-text">Revolutionary</h3>
+                    <h3 class="white-text">Team Building Automation</h3>
+                  </div>
+
+                  <!-- <div class="col-md-12 items">
+                    <ul>
+                      <li>
+                        <span [ngClass]="activeItem ? 'Active' : 'deActive'" (click)="goToItem1()">
+                          Itinerary
+                        </span>
+                      </li>
+
+                      <li>
+                        <span [ngClass]="activeItem2 ? 'Active' : 'deActive'" (click)="goToItem2()">
+                          Accounting
+                        </span>
+                      </li>
+
+                      <li>
+                      <span [ngClass]="activeItem3 ? 'Active' : 'deActive'" (click)="goToItem3()">
+                        Somrthing
+                     </span>
+                      </li>
+                    </ul>
+                  </div> -->
+
+                    <div class="col-md-12 start-row">
+                      <button class="btn btn-start" (click)="show()">
+                        start
+                      </button>
+                    </div>
+                  <div class="col-md-12 footer-company-name">
+                      <h5>
+                        Share the joy with a Street child
+                      </h5>
+                      <span class="more-info">
+                        For every company outing built by nextjourney, a set of school supplies will be given to a street child
+                      </span>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 mobile-form">
+              <div class="row">
+                <div class="form-right-side" id="myDIV">
+                  <div class="form-right-side-top">
+                    <div class="col-md-12">
+                  <span class="title">
+                    <h4 class="dark-blue-text">Welcome to &nbsp; </h4>
+                    <h4 class="blue-text"> Nextjourney</h4>
+                  </span>
+                    </div>
+
+                    <div class="col-md-12">
+                      <span>
+                          We make it easy for everyone to maximize their company joy
+                      </span>
+                    </div>
+                    <form  [formGroup]="registerForm">
+
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group form-black label-floating is-empty">
+                            <label class="control-label">Company Name</label>
+                            <input class="form-control" formControlName="companyName" [(ngModel)]="company.companyName" type="text"
+                                   name="companyName">
+                          </div>
+                          <p class="alert"
+                             *ngIf="!registerForm.controls['companyName'].valid && (registerForm.controls['companyName'].touched)">
+                            required (min length 5character)
+                          </p>
+                        </div>
+                        <!--<div class="col-md-12">-->
+                        <!--<div class="form-group form-black label-floating is-empty">-->
+                        <!--<label class="control-label">DTI Number</label>-->
+                        <!--<input class="form-control" [(ngModel)]="company.dtiNumber" type="text" name="dtiNumber">-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <div class="col-md-12">
+                          <div class="form-group form-black label-floating is-empty">
+                            <label class="control-label">Representative</label>
+                            <input class="form-control" [(ngModel)]="company.representative" type="text"
+                                   name="representative" formControlName="representative">
+                          </div>
+                          <p class="alert"
+                             *ngIf="!registerForm.controls['representative'].valid && (registerForm.controls['representative'].touched)">
+                            required (min length 3 character)
+                          </p>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group form-black label-floating is-empty">
+                            <label class="control-label">E-mail</label>
+                            <input class="form-control" [(ngModel)]="company.email" type="email" formControlName="email" name="email">
+                          </div>
+                          <p class="alert"
+                             *ngIf="!registerForm.controls['email'].valid && (registerForm.controls['email'].touched)">
+                            invalid email address
+                          </p>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group form-black label-floating is-empty">
+                            <label class="control-label">Phone Number</label>
+                            <input class="form-control" [(ngModel)]="company.mobile" formControlName="number" name="number">
+                          </div>
+                          <p class="alert"
+                             *ngIf="!registerForm.controls['number'].valid && (registerForm.controls['number'].touched)">
+                            invalid phone number
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="row">
+                          <div class="re-captcha-card">
+                            <re-captcha (captchaResponse)="handleCorrectCaptcha($event)"
+                                        site_key="6LdYMH4UAAAAAMPluqvLFv6lU37I-h1uXbZJZvBx"></re-captcha>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="row">
+                          <button type="submit" class="btn btn-register" [disabled]="!registerForm.valid||!notRobot||loading" (click)="registerCompany()">Start Now
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    </form>
+                  </div>
+
+                  <div class="form-right-site-bottom">
+                    <img src="../../../assets/img/logo.png">
+
+                    <p>
+                      Powered by NextJourney
+                    </p>
+                    <span>
+                      Barbod initutive project
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

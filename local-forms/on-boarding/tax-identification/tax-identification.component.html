@@ -1,0 +1,93 @@
+<div class="col-md-12 top-spacing2">
+  <div class="go-back" (click)="goBackToDash()">
+    <i class="material-icons">keyboard_arrow_left</i>
+    Back to Onboarding
+  </div>
+  <div class="card card-stats">
+    <div class="card-header" data-background-color="orange" >
+      <!--<i class="fa fa-arrow-left"></i>-->
+      Transaction Info and  tax related Info
+    </div>
+    <div class="card-content">
+      <div class="col-md-12">
+        <h3>Tax Info</h3>
+        <div class="col-md-12 padding-left">
+          <div class="col-md-4 ">
+            <div class="form-group form-black label-floating " [ngClass]="[getValidationClass('taxIdentificationNo'),!tax.taxIdentificationNo ? 'is-empty' : '']">
+              <label class="control-label">Tax Identification No</label>
+              <input  class="form-control" [(ngModel)]="tax.taxIdentificationNo"
+                      (ngModelChange)="taxValidation.fields.taxIdentificationNo.originalValue=tax.taxIdentificationNo"
+                      type="text" name="Identification">
+              <span class="form-control-feedback">
+				<i class="material-icons">priority_high</i>
+				</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <h3>Bank Info</h3>
+        <div class="col-md-12 padding-left" *ngFor="let item of tax.bankAccounts;let i=index">
+          <div class="col-md-4 ">
+            <div class="form-group form-black label-floating " [ngClass]="!item.type ? 'is-empty' : ''">
+              <label class="control-label">Type</label>
+              <input class="form-control" [(ngModel)]="item.type" type="text" name="Identification"
+                      (input)="getBank($event.target.value,item)"
+                     [matAutocomplete]="auto10">
+              <mat-autocomplete #auto10="matAutocomplete" (optionSelected)="item.type = $event.option.value;">
+                <mat-option *ngFor="let sub of lineResult" [value]="sub" >
+                  <span style="text-transform: capitalize;">{{sub}}</span>
+                </mat-option>
+              </mat-autocomplete>
+            </div>
+            <!--<span class="icon-position">-->
+               <!--<div class="ico-back" *ngIf="i>0" (click)="remove(tax.bankAcc,i)">-->
+                <!--<i class="fa fa-times ico" title="Delete"></i>-->
+              <!--</div>-->
+
+
+              <!--<div class="ico-back" (click)="tax.bankAcc.push('')">-->
+                <!--<i class="fa fa-plus ico" title="Add"></i>-->
+              <!--</div>-->
+
+
+            <!--</span>-->
+
+          </div>
+          <div class="col-md-4 ">
+            <div class="form-group form-black label-floating" [ngClass]="!item.accountNo ? 'is-empty' : ''">
+              <label class="control-label">Account No </label>
+              <input class="form-control" [(ngModel)]="item.accountNo" maxlength="20" type="text" name="Identification">
+              <p class="alert" *ngIf="dupAccountNo.indexOf(i)>-1">You have duplicated data entry. Please validate your data</p>
+
+            </div>
+            <span class="icon-position">
+               <div class="ico-back" *ngIf="i>0" (click)="remove(tax.bankAccounts,i)">
+                <i class="fa fa-trash-o ico" title="Delete"></i>
+              </div>
+
+
+              <div class="ico-back" (click)="tax.bankAccounts.push({type:'',accountNo:''})">
+                <i class="fa fa-plus ico" title="Add"></i>
+              </div>
+
+
+            </span>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-success pull-right" (click)="submit()">Submit</button>
+
+          <!--<button type="submit" class="btn btn-danger pull-right" (click)="goBackToDash()">Back</button>-->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

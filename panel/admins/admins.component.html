@@ -1,0 +1,372 @@
+<app-loading *ngIf="loading"></app-loading>
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row toolbar">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- <button *ngIf="mode=='A'" type="submit" class="btn btn-danger pull-right" (click)="mode='B'">Agencies
+          </button> -->
+          <!-- <button type="submit" *ngIf="mode=='B'" class="btn btn-danger pull-right" (click)="mode='A'">Back To Admin
+          </button> -->
+          <button type="submit" *ngIf="mode=='B'" class="btn btn-danger pull-right" (click)="addNewAgency()" data-toggle="modal"
+                  data-target="#myModal">Add New Agency
+          </button>
+          <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Agency Info</h4>
+                </div>
+                <div class="modal-body">
+                  <app-agency (register)="register($event)" [agency]="agency" [loading]="loading"></app-agency>
+                </div>
+                <div class="modal-footer text-center">
+                  <!--<button type="button" class="btn btn-danger submit-btn" data-dismiss="modal">Submit</button>-->
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div id="newAgency" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Agency Information</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <span>Agency Code: {{current.code}}</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <span>Agency Email: {{current.email}}</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <span>Agency Mobile: {{current.mobileNo}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer text-center">
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-md-12" *ngIf="mode=='A'">
+        <h3>Social Media Info</h3>
+        <div class="box-padding">
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group label-floating form-inline">
+                <label class="control-label">Facebook</label>
+                <input type="text" class="form-control  custom-input" name="facebook">
+                <i class="fa fa-facebook-f input_ico"></i>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group label-floating">
+                <label class="control-label">Linkedin</label>
+                <input type="text" class="form-control custom-input" name="linkedin">
+                <i class="fa fa-linkedin input_ico"></i>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group label-floating">
+                <label class="control-label">Instagram</label>
+                <input type="text" class="form-control custom-input" name="instagram">
+                <i class="fa fa-instagram input_ico"></i>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div> -->
+      <div class="row" *ngIf="mode=='B'">
+
+        <div class="col-lg-12 col-md-12 col-sm-12" >
+          <app-filter [typeOfFilter]="typeOfFilter" (updated)="search($event)"></app-filter>
+          <div class="scroll" scrollable (scrollPosition)="getAgencies()">
+
+            <div class="card card-stats col-md-12" *ngFor="let agency of agencies">
+
+              <div class="card-content" *ngIf="!agency.editable">
+                <div class="agencies">
+                  <div class="each-agency">
+                    <div class="logo col-md-3">
+                      <img width="40" [attr.src]="agency.logo.replace('https','')">
+                    </div>
+                    <div class="agency-info col-md-6">
+                      <ul class="info-wrp">
+                        <li class="each-info">
+                          Company Name: {{agency.company_name}}
+                        </li>
+                        <li class="each-info">
+                          City: {{agency.city}}
+                        </li>
+                        <li class="each-info">
+                          Represntative: {{agency.official_representative}}
+                        </li>
+                        <li class="each-info">
+                          Alt Rep: {{agency.alternate_representative}}
+                        </li>
+                        <li class="each-info">
+                          PhoneNo.: {{agency.telephone_number}}
+                        </li>
+                        <li class="each-info">
+                          MobileNo.: {{agency.mobile_number}}
+                        </li>
+                        <li class="each-info">
+                          fax: {{agency.fax_number}}
+                        </li>
+                        <li class="each-info">
+                          Email: {{agency.email_address}}
+                        </li>
+                        <li class="each-info">
+                          location: {{agency.location}}
+                        </li>
+                        <li class="each-info">
+                          Alt Rep: {{agency.alternate_representative}}
+                        </li>
+                        <li class="each-info">
+                          Office Address: {{agency.office_address}}
+                        </li>
+                        <li class="each-info">
+                          Services: {{agency.services}}
+                        </li>
+                        <li class="each-info">
+                          Website: <a (click)="goTo(agency.website)">{{agency.website}}</a>
+                        </li>
+                      </ul>
+
+                    </div>
+                    <div class="actions col-md-3">
+                      <div class="edit col-md-6" (click)="agency.editable=true;edit(agency)">
+                        <i class="material-icons">border_color</i>
+                      </div>
+                      <div class="edit col-md-6">
+                        <i class="material-icons">delete</i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-content" *ngIf="agency.editable">
+                <div class="agencies">
+                  <div class="each-agency">
+                    <div class="logo col-md-3">
+                      <img width="40" [attr.src]="agency.logo.replace('https','')">
+                    </div>
+                    <div class="agency-info col-md-6">
+                      <ul class="info-wrp ul-type">
+                        <li class="each-info">
+                          <div class="form-group form-black label-floating"
+                               [ngClass]="!agencyTemp.company_name ? 'is-empty' : ''">
+                            <label class="control-label">Company Name</label>
+                            <input type="text" class="form-control" [(ngModel)]="agencyTemp.company_name" name="city">
+                          </div>
+                        </li>
+                        <li class="each-info">
+                          <div class="form-group form-black label-floating"
+                               [ngClass]="!agencyTemp.city ? 'is-empty' : ''">
+                            <label class="control-label">City</label>
+                            <input type="text" class="form-control" [(ngModel)]="agencyTemp.city" name="city">
+                          </div>
+                        </li>
+                        <li class="each-info">
+                          <div class="form-group form-black label-floating"
+                               [ngClass]="!agencyTemp.official_representative ? 'is-empty' : ''">
+                            <label class="control-label">City</label>
+                            <input type="text" class="form-control" [(ngModel)]="agencyTemp.official_representative"
+                                   name="city">
+                          </div>
+                        </li>
+                        <li class="each-info">
+                          <div class="form-group form-black label-floating"
+                               [ngClass]="!agencyTemp.alternate_representative ? 'is-empty' : ''">
+                            <label class="control-label">Alternate Representative</label>
+                            <input type="text" class="form-control" [(ngModel)]="agencyTemp.alternate_representative"
+                                   name="alternate_representative">
+                          </div>
+                        </li>
+                        <li class="each-info">
+                          telephone_number:
+
+                          <mat-form-field class="example-chip-list input-width">
+                            <mat-chip-list #chipList1>
+                              <mat-chip
+                                *ngFor="let item of agencyTemp.telephone_number;let i=index"
+                                [selectable]="selectable"
+                                [removable]="removable"
+                                (removed)="agencyTemp.telephone_number.splice(i,1)">
+                                {{item}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                              </mat-chip>
+                              <input
+                                placeholder="telephone_number"
+                                [matChipInputFor]="chipList1"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event,'telephone_number')">
+                            </mat-chip-list>
+                          </mat-form-field>
+                        </li>
+                        <li class="each-info">
+                          mobile_number:
+                          <mat-form-field class="example-chip-list input-width">
+                            <mat-chip-list #chipList2>
+                              <mat-chip
+                                *ngFor="let item of agencyTemp.mobile_number;let i=index"
+                                [selectable]="selectable"
+                                [removable]="removable"
+                                (removed)="agencyTemp.mobile_number.splice(i,1)">
+                                {{item}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                              </mat-chip>
+                              <input
+                                placeholder="mobile_number"
+                                [matChipInputFor]="chipList2"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event,'mobile_number')">
+                            </mat-chip-list>
+                          </mat-form-field>
+                        </li>
+                        <li class="each-info">
+                          fax_number:
+                          <mat-form-field class="example-chip-list input-width">
+                            <mat-chip-list #chipList3>
+                              <mat-chip
+                                *ngFor="let item of agencyTemp.fax_number;let i=index"
+                                [selectable]="selectable"
+                                [removable]="removable"
+                                (removed)="agencyTemp.fax_number.splice(i,1)">
+                                {{item}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                              </mat-chip>
+                              <input
+                                placeholder="fax_number"
+                                [(ngModel)]="fax"
+                                [matChipInputFor]="chipList3"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event,'fax_number')">
+                            </mat-chip-list>
+                          </mat-form-field>
+                        </li>
+                        <li class="each-info">
+                          email_address:
+                          <mat-form-field class="example-chip-list input-width">
+                            <mat-chip-list #chipList4>
+                              <mat-chip
+                                *ngFor="let item of agencyTemp.email_address;let i=index"
+                                [selectable]="selectable"
+                                [removable]="removable"
+                                (removed)="agencyTemp.email_address.splice(i,1)">
+                                {{item}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                              </mat-chip>
+                              <input
+                                placeholder="email_address"
+                                [(ngModel)]="mail"
+                                [matChipInputFor]="chipList4"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event,'email_address')">
+                            </mat-chip-list>
+                          </mat-form-field>
+                        </li>
+                        <li class="each-info">
+                          alternate_representative:
+                          <mat-form-field class="example-chip-list input-width">
+                            <mat-chip-list #chipList5>
+                              <mat-chip
+                                *ngFor="let item of agencyTemp.alternate_representative;let i=index"
+                                [selectable]="selectable"
+                                [removable]="removable"
+                                (removed)="agencyTemp.alternate_representative.splice(i,1)">
+                                {{item}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                              </mat-chip>
+                              <input
+                                placeholder="alternate_representative"
+                                [matChipInputFor]="chipList5"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event,'alternate_representative')">
+                            </mat-chip-list>
+                          </mat-form-field>
+                        </li>
+                        <li class="each-info">
+                          office_address:
+                          <mat-form-field class="example-chip-list input-width">
+                            <mat-chip-list #chipList6>
+                              <mat-chip
+                                *ngFor="let item of agencyTemp.office_address;let i=index"
+                                [selectable]="selectable"
+                                [removable]="removable"
+                                (removed)="agencyTemp.office_address.splice(i,1)">
+                                {{item}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                              </mat-chip>
+                              <input
+                                placeholder="office_address"
+                                [matChipInputFor]="chipList6"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event,'office_address')">
+                            </mat-chip-list>
+                          </mat-form-field>
+                        </li>
+                        <li class="each-info">
+                          <mat-checkbox [(ngModel)]="agencyTemp.onboarded">onboarded</mat-checkbox>
+                        </li>
+                        <li class="each-info">
+                          <mat-checkbox [(ngModel)]="agencyTemp.deleted">deleted</mat-checkbox>
+                        </li>
+                        <li class="each-info">
+                          <div class="form-group form-black label-floating"
+                               [ngClass]="!agencyTemp.website ? 'is-empty' : ''">
+                            <label class="control-label">Website</label>
+                            <input type="text" class="form-control" [(ngModel)]="agencyTemp.website"
+                                   name="website">
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="col-md-12 btn-back">
+                      <button class="btn action-btn" (click)="save(agencyTemp,agency)">save</button>
+                      <button class="btn action-btn" (click)="agency.editable=false">cancel</button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card card-stats col-md-12 text-center" *ngIf="!(agencies.length>0)">
+              <b>There is no data</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

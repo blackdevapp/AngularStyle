@@ -1,0 +1,31 @@
+<div *ngIf="preloading">
+	<content-loader height="200">
+		<svg:rect x="17" y="38" rx="1" ry="1" width="60" height="5" />
+		<svg:rect x="80" y="38" rx="1" ry="1" width="60" height="5" />
+		<svg:rect x="143" y="38" rx="1" ry="1" width="60" height="5" />
+		<svg:rect x="207" y="38" rx="1" ry="1" width="60" height="5" />
+		<svg:rect x="270" y="38" rx="1" ry="1" width="60" height="5" />
+		<svg:rect x="17" y="50" rx="2" ry="2" width="80" height="8" />
+		<svg:rect x="17" y="70" rx="2" ry="2" width="120" height="17" />
+		<svg:rect x="140" y="70" rx="2" ry="2" width="120" height="17" />
+		<svg:rect x="17" y="90" rx="2" ry="2" width="120" height="17" />
+		<svg:rect x="140" y="90" rx="2" ry="2" width="120" height="17" />
+		<svg:rect x="17" y="110" rx="2" ry="2" width="120" height="17" />
+		<svg:rect x="140" y="110" rx="2" ry="2" width="120" height="17" />
+		<svg:rect x="280" y="150" rx="0" ry="0" width="65" height="17" />
+
+	</content-loader>
+</div>
+
+
+<div class="main-content" *ngIf="!preloading">
+	<div class="container-fluid">
+		<div class="row">
+      <app-profile-form></app-profile-form>
+      <!--<app-maps></app-maps>-->
+			<!--<div class="col-md-5">-->
+				<!--<input autofocus="" class="form-control" name="code" type="text">-->
+			<!--</div>-->
+		</div>
+	</div>
+</div>

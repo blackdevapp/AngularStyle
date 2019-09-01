@@ -1,0 +1,149 @@
+@import "../../../variables";
+
+%imageBackground {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  //max-height: 100%;
+  resize: both;
+}
+
+.section1Back {
+  @extend %imageBackground;
+  height: 988px;
+  //max-height: 100%;
+  //background: url("../../../assets/img/landingTour/section1Back.png") center center no-repeat;
+  background-size: cover;
+}
+
+.section2Back {
+  @extend %imageBackground;
+  min-height: 600px;
+  height: content-box;
+  //max-height: 100%;
+  background: url("../../../assets/img/landingTour/section2Back.png") center center no-repeat;
+  background-size: cover;
+}
+
+.section3Back {
+  @extend %imageBackground;
+  height: 750px;
+  //background: url("../../../assets/img/landingTour/section3Back.png") center center no-repeat;
+  background-size: cover;
+}
+
+.slider_box {
+  height: 575px;
+  margin-top: 80px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.top_space {
+  padding-top: 170px;
+}
+
+.section1_main_title {
+  color: $white;
+  font-size: 30px;
+}
+
+%photo_box_style {
+  border-radius: 50%;
+  border: 3px solid #C5C4C4;
+  background-color: #969696;
+}
+
+.photo_box {
+  @extend %photo_box_style;
+  width: 60px;
+  height: 60px;
+  background: url("../../../assets/img/landingTour/profile.png") center center no-repeat;
+  background-size: cover;
+  margin-left: -20px;
+
+}
+.photo_box_full{
+  @extend %photo_box_style;
+  width: 60px;
+  height: 60px;
+  background: url("../../../assets/img/landingTour/profile.png") center center no-repeat;
+  background-size: cover;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.photo_box_body {
+  display: inline-flex;
+  margin-left: 30px;
+  .photo_box_more {
+    @extend %photo_box_style;
+    margin-left: -20px;
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+    text-align: center;
+    color: $white;
+    .photo_box_more_text {
+      position: relative;
+      top: 13px;
+    }
+  }
+}
+
+.timeline_photo_box {
+  @extend %photo_box_style;
+  width: 45px;
+  height: 45px;
+  & .photo_box_more {
+    font-size: 14px !important;
+    text-align: center;
+    color: $white;
+  }
+}
+
+.sectionBtn {
+  height: 50px;
+  background-color: $sky_blue;
+  color: $white;
+  font-size: 18px;
+  width: 100%;
+  border-radius: 4px;
+  border: transparent;
+}
+
+.btn_top_space {
+  margin-top: 90px;
+}
+
+.section3Title {
+  //font-family: 'AvenirNextCondensed';
+  font-size: 32px;
+  color: $white;
+  margin-top: 40px;
+}
+
+.section3MainText {
+  font-size: 18px;
+  color: $white;
+  text-align: justify;
+  margin-top: 30px;
+}
+
+ngx-slick-carousel /deep/ .slide {
+  position: relative;
+  padding: 5px;
+  &.slick-current + .slide {
+    background-color: #00000024;
+    box-shadow: 0px 0px 48px -6px #a2a2a2;
+  }
+}
+
+.sectionBtnMargin{
+  margin-bottom: 50px;
+}
+
+.padding{
+  padding: 0;
+}

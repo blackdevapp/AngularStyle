@@ -1,0 +1,21 @@
+<!--<div class="wrapper">-->
+    
+    <!--<div class="sidebar" [ngClass]="{'small': smallMode}" data-color='red' data-image="">-->
+        <!--<div *ngIf="auth.loggedIn" class="small-mode" (click)="smallMode = !smallMode">-->
+            <!--<i class="material-icons" [ngClass]="{'rotate': smallMode}">keyboard_arrow_left</i>-->
+        <!--</div>-->
+        <!--<app-sidebar *ngIf="auth.loggedIn"></app-sidebar>-->
+        <!--<div class="sidebar-background" style="background-image: url(../assets/img/sidebar-4.jpg)"></div>-->
+    <!--</div>-->
+    <!--<div class="main-panel" [ngClass]="{'not-logged-in': !auth.loggedIn,'custom-width': (smallMode && auth.loggedIn)}">-->
+        <!--<app-navbar  *ngIf="auth.loggedIn"></app-navbar>-->
+        <div class="loader" [ngClass]="{'loading': loading}"></div>
+        <router-outlet></router-outlet>
+        <!--<div>-->
+            <!--<app-footer></app-footer>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!-- <div class="login" *ngIf="!auth.loggedIn">
+  <router-outlet></router-outlet>
+</div>  -->

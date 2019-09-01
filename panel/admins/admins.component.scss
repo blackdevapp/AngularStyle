@@ -1,0 +1,68 @@
+.scroll{
+  display:block;
+  height:60vh;
+  overflow-y:auto;
+  overflow-x: hidden;
+}
+.card-stats{
+	 .card-content{
+	 	text-align: left;
+	 	.agencies{
+	 		.each-agency{
+	 			.logo{
+	 				width: 50px;
+	 			}
+	 		}
+	 	}
+	 }	
+}
+
+.custom-input{
+  width: 96%;
+}
+.font-size-close{
+  font-size: 30px;
+}
+.input_ico{
+  position: absolute;
+  top: 12px;
+  bottom: 0;
+  right: 15px;
+  cursor: pointer;
+}
+
+.box-padding{
+  padding-left: 50px;
+}
+
+.ul-type{
+  list-style-type: none;
+}
+
+
+.input-width{
+  width: 100%;
+}
+
+
+.btn-back{
+  background-color: orange;
+  height: 41px;
+  padding: 0px;
+}
+
+
+.action-btn{
+  background: none;
+  color: black;
+  height: 32px;
+  line-height: 11px;
+  border: none;
+  float: right;
+  margin: 5px;
+}
+/deep/.modal-backdrop.in {
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+  z-index: -1!important;
+}

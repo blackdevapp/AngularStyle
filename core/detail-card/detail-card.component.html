@@ -1,0 +1,93 @@
+<div class="card card-profile" *ngIf="trip">
+    <div class="card-avatar">
+        <a>
+            <i class="material-icons">{{typeOfComponents[trip.type].icon}}</i>
+        </a>
+    </div>
+
+    <div class="content">
+    	<i class="material-icons" *ngIf="trip.details.roundTrip">repeat</i>
+        <h6 class="category text-gray">
+        	<p>
+        		{{trip.company}}		
+        	</p>
+        </h6>
+        <div class="card-title">
+        	<div class="row">
+        		<div class="col-md-4 col-sm-5 col-xs-5">
+        			{{trip.details.from.city}}
+        			<div class="row" *ngIf="trip.details.from.departure.date !== 0">
+        				<div class="col-md-12 little-font-size">
+        					<i class="material-icons little-font-size">calendar_today</i>
+        					{{moment(trip.details.from.departure.date).format('DD MMM YYYY')}}
+        				</div>
+        				<div class="col-md-12 little-font-size"  *ngIf="trip.details.from.departure.time !== 0">
+        					<i class="material-icons little-font-size">access_time</i>
+        					{{trip.details.from.departure.time}}
+        				</div>
+        			</div>
+        		</div>
+        		<div class="col-md-4 col-sm-2 col-xs-2">
+        			<i class="material-icons">arrow_forward_ios</i>		
+        		</div>
+        		<div class="col-md-4 col-sm-5 col-xs-5" *ngIf="trip.details.to">
+        			{{trip.details.to.city}}
+        			<div class="row">
+        				<div class="col-md-12 little-font-size" *ngIf="trip.details.from.arrival.date !== 0">
+        					<i class="material-icons little-font-size">calendar_today</i>
+        					{{moment(trip.details.from.arrival.date).format('DD MMM YYYY')}}
+        				</div>
+        				<div class="col-md-12 little-font-size"  *ngIf="trip.details.from.arrival.time !== 0">
+        					<i class="material-icons little-font-size">access_time</i>
+        					{{trip.details.from.arrival.time}}
+        				</div>
+        			</div>
+        		</div>		
+        	</div>
+        	
+        </div>
+        <br>
+        <br>
+        <div class="card-title" *ngIf="trip.details.roundTrip">
+        	<div class="row">
+        		<div class="col-md-4 col-sm-5 col-xs-5">
+        			{{trip.details.from.city}}
+        			<div class="row">
+        				<div class="col-md-12 little-font-size"  *ngIf="trip.details.to.arrival.date !== 0">
+        					<i class="material-icons little-font-size">calendar_today</i>
+        					{{moment(trip.details.to.arrival.date).format('DD MMM YYYY')}}
+        				</div>
+        				<div class="col-md-12 little-font-size" *ngIf="trip.details.to.arrival.time !== 0">
+        					<i class="material-icons little-font-size">access_time</i>
+        					{{trip.details.to.arrival.time}}
+        				</div>
+        			</div>
+        		</div>		
+        		<div class="col-md-4 col-sm-2 col-xs-2">
+        			<i class="material-icons">arrow_back_ios</i>		
+        		</div>
+        		<div class="col-md-4 col-sm-5 col-xs-5">
+        			{{trip.details.to.city}}
+        			<div class="row">
+        				<div class="col-md-12 little-font-size" *ngIf="trip.details.to.departure.date !== 0">
+        					<i class="material-icons little-font-size">calendar_today</i>
+        					{{moment(trip.details.to.departure.date).format('DD MMM YYYY')}}
+        				</div>
+        				<div class="col-md-12 little-font-size"   *ngIf="trip.details.to.departure.time !== 0">
+        					<i class="material-icons little-font-size">access_time</i>
+        					{{trip.details.to.departure.time}}
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        	
+        </div>
+        <hr>
+        <div class="row addon-wrp">
+        	<div class="col-md-2" *ngFor="let addon of trip.details.addons; let i = index">
+            	<app-addons [addon]="addon" (isChecked)="trip.details.addons[i].availability = $event;"></app-addons>
+        	</div>
+        </div>
+        <!-- <a href="#pablo" class="btn btn-danger btn-round">Submit</a> -->
+    </div>
+</div>

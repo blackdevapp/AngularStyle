@@ -1,0 +1,57 @@
+@import "../../../assets/sass/md/classes.scss";
+
+.icon-selector{
+	margin-top: 46px;
+	@extend .vertical-center;
+	flex-direction: column;
+	.row{
+		div{
+			font-size: 8px;
+			@extend .center;
+		}
+	}
+}
+.container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    position: relative;
+    margin: 1em;
+  }
+  
+  .demo-form {
+    padding: 4em;
+  }
+  
+  .mat-card {
+    padding: 0;
+    max-width: 600px;
+    margin: 3rem auto;
+  }
+mat-form-field /deep/{
+	margin-top: -5px;
+	
+	timepicker /deep/{
+		position: absolute;
+		top: -2px;
+		right: -55px;
+		width: 32px;
+		.mat-button /deep/{
+			min-width: 19px;
+			height: 28px;
+			border-radius: 50%;
+			background-color: #FFF;
+			border: 0;
+			mat-icon /deep/{
+			    font-size: 16px;
+			}
+		}
+	}
+}

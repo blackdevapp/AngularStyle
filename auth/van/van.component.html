@@ -1,0 +1,137 @@
+<app-loading *ngIf="loading"></app-loading>
+
+<div class="col-md-12">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <form autocomplete="off">
+            <h3>General Information</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group label-floating " [ngClass]="getValidationClass('firstName')">
+                        <label class="control-label">First Name</label>
+                        <input type="text" class="form-control" name="firstname" [(ngModel)]="user.firstName"
+                               (ngModelChange)="userValidation.fields.firstName.originalValue=user.firstName"/>
+                        <span class="form-control-feedback">
+					<i *ngIf="!userValidation.fields.firstName.isValid" class="material-icons">priority_high</i>
+				</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group label-floating " [ngClass]="getValidationClass('lastName')">
+                        <label class="control-label">Last Name</label>
+                        <input type="text" class="form-control" name="lastname" [(ngModel)]="user.lastName"
+                               (ngModelChange)="userValidation.fields.lastName.originalValue=user.lastName"/>
+                        <span class="form-control-feedback">
+					<i *ngIf="!userValidation.fields.lastName.isValid" class="material-icons">priority_high</i>
+				</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2  col-xs-12 dropdown">
+                    <a class="dropdown-toggle drop-width text-left"
+                       data-toggle="dropdown">
+                        <span class="notification">{{user.title ? user.title : 'Title'}}</span>
+                        <i class="fa fa-angle-down"></i>
+                        <!--<p class="hidden-lg hidden-md">Notifications</p>-->
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a (click)="user.title='Mr.'">Mr.</a></li>
+                        <li><a (click)="user.title='Ms.'">Ms.</a></li>
+                        <li><a (click)="user.title='Dr.'">Dr.</a></li>
+                        <li><a (click)="user.title='Attny'">Attny</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group label-floating " [ngClass]="getValidationClass('address')">
+                        <label class="control-label">Address</label>
+                        <input type="text" class="form-control" name="address" [(ngModel)]="user.address"
+                               (ngModelChange)="userValidation.fields.address.originalValue=user.address"/>
+                        <span class="form-control-feedback">
+					<i *ngIf="!userValidation.fields.address.isValid" class="material-icons">priority_high</i>
+				</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group label-floating " [ngClass]="getValidationClass('state')">
+                        <label class="control-label">State</label>
+                        <input type="text" class="form-control" name="state" [(ngModel)]="user.state"
+                               (ngModelChange)="userValidation.fields.state.originalValue=user.state"/>
+                        <span class="form-control-feedback">
+					<i *ngIf="!userValidation.fields.state.isValid" class="material-icons">priority_high</i>
+				</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group label-floating " [ngClass]="getValidationClass('city')">
+                        <label class="control-label">City</label>
+                        <input type="text" class="form-control" name="city" [(ngModel)]="user.city"
+                               (ngModelChange)="userValidation.fields.city.originalValue=user.city"/>
+                        <span class="form-control-feedback">
+					<i *ngIf="!userValidation.fields.city.isValid" class="material-icons">priority_high</i>
+				</span>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-12 dropdown">
+                    <a class="dropdown-toggle drop-width text-left"
+                       data-toggle="dropdown">
+
+                        <!--<i class="material-icons">notifications</i>-->
+                        <span class="notification">{{user.gender ? user.gender : 'Gender'}}</span>
+                        <i class="fa fa-angle-down"></i>
+
+                        <!--<p class="hidden-lg hidden-md">Notifications</p>-->
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a (click)="user.gender='Male';">Male</a></li>
+                        <li><a (click)="user.gender='Female';">Female</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-4 col-xs-12">
+                    <div class="form-group form-black label-floating input-top-space"
+                         [ngClass]="!birthDate ? 'is-empty' : ''">
+                        <mat-form-field class="full-width">
+                            <input matInput [matDatepicker]="picker" [max]="maxDate" placeholder="BirthDate"
+                                   [(ngModel)]="birthDate" name="arrival" class="pull-left">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+
+                    </div>
+                </div>
+
+            </div>
+            <h3>Contact Information</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group label-floating " [ngClass]="getValidationClass('email')">
+                        <label class="control-label">Email</label>
+                        <input type="email" class="form-control" name="email" [(ngModel)]="user.email"
+                               (ngModelChange)="userValidation.fields.email.originalValue=user.email"/>
+                        <span class="form-control-feedback">
+					<i *ngIf="!userValidation.fields.email.isValid" class="material-icons">priority_high</i>
+				</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group label-floating " [ngClass]="getValidationClass('mobileNo')">
+                        <label class="control-label">Mobile No.</label>
+                        <input type="text" class="form-control" name="mobile" [(ngModel)]="user.mobileNo"
+                               (ngModelChange)="userValidation.fields.mobileNo.originalValue=user.mobileNo"
+                               maxlength="11"/>
+                        <span class="form-control-feedback">
+					<i *ngIf="!userValidation.fields.mobileNo.isValid" class="material-icons">priority_high</i>
+				</span>
+                    </div>
+                </div>
+            </div>
+            <button type="button" (click)="addUser()" class="btn btn-primary">Submit</button>
+        </form>
+
+    </div>
+    <div class="col-md-1"></div>
+</div>

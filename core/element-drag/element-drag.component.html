@@ -1,0 +1,181 @@
+<div class="row" *ngIf="(eachComponent &&eachComponent.associated_agency!=='amadeus' &&eachComponent.associated_agency!=='airasia') ||(eachComponent &&eachComponent.type==='hotel-room') && math.round(exchange(eachComponent)*100)/100>0">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card card-stats">
+      <div class="card-content">
+        <div class="element-data col-md-9 col-xs-12 mobile-padding">
+          <div>
+            <div class="single-line">
+              <!--<div class="col-md-2 checkbox">-->
+              <!--<label>-->
+              <!--<input [checked]="eachComponent.marked"-->
+              <!--(click)="passBackOfflineData(eachComponent,eachComponent.marked)" type="checkbox"-->
+              <!--name="optionsCheckboxes">-->
+              <!--</label>-->
+              <!--</div>-->
+              <div class="line">
+                <div class="data">
+                  <div class="icon date">
+                    <div class="circle-back">
+                      <i class="material-icons">{{eachComponent.icon}}</i>
+                    </div>
+                    <div class="date-format" custom="cus"
+                         [attr.duration]="eachComponent.type!=='van-driver'?getDuration(eachComponent.details.from.departure.date, eachComponent.details.from.departure.time,
+                      eachComponent.details.from.arrival.date,
+                      eachComponent.details.from.arrival.time
+                      ):null">
+                      <div class="dep">
+                        <i *ngIf="eachComponent.type==='AIRPLANE'"
+                           class="material-icons detailed-info">flight_takeoff</i>
+                        <i *ngIf="eachComponent.type==='hotel-room'"
+                           class="material-icons  detailed-info">rotate_left</i>
+                        <i *ngIf="eachComponent.type==='van-driver'"
+                           class="material-icons  detailed-info">airport_shuttle</i>
+                        <div class="detail-info">
+                          <div class="detail-info-date">
+                            <i class="material-icons">date_range</i>
+                            {{eachComponent.type!=='van-driver'?formatDate(eachComponent.details.from.departure.date):'custom date'}} {{eachComponent.type!=='van-driver'?eachComponent.details.from.departure.time:''}}
+                          </div>
+                          <div class="detail-info-place">
+                            <i class="material-icons">pin_drop</i>
+                            {{eachComponent.details.from.airport?eachComponent.details.from.airport:eachComponent.details.from.city}}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="land">
+                        <i *ngIf="eachComponent.type==='AIRPLANE'" class="material-icons detailed-info">flight_land</i>
+                        <i *ngIf="eachComponent.type==='hotel-room'"
+                           class="material-icons  detailed-info">rotate_right</i>
+                        <i *ngIf="eachComponent.type==='van-driver'"
+                           class="material-icons  detailed-info">airport_shuttle</i>
+                        <div class="detail-info">
+                          <div class="detail-info-date">
+                            <i class="material-icons">date_range</i>
+                            {{eachComponent.type!=='van-driver'?formatDate(eachComponent.details.from.arrival.date):'custom date'}} {{eachComponent.type!=='van-driver'?eachComponent.details.from.arrival.time:''}}
+                          </div>
+                          <div class="detail-info-place">
+                            <i class="material-icons">pin_drop</i>{{eachComponent?.details?.to?.airport?eachComponent.details.to.airport:eachComponent?.details?.to?.city}}
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="data" *ngIf="eachComponent.details.roundTrip">
+                  <div class="icon date">
+                    <div class="circle-back">
+                      <i class="material-icons">{{eachComponent.icon}}</i>
+                    </div>
+                    <div class="date-format" [attr.duration]="eachComponent.type!=='van-driver'?getDuration(eachComponent.details.to.departure.date, eachComponent.details.to.departure.time,
+        				eachComponent.details.to.arrival.date,
+        				eachComponent.details.to.arrival.time
+        				):null">
+                      <div class="dep">
+                        <i class="material-icons detailed-info">flight_takeoff</i>
+                        <div class="detail-info">
+                          <div class="detail-info-date">
+                            <i class="material-icons">date_range</i>
+                            {{eachComponent.type!=='van-driver'?formatDate(eachComponent.details.to.departure.date):'custom date'}} {{eachComponent.type!=='van-driver'?eachComponent.details.to.departure.time:null}}
+                          </div>
+                          <div class="detail-info-place">
+                            <i class="material-icons">pin_drop</i>{{eachComponent.details.to.airport}}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="land">
+                        <i *ngIf="eachComponent.type==='AIRPLANE'" class="material-icons detailed-info">flight_land</i>
+                        <i *ngIf="eachComponent.type==='hotel-room'"
+                           class="material-icons  detailed-info">rotate_right</i>
+                        <i *ngIf="eachComponent.type==='van-driver'"
+                           class="material-icons  detailed-info">airport_shuttle</i>
+                        <div class="detail-info">
+                          <div class="detail-info-date">
+                            <i class="material-icons">date_range</i>
+                            {{eachComponent.type!=='van-driver'?formatDate(eachComponent.details.to.arrival.date):'custom date'}} {{eachComponent.type!=='van-driver'?eachComponent.details.to.arrival.time:null}}
+                          </div>
+                          <div class="detail-info-place">
+                            <i class="material-icons">pin_drop</i>
+                            {{eachComponent.details.from.airport?eachComponent.details.from.airport:eachComponent.details.from.city}}
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="eachComponent &&(eachComponent.associated_agency==='amadeus'||eachComponent.associated_agency==='airasia')&&eachComponent.type==='AIRPLANE' &&math.round(exchangeAmadeus(eachComponent)*100)/100>0">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card card-stats">
+      <div class="card-content">
+        <div class="element-data col-md-9 col-xs-12 mobile-padding">
+          <div>
+            <div class="single-line">
+              <div class="line">
+                <div class="data" *ngFor="let segment of eachComponent.segments;let count1=index">
+                  <div class="icon date">
+                    <div class="circle-back">
+                      <span class="trip-dep-dest">
+                        <div class="dep">
+                          {{segment.flightSegment.departure.iataCode}}
+                        </div>
+                        <i class="material-icons">arrow_right_alt</i>
+                        <div class="dest">
+                          {{segment.flightSegment.arrival.iataCode}}
+                        </div>
+                      </span>
+                      <i class="material-icons">{{eachComponent.icon}}</i>
+                    </div>
+                    <div class="date-format" [attr.duration]="eachComponent.type!=='van-driver'?getDuration(convertAmadeusJustDate(segment.flightSegment.departure.at), convertAmadeusJustTime(segment.flightSegment.departure.at),
+        				convertAmadeusJustDate(segment.flightSegment.arrival.at),
+        				convertAmadeusJustTime(segment.flightSegment.arrival.at)
+        				):null">
+                      <div class="dep">
+                        <i *ngIf="eachComponent.type==='AIRPLANE'"
+                           class="material-icons detailed-info">flight_takeoff</i>
+                        <i *ngIf="eachComponent.type==='hotel-room'"
+                           class="material-icons  detailed-info">rotate_left</i>
+                        <div class="detail-info">
+                          <div class="detail-info-date">
+                            <i class="material-icons">date_range</i>
+                            {{convertAmadeusDate(segment.flightSegment.departure.at)}}
+                          </div>
+                          <div class="detail-info-place">
+                            <i class="material-icons">pin_drop</i>
+                            {{segment.flightSegment.departure.iataCode}}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="land">
+                        <i  class="material-icons detailed-info">flight_land</i>
+
+                        <div class="detail-info">
+                          <div class="detail-info-date">
+                            <i class="material-icons">date_range</i>
+                            {{convertAmadeusDate(segment.flightSegment.arrival.at)}}
+                          </div>
+                          <div class="detail-info-place">
+                            <i class="material-icons">pin_drop</i>{{segment.flightSegment.arrival.iataCode}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

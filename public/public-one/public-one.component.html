@@ -1,0 +1,492 @@
+<app-header *ngIf="agency" [agency]="agency"></app-header>
+<div class="main-content">
+  <ngx-slick-carousel class="carousel big-carousel"
+                      #slickModal="slick-carousel"
+                      [config]="mainSlideConfig"
+                      (init)="slickInit($event)"
+                      (breakpoint)="breakpoint($event)"
+                      (afterChange)="afterChange($event)"
+                      (beforeChange)="beforeChange($event)">
+    <div ngxSlickItem *ngFor="let package of getFeatured(true);let i = index" class="slide">
+      <div class="image-over-text">
+        <div class="intro">
+          <h2>
+            <span [innerHTML]="package.packageData.remarks">
+
+            </span>
+          </h2>
+          <button class="sectionBtn" tabindex="0" [routerLink]="'landingTour/'+package.packageData._id">
+            MORE INFO
+          </button>
+        </div>
+      </div>
+        <img src="{{ package.packageData.images[0] }}" alt="" width="100%">
+    </div>
+  </ngx-slick-carousel>
+  <div class="row toolbar">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="card card-stats">
+        <div class="card-content" *ngIf="packages">
+          <p class="category">
+            <i class="material-icons"> build </i>
+          </p>
+        </div>
+        <div class="tools">
+          <!-- <span (click)="packageList = !packageList;packageBuilder = []" class="po">
+              <i *ngIf="!packageList" class="material-icons active">storage</i>
+              <i *ngIf="packageList" class="material-icons active">widgets</i>
+          </span> -->
+          <span class="po" (click)="filter = !filter;">
+                        <i class="material-icons active">filter_list</i>
+                    </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row toolbar" *ngIf="filter">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="card card-stats">
+        <p class="category">
+          <i class="material-icons"> filter_list </i>
+        </p>
+        <div class="col-md-3">
+          <div class="form-group form-black label-floating is-empty">
+            <mat-form-field>
+              <input autofocus matInput [matDatepicker]="picker1" placeholder="From" class="input-width"
+                     [(ngModel)]="departure" (ngModelChange)="collectDates(departure)">
+              <mat-datepicker-toggle autofocus matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker autofocus #picker1 [startAt]="endDate"></mat-datepicker>
+              <input autofocus matInput name="time-picker" atp-time-picker value="00:00" class="time time-width" placeholder="Time">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group form-black label-floating is-empty">
+            <mat-form-field>
+              <input [(ngModel)]="arrival" (ngModelChange)="collectDates(arrival)" autofocus matInput
+                     [matDatepicker]="picker2" placeholder="To" class="input-width">
+              <mat-datepicker-toggle autofocus matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker autofocus #picker2 [startAt]="endDate"></mat-datepicker>
+              <input autofocus matInput name="time-picker" atp-time-picker value="00:00" class="time time-width" placeholder="Time">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-1" name="round-trip">
+          <app-addons [addon]="roundTripData" (isChecked)="roundTrip = $event;collectDates(roundTrip)"></app-addons>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <ngx-slick-carousel class="carousel"
+                      #slickModal="slick-carousel"
+                      [config]="slideConfig"
+                      (init)="slickInit($event)"
+                      (breakpoint)="breakpoint($event)"
+                      (afterChange)="afterChange($event)"
+                      (beforeChange)="beforeChange($event)">
+    <div ngxSlickItem *ngFor="let package of getFeatured(false);let i = index" class="slide" (click)="goToLandingTour(package)">
+      <div class="price" *ngIf="package">
+        {{packagePrice(package)}}
+        <i class="material-icons">flight_takeoff</i>
+        <div class="more-info">
+          <div *ngIf="package.componentsData[0]">
+            {{(package.componentsData[0].associated_agency!='amadeus'&&package.componentsData[0].associated_agency!='airasia')?package.componentsData[0].details.from.city:package.componentsData[0].segments[0].flightSegment.departure.iataCode}}
+          </div>
+          <i class="material-icons">arrow_right_alt</i>
+          <div *ngIf="package.componentsData[0]">
+            {{(package.componentsData[0].associated_agency!='amadeus'&&package.componentsData[0].associated_agency!='airasia')?package.componentsData[0].details.to.city:package.componentsData[0].segments[component.segments.length-1].flightSegment.arrival.iataCode}}
+          </div>
+        </div>
+        <ul class="deep-info">
+          <li class="each-info" *ngFor="let component of package.componentsData" >
+            <div class="icon">
+              <i class="material-icons">date_range</i>
+              {{(component.associated_agency==='amadeus'||component.associated_agency==='airasia')?convertAmadeusDate(component.segments[0].flightSegment.departure.at):(component.pair?cleanDate(component.details.to.departure.date,component):cleanDate(component.details.from.departure.date,component))}}
+            </div>
+            <div class="description">
+              <div *ngIf="component.mode === 'transport'">
+                <i class="material-icons info-ico">{{component.icon}}</i>
+                <div *ngIf="component">
+                  {{(component.associated_agency!='amadeus'&&component.associated_agency!='airasia')?component.details.from.city:component.segments[0].flightSegment.departure.iataCode}}
+                </div>
+                <i class="material-icons">arrow_right_alt</i>
+                <div *ngIf="component">
+                  {{(component.associated_agency!='amadeus'&&component.associated_agency!='airasia')?component.details.to.city:component.segments[component.segments.length-1].flightSegment.arrival.iataCode}}
+                </div>
+              </div>
+              <div *ngIf="component.mode === 'accomodation'">
+                <i class="material-icons info-ico">{{component.icon}}</i>
+                {{component.company?component.company:(component.associated_agency==='amadeus'?'Amadeus':'Airasia')}}
+
+              </div>
+
+            </div>
+          </li>
+          <!-- <app-addons *ngFor="let addon of component.details.addons" [addon]="addon"></app-addons> -->
+          <!-- </div> -->
+        </ul>
+
+      </div>
+      <img src="{{ package.packageData.images[0] }}" alt="" width="100%">
+
+      <div class="long-description" [innerHTML]="package.packageData.remarks">
+
+      </div>
+    </div>
+  </ngx-slick-carousel>
+</div>
+<section class="section3Back"
+         style="background: url(../../../assets/img/landingTour/section3Back.png) center center no-repeat">
+  <div class="container" *ngIf="visaProcessStep == 1">
+    <div class="col-md-12">
+      <p class="section3Title">
+        Smart Visa process by {{agency?agency.company_name:'NJ'}}
+      </p>
+    </div>
+    <div class="col-md-12">
+      <div class="col-md-5 padding">
+        <p class="section3MainText">
+          You may now easily process your visa for any supported country
+        </p>
+      </div>
+      <div class="col-md-3"></div>
+      <div class="col-md-4">
+        <button class="sectionBtn btn_top_space" (click)="visaProcessStep = 2">
+          PROCESS VISA NOW
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="container" *ngIf="visaProcessStep === 2">
+    <div class="row">
+      <div class="form-group form-black is-empty col-md-4">
+          <input 
+          type="text" 
+          class="form-control"
+          (input)="getCountries($event.target.value)"
+          [matAutocomplete]="auto1"  
+          placeholder="Passport Origin"
+          [value]="visaProcess.passportName">
+        <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="passport($event)">
+          <mat-option *ngFor="let item of searchResult" [value]="item['official_name_en']">
+            {{item.official_name_en}} 
+          </mat-option>
+          <mat-option *ngIf="loader">
+            <div class="text-center action-btn">
+              <i class="fa fa-spinner fa-pulse fa-fw"></i>
+
+            </div>
+
+          </mat-option>
+        </mat-autocomplete>
+          <span class="material-input"></span>
+      </div>
+      <div class="form-group form-black is-empty col-md-4">
+          <input 
+          type="text" 
+          class="form-control"
+          (input)="getCountries($event.target.value)"
+          [matAutocomplete]="auto2"  
+          placeholder="Country for Visa"
+          [value]="visaProcess.visaName">
+        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="visa($event)">
+          <mat-option *ngFor="let item of searchResult" [value]="item['official_name_en']">
+            {{item.official_name_en}} 
+          </mat-option>
+          <mat-option *ngIf="loader">
+            <div class="text-center action-btnr">
+              <i class="fa fa-spinner fa-pulse fa-fw"></i>
+
+            </div>
+
+          </mat-option>
+        </mat-autocomplete>
+          <span class="material-input"></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <button class="sectionBtn btn_top_space" (click)="getPassportInfo()">
+          Get Visa Info
+        </button>
+      </div>
+    </div>
+    {{requirements}}
+  </div>
+  <div class="container" *ngIf="visaProcessStep === 3">
+    <div *ngIf="nullForm">
+
+        <div class="row">
+            <div class="col col-md-12 custom-row-margin">
+              <h5>
+                  Sorry, We're not processing such visa at the moment, You may get back again
+              </h5>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-md-2">
+                <button class="sectionBtn btn_top_space" (click)="visaProcessStep=2;nullForm=false;requirements=''">
+                  Back
+                </button>
+              </div>
+            </div>
+    </div>
+    <div *ngIf="!nullForm">
+        <h3>Rules</h3>
+        <div class="row">
+          <div class="col col-md-12 custom-row-margin" *ngFor="let item of formData.form.roles;let i=index" >
+            <span>{{i+1}}- {{item}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <button class="sectionBtn btn_top_space" (click)="visaProcessStep=10">
+              Skip
+            </button>
+          </div>
+        </div>
+
+    </div>
+    
+  </div>
+  <div class="container" *ngIf="visaProcessStep === 10">
+    <form autocomplete="off">
+      <h3>General Information</h3>
+      <div class="row">
+        <div class="col-md-12 custom-row-margin" *ngFor="let item of formData.form.items;let i=index" >
+          <div *ngIf="item.type=='Checkbox'">
+            <div class="col-md-2" >
+              <h4> {{item.label}} :</h4>
+            </div>
+            <div class="col-md-3 check-display" *ngFor="let sub of item.data">
+              <div class="checkbox input-top-space">
+                <label>
+                  <input type="checkbox" (change)="changeCheckbox($event,item)" [value]="sub" name="optionsCheckboxes">
+                </label>
+                {{sub}}
+              </div>
+            </div>
+          </div>
+          <div *ngIf="item.type=='Radio'">
+
+            <div class="col-md-2" >
+              <h4> {{item.label}} :</h4>
+            </div>
+            <div class="col-md-3 check-display" *ngFor="let sub of item.data">
+              <div class="radio input-top-space">
+                <label>
+                  <input type="radio" (change)="changeRadio($event,item)" [value]="sub" name="optionsCheckboxes">
+                </label>
+                {{sub}}
+              </div>
+
+            </div>
+          </div>
+          <div *ngIf="item.type=='Attachment'">
+
+            <div class="col-md-2" >
+              <h4> {{item.label}} :</h4>
+            </div>
+            <!--<div class="col-md-3">-->
+              <!--<form>-->
+                <!--<input type="file" name="fileupload" value="fileupload" id="fileupload{{i}}" class="custom-file-input input-top-space">-->
+              <!--</form>-->
+
+            <!--</div>-->
+            <div class="col-md-12 form-inline img-section">
+              <image-upload
+                url="{{appSetting.UPLOAD_URL}}/api/upload/5c15efb47b741fff2044ec26"
+                [max]="10"
+                [extensions]="['jpg','png','jpeg']"
+                [maxFileSize]="3048576"
+                buttonCaption=""
+                dropBoxMessage=""
+                clearButtonCaption=""
+                (uploadFinished)="uploadFinished($event,item)"
+                [uploadedFiles]="images1"
+                (removed)="onRemoved($event,item)"
+                [uploadedFiles]="images1"
+              >
+              </image-upload>
+             
+              <div class="images" *ngFor="let image of item.value">
+                <img [src]="image" alt="">
+              </div>
+              <div class="col-md-1">
+              </div>
+
+              <!-- <div class="col-md-8">
+                <img src="../../../assets/img/tim_80x80.png" class="slide-img">
+                <img src="../../../assets/img/tim_80x80.png" class="slide-img">
+                <img src="../../../assets/img/tim_80x80.png" class="slide-img">
+
+                <i class="material-icons more-ico">
+                  more_vert
+                </i>
+              </div> -->
+
+            </div>
+          </div>
+          <div *ngIf="item.type=='Input'">
+
+            <div class="col-md-4" >
+              <div class="form-group label-floating">
+                <label class="control-label">{{item.label}}</label>
+                <input type="text" class="form-control" [(ngModel)]="item.value"  name="{{item.label}}{{i}}" />
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="item.type=='DatePicker'">
+
+            <div class="col-md-4" >
+              <div class="form-group form-black label-floating is-empty datepicker-space date-main-input">
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker" placeholder="{{item.label}}" [(ngModel)]="item.value" name="picker" class="date input-width">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker ></mat-datepicker>
+                </mat-form-field>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <button class="sectionBtn btn_top_space" (click)="goToLogin()">
+            Get Visa Info
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="container" *ngIf="visaProcessStep === 4">
+      <br/>
+      <br/>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3" *ngIf="mode==='A'">
+        <div class="card">
+          <div class="card-header" data-background-color="purple">
+            <h4 class="title">Login</h4>
+          </div>
+          <div class="card-content">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group form-black label-floating is-empty">
+                  <label class="control-label">Email</label>
+                  <input [(ngModel)]="email" class="form-control" type="email" name="email">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group form-black label-floating is-empty">
+                  <label class="control-label">Password</label>
+                  <input class="form-control" [(ngModel)]="password"  type="password" name="password">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <button type="submit" class="btn btn-primary pull-right" (click)="login()">Login</button>
+                <button type="submit" class="btn btn-danger pull-right" (click)="goToMode('B')">SignUp</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--<div class="col-md-12">-->
+        <!--<button class="btn btn-book">book now</button>-->
+        <!--</div>-->
+      </div>
+
+      <div class="col-md-6 col-md-offset-3" *ngIf="mode==='B'">
+        <div class="card">
+          <div class="card-header" data-background-color="purple">
+            <h4 class="title">SignUp</h4>
+          </div>
+          <div class="card-content">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group form-black label-floating is-empty">
+                  <label class="control-label">Email</label>
+                  <input class="form-control" [(ngModel)]="email" type="email" name="email">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group form-black label-floating is-empty">
+                  <label class="control-label">Password</label>
+                  <input  class="form-control" [(ngModel)]="password" type="password" name="password">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group form-black label-floating is-empty">
+                  <label class="control-label">Confirm Password</label>
+                  <input class="form-control" [(ngModel)]="confirmPassword" type="password"
+                         name="confirmPassword">
+                </div>
+              </div>
+
+
+              <div class="col-md-12">
+                <div class="form-group form-black label-floating is-empty">
+                  <label class="control-label">Mobile Number</label>
+                  <input class="form-control" [(ngModel)]="mobileNo" type="text" name="mobile">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <button type="submit" class="btn btn-primary pull-right" (click)="signup()">SignUp</button>
+                <button type="submit" class="btn btn-danger pull-right" (click)="goToMode('A')">Login</button>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+  <div class="container" *ngIf="visaProcessStep === 5">
+    <div class="info-main">
+    <p>{{user.firstName}} {{user.lastName}}
+    </p>
+
+    <p>{{formData.name}}</p>
+
+    <div class="check-display">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" (change)="onCheck($event)" [checked]="user.policy" name="optionsCheckboxes">
+        </label>
+      </div>
+      <p class="check-text">
+        Do you have police clearance?
+      </p>
+    </div>
+
+      <p *ngFor="let item of formData.form.items">{{item.label}} : {{item.value}}</p>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2">
+        <button class="sectionBtn btn_top_space"  (click)="createInquery()">
+          send Inquery
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="container" *ngIf="visaProcessStep === 9">
+    <!-- <form autocomplete="off"> -->
+      <h3>
+        Citizens (Passport Holders) of {{visaProcess.passport}} are visa free to {{visaProcess.visa}}
+      </h3>
+    <!-- </form> -->
+  </div>
+</section>
+<footer  *ngIf="agency" [agency]="agency"></footer>

@@ -1,0 +1,185 @@
+<app-loading *ngIf="loading"></app-loading>
+
+<div class="spacial-message" *ngIf="role!=='admin' && role!=='superadmin'
+&&role!=='user'&&role!=='encoder'&&role!=='agent'&&role!=='van-driver'&&role!=='company'
+&&role!=='tour-guide'">
+  Please confirm your email address
+  <button class="confirm-now" [routerLink]="['/panel/profile']">
+    Confirm Now
+  </button>
+</div>
+<div class="spacial-message" *ngIf="role==='company'&&memory.getCompanyName() &&companyList.length>0">
+  <h3>Complete your sign up</h3>
+  <div class="col-md-3 col-sm-4">
+    <div class="form-group form-black label-floating"
+         [ngClass]="company_name === '' ? 'is-empty' : ''">
+      <label class="control-label">Your complete comapny name</label>
+      <input type="text" name="from" class="form-control"
+             [value]="company_name"
+             (input)="getCompany($event.target.value)"
+             [matAutocomplete]="auto1">
+      <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="company_name=$event.option.value">
+        <mat-option *ngFor="let item of companyListSearch" [value]="item.bnName" >
+          {{item.bnName}}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-4">
+    <div class="form-group form-black label-floating" [ngClass]="password === '' ? 'is-empty' : ''">
+      <label class="control-label">Choose a password</label>
+      <input type="password" class="form-control" name="pass"
+             [(ngModel)]="password" autocomplete="new-password">
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-4">
+    <div class="form-group form-black label-floating" [ngClass]="cPassword === '' ? 'is-empty' : ''">
+      <label class="control-label">confirm password</label>
+      <input type="password" class="form-control" name="cpass"
+             [(ngModel)]="cPassword"  autocomplete="new-password">
+    </div>
+  </div>
+  <button class="confirm-now" [disabled]="!password||!company_name||!cPassword" (click)="setCompanyName()">
+    submit
+  </button>
+</div>
+<div class="spacial-message" *ngIf="role==='company'&& memory.getCompanyName() &&companyList.length==0">
+  <h3>Complete your sign up</h3>
+  <div class="col-md-3 col-sm-4">
+    <div class="form-group form-black label-floating" [ngClass]="password === '' ? 'is-empty' : ''">
+      <label class="control-label">Choose a password</label>
+      <input type="password" class="form-control" name="pass"
+             [(ngModel)]="password" autocomplete="new-password">
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-4">
+    <div class="form-group form-black label-floating" [ngClass]="cPassword === '' ? 'is-empty' : ''">
+      <label class="control-label">confirm password</label>
+      <input type="password" class="form-control" name="cpass"
+             [(ngModel)]="cPassword"  autocomplete="new-password">
+    </div>
+  </div>
+  <button class="confirm-now" [disabled]="!password||!cPassword" (click)="setCompanyName()">
+    submit
+  </button>
+</div>
+<nav class="navbar navbar-transparent navbar-absolute">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" (click)="sidebarToggle()">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">{{getTitle()}}</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li *ngIf="role!=='superadmin' &&role!=='encoder'&&role!=='van-driver'&&role!=='tour-guide'&&role!=='company'">
+          <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+            <!--<i class="material-icons">notifications</i>-->
+          <!--</a>-->
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{memory.getActiveCurrency()?memory.getActiveCurrency():'PHP'}} {{math.round(total*100)/100}}</a>
+
+          <ul class="dropdown-menu scroll">
+            <li class="item-width">
+              <div class="col-md-12">
+                <div class="col-md-8">
+                  <div class="form-group form-black label-floating"
+                       [ngClass]="!amount? 'is-empty' : ''">
+                    <label class="control-label">Amount({{memory.getActiveCurrency()}})</label>
+                    <!--[ngClass]="validation.checkString(user.firstName,26)?'':'has-error'"-->
+                    <input type="number" class="form-control input-color" [(ngModel)]="amount"
+                           name="amount">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <button type="button" class="btn btn-danger submit-btn" data-dismiss="modal" (click)="addAmount()">Add Amount
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li class="item-width">
+              <div class="col-md-12">
+                <div class="col-md-8">
+                  <div class="form-group form-black label-floating"
+                       [ngClass]="!exportAmount ? 'is-empty' : ''">
+                    <label class="control-label">Export Amount({{memory.getActiveCurrency()}})</label>
+                    <!--[ngClass]="validation.checkString(user.firstName,26)?'':'has-error'"-->
+                    <input type="number" class="form-control "  [(ngModel)]="exportAmount" [max]="math.round(total*100)/100"
+                           name="exportAmount">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <button type="button" class="btn btn-danger submit-btn" data-dismiss="modal" (click)="exportAmountAction()">Export Amount
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+        </li>
+        <li *ngIf="role!=='superadmin'&&role!=='van-driver'&&role!=='tour-guide'&&role!=='company'">
+          <a href="#pablo" (click)="goTo1(agency_id)" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons">dashboard</i>
+            <p class="hidden-lg hidden-md">Dashboard</p>
+          </a>
+        </li>
+        <li class="dropdown" *ngIf="role!=='superadmin'&&role!=='encoder'&&role!=='van-driver'&&role!=='tour-guide'&&role!=='user'&&role!=='company'">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" (click)="getNotification()">
+            <i class="material-icons">notifications</i>
+            <span class="notification" *ngIf="inqueryCount>0">{{inqueryCount}}</span>
+            <p class="hidden-lg hidden-md">Notifications</p>
+          </a>
+          <ul class="dropdown-menu scroll">
+            <li *ngFor="let item of notifications" class="item-width">
+              <app-notification [notify]="item" (clicked)="goToInquery($event.details.inquery_id)"></app-notification>
+            </li>
+            <li *ngIf="!notifications" class="item-width">
+              <div *ngIf="!notifications" class="result-box">No data to show</div>
+            </li>
+            <li  class="item-width" *ngIf="notifLoading">
+              <!--(click)="getNotification()"-->
+              <div class="notif-loading">
+                <img src="https://www.mrsnelsons.com/Public/img/dots.gif" alt="">
+              </div>
+            </li>
+          </ul>
+
+        </li>
+        <li>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons">exit_to_app</i>
+            <p class="hidden-lg hidden-md">exit_to_app</p>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a *ngIf="role!=='superadmin'" (click)="goTo('/panel/profile')">Profile</a></li>
+            <li><a (click)="goTo('/logout')">Logout</a></li>
+          </ul>
+          <!--<a href="/logout" [routerLink]="['/logout']" class="dropdown-toggle" data-toggle="dropdown">-->
+          <!--<i class="material-icons">person</i>-->
+          <!--<p class="hidden-lg hidden-md">Profile</p>-->
+          <!--</a>-->
+        </li>
+
+      </ul>
+
+      <!-- <form class="navbar-form navbar-right" role="search">
+                <div class="form-group form-black is-empty">
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" (keyup)="filter()"
+                           [(ngModel)]="searchInput" [matAutocomplete]="auto1"  placeholder="Search">
+                  <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="goTo($event.option.value)">
+                    <mat-option *ngFor="let item of searchResult" [value]="item.path" (click)="goTo(item.path)">
+                      {{item.title}}
+                    </mat-option>
+                  </mat-autocomplete>
+                    <span class="material-input"></span>
+                </div>
+                <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                    <i class="material-icons">search</i><div class="ripple-container"></div>
+                </button>
+            </form> -->
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,197 @@
+<div *ngIf="preloading">
+  <content-loader height="250">
+    <svg:rect x="17" y="25" rx="4" ry="4" width="370" height="81" />
+    <svg:rect x="17" y="120" rx="4" ry="4" width="113" height="36" />
+    <svg:rect x="144" y="120" rx="4" ry="4" width="113" height="36" />
+    <svg:rect x="272" y="120" rx="4" ry="4" width="113" height="36" />
+    <svg:rect x="17" y="170" rx="4" ry="4" width="370" height="14" />
+  </content-loader>
+</div>
+
+<div class="main-content" [ngStyle]="{'display':preloading?'none':''}" >
+
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-chart" data-background-color="orange">
+            <div class="ct-chart" id="dailySalesChart"></div>
+          </div>
+          <div class="card-content" *ngIf="appSetting.DASHBOARD_INCREASE">
+            <h4 class="title">Revenue Changes</h4>
+            <p class="category"><span class="text-success"><i class="fa fa-long-arrow-up"></i> 0%  </span> increase in
+              today sales.</p>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">access_time</i> Last update
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header" data-background-color="orange">
+            <i class="material-icons">content_copy</i>
+          </div>
+          <div class="card-content" *ngIf="(trips.totalActiveTrips>=0) && (trips.totalTrips>=0)">
+            <p class="category">Active Trips</p>
+            <h3 class="title">{{trips.totalTrips - (tripNeedAttention?tripNeedAttention:0)}}/{{trips.totalTrips}}
+            </h3>
+          </div>
+          <div class="card-content" *ngIf="memory.getLoading()">
+            <p class="category">Active Trips</p>
+            <div class="loader">
+              <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+              </svg>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons text-success">info</i> <a style="cursor:pointer" (click)="goToTrip('valid')">Check
+              All
+              Trips</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header" data-background-color="green">
+            <i class="material-icons">store</i>
+          </div>
+          <div class="card-content">
+            <p class="category">Total Sale</p>
+            <h3 class="title"
+                *ngIf="totalSale>=0">{{memory.getActiveCurrency() ? memory.getActiveCurrency() : 'PHP'}} {{math.round(totalSale*100)/100}}</h3>
+            <!--<i class="fa fa-spinner fa-pulse fa-fw" ></i>-->
+            <div class="loader" *ngIf="!(totalSale>=0)">
+              <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+              </svg>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">date_range</i>
+              Last 24 Hours
+              <a [routerLink]="['/panel/accounting']">Check All Sale</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header" data-background-color="red">
+            <i class="material-icons">info_outline</i>
+          </div>
+          <div class="card-content">
+            <p class="category">Trips Needs Attention</p>
+            <h3 class="title" *ngIf="tripNeedAttention>=0">{{tripNeedAttention}}</h3>
+            <!--<i class="fa fa-spinner fa-pulse fa-fw" ></i>-->
+            <div class="loader" *ngIf="!(tripNeedAttention>=0)">
+              <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+              </svg>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="stats" style="cursor:pointer" (click)="goToTrip('invalid')">
+              <i class="material-icons">local_offer</i> Tracked from Records
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats" >
+              <div class="card-header" data-background-color="blue">
+                  <i class="fa fa-twitter"></i>
+              </div>
+              <div class="card-content">
+                  <p class="category">Followers</p>
+                  <h3 class="title">+245</h3>
+              </div>
+              <div class="card-footer">
+                  <div class="stats">
+                      <i class="material-icons">update</i> Just Updated
+                  </div>
+              </div>
+          </div>
+      </div> -->
+    </div>
+
+    <!--<div class="row">-->
+    <!--<div class="col-lg-12 col-md-12">-->
+    <!--<div class="card card-nav-tabs">-->
+    <!--<div class="card-header" data-background-color="purple">-->
+    <!--<div class="nav-tabs-navigation">-->
+    <!--<div class="nav-tabs-wrapper">-->
+    <!--&lt;!&ndash; <span class="nav-tabs-title">Tasks:</span> &ndash;&gt;-->
+    <!--<ul class="nav nav-tabs" data-tabs="tabs">-->
+    <!--<li class="active">-->
+    <!--<a href="#profile" data-toggle="tab">-->
+    <!--<i class="material-icons">compare_arrows</i>-->
+    <!--Latest Inqueries-->
+    <!--<div class="ripple-container"></div>-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="card-content">-->
+    <!--<div class="tab-content">-->
+    <!--<div class="tab-pane active" id="profile">-->
+    <!--<table class="table">-->
+    <!--<tbody *ngIf="allInqueries?.length">-->
+    <!--<tr *ngFor="let inquiry of allInqueries">-->
+    <!--<td>-->
+    <!--{{inquiry.type === 'BOOK' ? 'Booking from user' : 'Visa Process from user'}}-->
+    <!--</td>-->
+    <!--<td>-->
+    <!--{{inquiry.status}}-->
+    <!--</td>-->
+
+    <!--</tr>-->
+    <!--</tbody>-->
+    <!--<tbody *ngIf="!(allInqueries.length>0)">-->
+    <!--<div *ngIf="!inqueriesLoading">No data to show</div>-->
+    <!--<div class="loader text-center" *ngIf="inqueriesLoading">-->
+    <!--<svg class="circular" viewBox="25 25 50 50">-->
+    <!--<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>-->
+    <!--</svg>-->
+    <!--</div>-->
+    <!--</tbody>-->
+    <!--</table>-->
+    <!--<button [routerLink]="['/panel/inqueries']" [disabled]="!(allInqueries.length>0)"-->
+    <!--class="btn btn-danger pull-right btn-full-width" type="submit">-->
+    <!--See All Inqueries-->
+    <!--<div class="ripple-container"></div>-->
+    <!--</button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+
+    <app-tile-table [data]="allInqueries" [config]="config" [loading]="memory.getLoading()">
+    </app-tile-table>
+    <div class="col-md-12 ">
+      <div class="pull-right">
+        <button [routerLink]="['/panel/inqueries']"
+                class="btn btn-danger pull-right btn-full-width" type="submit">
+          See All Inqueries
+          <div class="ripple-container"></div>
+        </button>
+      </div>
+    </div>
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+  </div>
+</div>

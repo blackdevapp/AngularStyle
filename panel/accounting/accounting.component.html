@@ -1,0 +1,66 @@
+<div *ngIf="preloading">
+  <content-loader>
+    <svg:rect x="17" y="38" rx="2" ry="2" width="370" height="16" />
+    <svg:rect x="17" y="65" rx="2" ry="2" width="370" height="16" />
+    <svg:rect x="17" y="85" rx="2" ry="2" width="370" height="16" />
+  </content-loader>
+</div>
+
+
+
+<div class="main-content" *ngIf="!preloading">
+  <app-circular-drop (clicked)="dropClicked($event)" [data]="dropData"></app-circular-drop>
+
+  <div class="container-fluid" *ngIf="mode=='accounting'">
+    <app-filter [typeOfFilter]="typeOfFilter" (updated)="search($event)"></app-filter>
+
+    <app-tile-table [data]="tableItems" [config]="config"
+                    (scroll)="onScroll()" (factor)="goToFactor($event)"
+                    [loading]="memory.getLoading()"></app-tile-table>
+
+    <!--<app-tile-table [items]="tableItems" (factor)="goToFactor($event)"></app-tile-table>-->
+
+
+    <div class="sub-footer-body">
+      <ul>
+        <li></li>
+
+        <li>
+          {{memory.getActiveCurrency()?memory.getActiveCurrency():'PHP'}} {{math.round(totalDebit*100)/100}}
+        </li>
+        <li>
+          {{memory.getActiveCurrency()?memory.getActiveCurrency():'PHP'}} {{math.round(totalCredit*100)/100}}
+        </li>
+        <li>
+          {{memory.getActiveCurrency()?memory.getActiveCurrency():'PHP'}} {{math.round((totalDebit-totalCredit)*100)/100}}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid" *ngIf="mode=='manual'">
+    <app-manual-transaction (add)="addTransactions($event)" [data]="manualData"></app-manual-transaction>
+  </div>
+</div>
+
+
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Package Preview</h4>
+        <a (click)="print1()">print</a>
+      </div>
+      <div class="modal-body" id="printTable" *ngIf="package">
+        <!-- <app-timeline [package]="package" [mode]="'inquery'"></app-timeline> -->
+        <!-- <app-invoice></app-invoice> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

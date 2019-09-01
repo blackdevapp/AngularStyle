@@ -1,0 +1,158 @@
+@import "../../../assets/sass/md/classes.scss";
+
+.icon-selector{
+  margin-top: 46px;
+  @extend .vertical-center;
+  flex-direction: column;
+  .row{
+    div{
+      font-size: 8px;
+      @extend .center;
+    }
+  }
+}
+
+
+.input_ico{
+  position: absolute;
+  top: 12px;
+  bottom: 0;
+  right: 15px;
+  cursor: pointer;
+}
+.input_ico2{
+  position: absolute;
+  top: 12px;
+  bottom: 0;
+  right: 0px;
+  cursor: pointer;
+}
+
+.input_ico3{
+  position: absolute;
+  top: 12px;
+  bottom: 0;
+  right: 20px;
+  cursor: pointer;
+}
+.custom-input{
+  width: 96%;
+}
+
+.custom-input2{
+  width: 50%!important;
+
+}
+
+.edit-ico{
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+
+.box-padding{
+  padding-left: 50px;
+}
+.box-padding-vertical{
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+
+.submit-btn{
+  width: 100px!important;
+}
+
+
+.modal-body{
+  height: auto;
+}
+
+
+.invalid-input:invalid{
+  border: red;
+}
+
+
+.modal .modal-dialog{
+  margin-top: 80px;
+}
+
+
+/deep/.form-control, .form-group .form-control .invalid-input{
+  background-color: red;
+}
+
+.alert {
+  padding: 10px;
+  background-color: #ff6438;
+  color: white;
+}
+
+
+
+.table-custom-width{
+  tr{
+    td{
+      &:nth-child(1){
+        width: 20%;
+      }
+      &:nth-child(2){
+        width: 70%;
+      }
+      &:nth-child(3){
+        width: 10%;
+      }
+
+    }
+  }
+}
+.font-size-close{
+  font-size: 30px;
+}
+.nav-tabs{
+  background-color: transparent;
+}
+
+a{
+  cursor: pointer!important;
+}
+.border-li{
+  border: 1px solid #fff;
+  border-radius: 2px;
+  cursor: pointer!important;
+}
+
+.custom-margin2{
+  margin-top: 8px!important;
+}
+
+.btn-all{
+  background: #ef4e47;
+  border-radius: 4px;
+  margin-top: -6px;
+  width: 90px;
+  border: none;
+  color: white;
+  &:hover{
+    background: rgba(255, 255, 255, 0.20);
+  }
+
+  span{
+    font-size: 14px;
+    position: relative;
+    left: 5px;
+    top: -2px;
+  }
+
+  i{
+    position: relative;
+    top: 4px;
+    left: -6px;
+  }
+}
+
+
+.config-padding{
+  padding-left: 50px;
+}

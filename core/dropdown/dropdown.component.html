@@ -1,0 +1,26 @@
+<!-- <li style="list-style-type: none;margin-left: 15px;">
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	     <i class="material-icons" *ngIf="!storeSelectedData">notifications</i> -->
+<!-- <i class="material-icons" *ngIf="storeSelectedData">{{storeSelectedData.icon}}</i>
+  <span class="notification" *ngIf="storeSelectedData">{{storeSelectedData.displayName}}</span>
+   <span class="notification">{{dropData.length}}</span> -->
+<!-- <p class="hidden-lg hidden-md">Notifications</p>
+</a>
+<ul class="dropdown-menu">
+  <li  *ngFor="let item of dropData">
+      <a (click)="selectedItem(item)">{{item.displayName}}</a>
+  </li>
+</ul>
+</li>  -->
+
+<div class="dropdown" style="list-style-type: none;margin-left: 15px;">
+  <button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown">
+    <i class="material-icons" *ngIf="storeSelectedData">{{storeSelectedData.icon}}</i>
+    <span class="notification" *ngIf="storeSelectedData">{{storeSelectedData.displayName}}</span>
+    <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li *ngFor="let item of dropData">
+      <a (click)="selectedItem(item)">{{item.displayName}}</a>
+    </li>
+  </ul>
+</div>

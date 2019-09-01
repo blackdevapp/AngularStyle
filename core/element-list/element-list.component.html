@@ -1,0 +1,390 @@
+<!-- <div class="row" *ngIf="liveComponents && !offline">
+	<div class="col-lg-12 col-md-12 col-sm-12" *ngFor="let flight of liveComponents.results">
+        <div class="card card-stats">
+        	<div class="card-footer">
+	              <div class="stats">
+	                  {{liveComponents.currency}} {{flight.fare.total_price}}
+	              </div>
+            </div>
+            <div class="card-content">
+		        <div class="element-data col-md-9">
+		        	<div *ngFor="let itineraries of flight.itineraries">
+		        		<div class="single-line" *ngFor="let flights of itineraries.outbound.flights;let flightIndex = index">
+			        		<div class="line">
+			        			<div class="col-md-2 checkbox">
+						            <label>
+						                <input (click)="selectedFlight(flights,flight.fare)" type="checkbox" name="optionsCheckboxes">
+						            </label>
+						        </div>
+			        			<div class="data">		        				
+			        				<div class="icon date">
+			        					<i class="material-icons">flight_takeoff</i>
+				        				<div class="date-format">
+				        					
+				        					{{formatDate(flights.departs_at)}}
+				        				</div>
+			        				</div>
+			        				<div class="name">
+			        					{{flights.origin.airport}}
+			        				</div>
+			        			</div>
+			        			<div class="data">		        				
+			        				<div class="icon date">
+			        					<i class="material-icons">flight_land</i>
+				        				<div class="date-format">
+				        					{{formatDate(flights.arrives_at)}}
+				        				</div>
+			        				</div>
+			        				<div class="name">
+			        					{{flights.destination.airport}}
+			        				</div>
+			        			</div>
+			        		</div>
+			        	</div>	
+		        	</div>
+		        </div>
+		        <div class="actions col-md-3">
+			    	<div class="edit col-md-6">
+			    		<i class="material-icons">border_color</i>
+			    	</div>
+			    	<div class="edit col-md-6">
+			    		<i class="material-icons">delete</i>
+			    	</div>
+			    </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="row"
+     *ngIf="(eachComponent &&eachComponent.associated_agency!=='amadeus' &&eachComponent.associated_agency!=='airasia') ||(eachComponent &&eachComponent.type==='hotel-room') && math.round(exchange(eachComponent)*100)/100>0">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card card-stats">
+      <div class="card-footer">
+        <div class="row grab">
+          <div class="col-md-6">
+            <div class="stats">
+              <i class="material-icons align-share"
+                 *ngIf="eachComponent.asSharable==true&& eachComponent.associated_agency!==memory.getAgencyId()">share</i>
+              <div
+                *ngIf="math.round(exchange(eachComponent)*100)/100>0">{{memory.getActiveCurrency() ? memory.getActiveCurrency() : 'PHP'}} {{math.round(exchange(eachComponent) * 100) / 100}}</div>
+            </div>
+          </div>
+          <div class="col-md-6 info">
+            <img *ngIf="eachComponent.associated_agency==='agoda' &&role!=='company'"
+                 src="../../../assets/img/agoda.png"
+                 style="width: auto;height: 50px">
+            <img *ngIf="eachComponent.associated_agency==='agoda'&&role!=='company'" (click)="goToAgoda()"
+                 class="external-ico" src="../../../assets/img/external-link-alt-solid.svg">
+            <img *ngIf="eachComponent.user === 'amadeus'&&role!=='company'"
+                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Amadeus_%28CRS%29_Logo.svg/1280px-Amadeus_%28CRS%29_Logo.svg.png"
+                 style="width: 100px;">
+            <div *ngIf="eachComponent.type!='hotel-room'">
+              <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <!-- <i class="material-icons alert-icon">notifications</i> -->
+                    <i class="material-icons">event_seat</i>
+                    <span class="notification alert-badge">	{{eachComponent.quantity}}</span>
+                    <p class="hidden-lg hidden-md">Notifications</p>
+                  </a>
+                  <!--<ul class="dropdown-menu">-->
+                    <!--<li><a href="#">Mike John responded to your email</a></li>-->
+                  <!--</ul>-->
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="element-data col-md-12 col-xs-12 mobile-padding">
+          <div>
+            <div class="single-line auto-height">
+              <!--<div class="col-md-2 checkbox">-->
+              <!--<label>-->
+              <!--<input [checked]="eachComponent.marked"-->
+              <!--(click)="passBackOfflineData(eachComponent,eachComponent.marked)" type="checkbox"-->
+              <!--name="optionsCheckboxes">-->
+              <!--</label>-->
+              <!--</div>-->
+              <div class="line">
+                <div class="data">
+                  <div class="icon date">
+                    <div class="circle-back">
+                      <i class="material-icons">{{eachComponent.icon}}</i>
+                    </div>
+                    <div class="date-format" custom="cus"
+                         [attr.duration]="(eachComponent.type!=='van-driver'&&eachComponent.type!=='hotel-room')?getDuration(eachComponent.details.from.departure.date, eachComponent.details.from.departure.time,
+                      eachComponent.details.from.arrival.date, 
+                      eachComponent.details.from.arrival.time
+                      ):null">
+                      <div class="dep">
+                        <i *ngIf="eachComponent.type==='AIRPLANE'"
+                           class="material-icons detailed-info">flight_takeoff</i>
+                        <i *ngIf="eachComponent.type==='hotel-room'"
+                           class="material-icons  detailed-info">rotate_left</i>
+                        <i *ngIf="eachComponent.type==='van-driver'"
+                           class="material-icons  detailed-info">airport_shuttle</i>
+                        <div class="detail-info">
+                          <div class="detail-info-date">
+                            <i class="material-icons">date_range</i>
+                            {{eachComponent.type !== 'van-driver' ? formatDate(eachComponent.details.from.departure.date) : 'custom date'}} {{eachComponent.type !== 'van-driver' ? eachComponent.details.from.departure.time : ''}}
+                          </div>
+                          <div class="detail-info-place">
+                            <i class="material-icons">pin_drop</i>
+                            {{eachComponent.details.from.airport ? eachComponent.details.from.airport : eachComponent.details.from.city}}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="land">
+                        <i *ngIf="eachComponent.type==='AIRPLANE'" class="material-icons detailed-info">flight_land</i>
+                        <i *ngIf="eachComponent.type==='hotel-room'"
+                           class="material-icons  detailed-info">rotate_right</i>
+                        <i *ngIf="eachComponent.type==='van-driver'"
+                           class="material-icons  detailed-info">airport_shuttle</i>
+                        <div class="detail-info">
+                          <div class="detail-info-date">
+                            <i class="material-icons">date_range</i>
+                            {{eachComponent.type !== 'van-driver' ? formatDate(eachComponent.details.from.arrival.date) : 'custom date'}} {{eachComponent.type !== 'van-driver' ? eachComponent.details.from.arrival.time : ''}}
+                          </div>
+                          <div class="detail-info-place">
+                            <i
+                              class="material-icons">pin_drop</i>{{eachComponent?.details?.to?.airport ? eachComponent.details.to.airport : eachComponent?.details?.to?.city}}
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="data" *ngIf="eachComponent.details.roundTrip">
+                  <div class="icon date">
+                    <div class="circle-back">
+                      <i class="material-icons">{{eachComponent.icon}}</i>
+                    </div>
+                    <div class="date-format" [attr.duration]="(eachComponent.type!=='van-driver'&&eachComponent.type!=='hotel-room')?getDuration(eachComponent.details.to.departure.date, eachComponent.details.to.departure.time,
+        				eachComponent.details.to.arrival.date, 
+        				eachComponent.details.to.arrival.time
+        				):null">
+                      <div class="dep">
+                        <i *ngIf="eachComponent.type==='AIRPLANE'" class="material-icons detailed-info">flight_land</i>
+                        <i *ngIf="eachComponent.type==='hotel-room'"
+                           class="material-icons  detailed-info">rotate_right</i>
+                        <i *ngIf="eachComponent.type==='van-driver'"
+                           class="material-icons  detailed-info">airport_shuttle</i>
+                        <div class="detail-info">
+                          <div class="detail-info-date">
+                            <i class="material-icons">date_range</i>
+                            {{eachComponent.type !== 'van-driver' ? formatDate(eachComponent.details.to.departure.date) : 'custom date'}} {{eachComponent.type !== 'van-driver' ? eachComponent.details.to.departure.time : ''}}
+                          </div>
+                          <div class="detail-info-place">
+                            <i class="material-icons">pin_drop</i>{{eachComponent.details.to.airport}}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="land">
+                        <i *ngIf="eachComponent.type==='AIRPLANE'" class="material-icons detailed-info">flight_land</i>
+                        <i *ngIf="eachComponent.type==='hotel-room'"
+                           class="material-icons  detailed-info">rotate_right</i>
+                        <i *ngIf="eachComponent.type==='van-driver'"
+                           class="material-icons  detailed-info">airport_shuttle</i>
+                        <div class="detail-info">
+                          <div class="detail-info-date">
+                            <i class="material-icons">date_range</i>
+                            {{eachComponent.type !== 'van-driver' ? formatDate(eachComponent.details.to.arrival.date) : 'custom date'}} {{eachComponent.type !== 'van-driver' ? eachComponent.details.to.arrival.time : ''}}
+                          </div>
+                          <div class="detail-info-place">
+                            <i class="material-icons">pin_drop</i>
+                            {{eachComponent.details.from.airport ? eachComponent.details.from.airport : eachComponent.details.from.city}}
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="element-data-features col-md-12 col-xs-12 mobile-padding">
+        	<div class="features-wrp" *ngIf="eachComponent.details.addons">
+        		<div class="each-feature" *ngFor="let item of eachComponent.details.addons" [ngClass]="item.availability?'':'not-available'" >
+        			<i *ngIf="item.type==='mat'" class="material-icons">{{item.icon}}</i>
+        			<i *ngIf="item.type==='fa'" class="{{item.icon}}"></i>
+        		</div>
+        		<!--<div class="each-feature not-available" description="No gas available">-->
+        			<!--<i class="material-icons">local_gas_station</i>-->
+        		<!--</div>-->
+        		<!--<div class="each-feature" description="Smoking area available">-->
+        			<!--<i class="fas fa-smoking"></i>-->
+        		<!--</div>-->
+        		<!--<div class="each-feature" description="Free wifi in all rooms">-->
+        			<!--<i class="fas fa-wifi"></i>-->
+        		<!--</div>-->
+        	</div>
+        </div>
+        <div class="actions col-md-12 col-xs-12 mobile-padding" *ngIf="mode!=='read-only'">
+          <div class="edit col-md-1 text-center" *ngIf="eachComponent.associated_agency==memory.getAgencyId()&&role!=='company'">
+
+            <i class="material-icons" (click)="goTo(eachComponent)">border_color</i>
+          </div>
+          <div class="edit col-md-1 text-center" *ngIf="eachComponent.associated_agency==memory.getAgencyId()&&role!=='company'">
+            <i class="material-icons" (click)="deleteElement(eachComponent)">delete</i>
+          </div>
+        </div>
+        <div class="photos" (click)="images()"
+             *ngIf="eachComponent.associated_agency==='agoda'&&eachComponent.images.length>0">
+          <!-- <i class="fa fa-ellipsis-v"></i> -->
+          <!-- <img class="photos-item" *ngFor="let item of eachComponent.images.slice(0,4)" [src]="'http://'+item" [ngStyle]="{'background-image': 'url(' + item + ')'}" (click)="slideImages(eachComponent.images)"> -->
+          <ngx-slick-carousel class="small-slider"
+                              #slickModal1="slick-carousel"
+                              [config]="mainSlideConfig">
+            <div ngxSlickItem class="slide" *ngFor="let image of eachComponent.images.slice(0,4)">
+              <!-- <img [attr.src]="image" class="img"> -->
+              <div (click)="slideImages(eachComponent.images)"
+                   [ngStyle]="{'background-image': 'url(https://' + image + ')'}"></div>
+            </div>
+          </ngx-slick-carousel>
+          <!--<app-slider *ngIf="tmpImages.length > 0" [tmpImages]="eachComponent.images.slice(0,4)"></app-slider>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row"
+     *ngIf="eachComponent &&(eachComponent.associated_agency==='amadeus'||eachComponent.associated_agency==='airasia')&&eachComponent.type==='AIRPLANE' &&math.round(exchangeAmadeus(eachComponent)*100)/100>0">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card card-stats">
+      <div class="card-footer">
+        <div class="row grab">
+          <div class="col-md-6">
+
+            <div class="stats">
+              <i class="material-icons  align-share">share</i>
+              <div
+                *ngIf="math.round(exchangeAmadeus(eachComponent)*100)/100>0">{{memory.getActiveCurrency() ? memory.getActiveCurrency() : 'PHP'}} {{math.round(exchangeAmadeus(eachComponent) * 100) / 100}}</div>
+            </div>
+          </div>
+          <div class="col-md-6 info">
+            <img *ngIf="eachComponent.associated_agency==='amadeus'&&role!=='company'"
+                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Amadeus_%28CRS%29_Logo.svg/1280px-Amadeus_%28CRS%29_Logo.svg.png"
+                 style="width: 100px;">
+
+            <img *ngIf="eachComponent.associated_agency==='airasia'&&role!=='company'"
+                 src="https://a.staticaa.com/images/logo/aa-logo.png"
+                 style="width: auto;height: 40px">
+            <img *ngIf="eachComponent.associated_agency==='airasia'&&role!=='company'" (click)="goToAirasia()"
+                 class="external-ico" src="../../../assets/img/external-link-alt-solid.svg">
+            <div>
+              <ul class="nav navbar-nav navbar-right"
+                  *ngIf="eachComponent.associated_agency!='airasia'&&role!=='company'">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <!-- <i class="material-icons alert-icon">notifications</i> -->
+                    <i class="material-icons alert-icon">event_seat</i>
+                    <span class="notification alert-badge">	{{eachComponent.quantity}}</span>
+                    <p class="hidden-lg hidden-md">Notifications</p>
+                  </a>
+                  <!--<ul class="dropdown-menu">-->
+                    <!--<li><a href="#">Mike John responded to your email</a></li>-->
+                  <!--</ul>-->
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="element-data col-md-9 col-xs-12 mobile-padding">
+          <div>
+            <div class="single-line">
+              <div class="line">
+                <div class="data" *ngFor="let segment of eachComponent.segments;let count1=index">
+                  <div class="icon date">
+                    <div class="circle-back">
+                      <span class="trip-dep-dest">
+                        <div class="dep">
+                          {{segment.flightSegment.departure.iataCode}}
+                        </div>
+                        <i class="material-icons">arrow_right_alt</i> 
+                        <div class="dest">
+                          {{segment.flightSegment.arrival.iataCode}}
+                        </div>
+                      </span>
+                      <i class="material-icons">{{eachComponent.icon}}</i>
+                    </div>
+                    <div class="date-format" [attr.duration]="getDuration(convertAmadeusJustDate(segment.flightSegment.departure.at), convertAmadeusJustTime(segment.flightSegment.departure.at),
+        				convertAmadeusJustDate(segment.flightSegment.arrival.at),
+        				convertAmadeusJustTime(segment.flightSegment.arrival.at)
+        				)">
+                      <div class="dep">
+                        <i *ngIf="eachComponent.type==='AIRPLANE'"
+                           class="material-icons detailed-info">flight_takeoff</i>
+                        <i *ngIf="eachComponent.type==='hotel-room'"
+                           class="material-icons  detailed-info">rotate_left</i>
+                        <div class="detail-info">
+                          <div class="detail-info-date">
+                            <i class="material-icons">date_range</i>
+                            {{convertAmadeusDate(segment.flightSegment.departure.at)}}
+                          </div>
+                          <div class="detail-info-place">
+                            <i class="material-icons">pin_drop</i>
+                            {{segment.flightSegment.departure.iataCode}}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="land">
+                        <i class="material-icons detailed-info">flight_land</i>
+
+                        <div class="detail-info">
+                          <div class="detail-info-date">
+                            <i class="material-icons">date_range</i>
+                            {{convertAmadeusDate(segment.flightSegment.arrival.at)}}
+                          </div>
+                          <div class="detail-info-place">
+                            <i class="material-icons">pin_drop</i>{{segment.flightSegment.arrival.iataCode}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="element-data-features col-md-5 col-xs-12 mobile-padding">
+          <div class="features-wrp earch-wrap" *ngIf="eachComponent.details.addons">
+            <div class="each-feature" *ngFor="let item of eachComponent.details.addons" [ngClass]="item.availability?'':'not-available'">
+              <i *ngIf="item.type==='mat'" class="material-icons">{{item.icon}}</i>
+              <i *ngIf="item.type==='fa'" class="{{item.icon}}"></i>
+            </div>
+            <!--<div class="each-feature not-available" description="No gas available">-->
+            <!--<i class="material-icons">local_gas_station</i>-->
+            <!--</div>-->
+            <!--<div class="each-feature" description="Smoking area available">-->
+            <!--<i class="fas fa-smoking"></i>-->
+            <!--</div>-->
+            <!--<div class="each-feature" description="Free wifi in all rooms">-->
+            <!--<i class="fas fa-wifi"></i>-->
+            <!--</div>-->
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--<div class="slider-back" *ngIf="slider == true" >-->
+<!--<div class="white-back" *ngIf="eachComponent.associated_agency==='agoda'&&eachComponent.images.length>0">-->
+<!--<i class="fa fa-close close-icon" (click)="closeSlider()"></i>-->
+
+<!--</div>-->
+<!--</div>-->
+
+

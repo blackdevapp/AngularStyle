@@ -1,0 +1,435 @@
+<app-theme-one-header [agency]="agency" [headerItem]="headerItem"></app-theme-one-header>
+<br>
+
+<mat-vertical-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Requirement </ng-template>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row ">
+              <div class="search-bar">
+                <div class="row line">
+                  <div class="col-md-11">
+                    <div class="row bottom-field">
+                      <div class="form-group form-black is-empty">
+                        <input
+                          type="text"
+                          class="form-control"
+                          (input)="getCountries($event.target.value)"
+                          [matAutocomplete]="auto1"
+                          placeholder="Passport Origin"
+                          name="passportOrigin"
+                          formControlName="passportOrigin"
+                          [value]="visaProcess.passportName">
+                        <!--<i class="material-icons show-hide" matStepperNext (click)="getPassportInfo()">search</i>-->
+                        <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="passport($event)">
+                          <mat-option *ngFor="let item of searchResult" [value]="item['official_name_en']">
+                            {{item.official_name_en}}
+                          </mat-option>
+                          <mat-option *ngIf="loader">
+                            <div class="text-center">
+                              <i class="fa fa-spinner fa-pulse fa-fw"
+                                 style="color:rgba(0,0,0,0.84);margin-top: 5%;z-index: 999999999;font-size: 30px!important;"></i>
+
+                            </div>
+
+                          </mat-option>
+                        </mat-autocomplete>
+                        <span class="material-input"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-1 clear-icon">
+                    <div class="row">
+                      <i class="material-icons trash2" (click)="remove()">
+                        clear
+                      </i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-11">
+                    <div class="row bottom-field">
+                      <div class="form-group form-black is-empty">
+                        <input
+                          type="text"
+                          class="form-control"
+                          (input)="getCountries($event.target.value)"
+                          [matAutocomplete]="auto2"
+                          name="country"
+                          formControlName="country"
+                          placeholder="Search for a destination country      eg.Germany "
+                          [value]="visaProcess.visaName">
+                        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="visa($event)">
+                          <mat-option *ngFor="let item of searchResult" [value]="item['official_name_en']">
+                            {{item.official_name_en}}
+                          </mat-option>
+                          <mat-option *ngIf="loader">
+                            <div class="text-center">
+                              <i class="fa fa-spinner fa-pulse fa-fw"
+                                 style="color:rgba(0,0,0,0.84);margin-top: 5%;z-index: 999999999;font-size: 30px!important;"></i>
+
+                            </div>
+
+                          </mat-option>
+                        </mat-autocomplete>
+                        <span class="material-input"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-1 clear-icon">
+                    <div class="row">
+                      <i class="material-icons trash2" (click)="remove2()">
+                        clear
+                      </i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-success" mat-button  [disabled]="!firstFormGroup.valid || (!visaProcess.visaName) || (!visaProcess.passportName)" (click)="getPassportInfo()">Next</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form>
+      <ng-template matStepLabel>Requirements List</ng-template>
+      <div class="container">
+      <div *ngIf="!nullForm">
+        <div class="col-md-12 top-section">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row" style="display: flex">
+                <i class="material-icons">
+                  search
+                </i>
+                <p>
+                  Follow insruction to start your visa process
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 clear-icon">
+              <div class="row">
+                <i class="material-icons trash">
+                  clear
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="inline-hr">
+        <div class="col-md-12">
+          {{requirements}}
+          <br>
+          <div class="row">
+            <ol class="list">
+              <li class="each-info" *ngFor="let item of formData.form.roles;let i=index">
+                <div class="warp-text">
+                  <p>{{item}}</p>
+                  <p class="details">list of requirement for visa to {{visaProcess.visaName}}</p>
+                  <p class="details second">from {{visaProcess.passportName}}</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <button class="btn btn-light" matStepperPrevious >
+            Back
+          </button>
+          <button class="btn btn-success" matStepperNext>
+            Next
+          </button>
+
+
+        </div>
+      </div>
+      <div *ngIf="nullForm">
+        <div class="row">
+          <div class="col col-md-12 custom-row-margin">
+            <h5>
+              Sorry, We're not processing such visa at the moment, You may get back again
+            </h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <button class="btn btn-light" matStepperPrevious >
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Booking Form</ng-template>
+    <div class="container">
+      <form autocomplete="off">
+        <h3>General Information</h3>
+        <div class="row">
+          <div class="col-md-12 custom-row-margin" *ngFor="let item of formData.form.items;let i=index">
+            <div *ngIf="item.type=='Checkbox'">
+              <div class="col-md-2">
+                <h4> {{item.label}} :</h4>
+              </div>
+              <div class="col-md-3 check-display" *ngFor="let sub of item.data">
+                <div class="checkbox input-top-space">
+                  <label>
+                    <input type="checkbox" (change)="changeCheckbox($event,item)" [value]="sub"
+                           name="optionsCheckboxes">
+                  </label>
+                  {{sub}}
+                </div>
+              </div>
+            </div>
+            <div *ngIf="item.type=='Radio'">
+
+              <div class="col-md-2">
+                <h4> {{item.label}} :</h4>
+              </div>
+              <div class="col-md-3 check-display" *ngFor="let sub of item.data">
+                <div class="radio input-top-space">
+                  <label>
+                    <input type="radio" (change)="changeRadio($event,item)" [value]="sub" name="optionsCheckboxes">
+                  </label>
+                  {{sub}}
+                </div>
+
+              </div>
+            </div>
+            <div *ngIf="item.type=='Attachment'">
+              <div class="col-md-2">
+                <h4> {{item.label}} :</h4>
+              </div>
+              <div class="col-md-12 form-inline img-section">
+                <image-upload
+                  url="{{appSetting.UPLOAD_URL}}/api/upload/5c15efb47b741fff2044ec26"
+                  [max]="10"
+                  [extensions]="['jpg','png','jpeg']"
+                  [maxFileSize]="3048576"
+                  buttonCaption=""
+                  dropBoxMessage=""
+                  clearButtonCaption=""
+                  (uploadFinished)="uploadFinished($event,item)"
+                  [uploadedFiles]="images1"
+                  (removed)="onRemoved($event,item)"
+                  [uploadedFiles]="images1">
+                </image-upload>
+
+                <div class="images" *ngFor="let image of item.value">
+                  <img [src]="image" alt="">
+                </div>
+                <div class="col-md-1">
+                </div>
+              </div>
+            </div>
+            <div *ngIf="item.type=='Input'">
+              <div class="col-md-4">
+                <div class="form-group label-floating">
+                  <label class="control-label">{{item.label}}</label>
+                  <input type="text" class="form-control" [(ngModel)]="item.value" name="{{item.label}}{{i}}"/>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="item.type=='DatePicker'">
+              <div class="col-md-4">
+                <div class="form-group form-black label-floating is-empty datepicker-space date-main-input">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="picker" placeholder="{{item.label}}" [(ngModel)]="item.value"
+                           name="picker" class="date"
+                           style="width: 74px;float: left;">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+          <button class="btn btn-light" matStepperPrevious >
+            Back
+          </button>
+            <button class="btn btn-primary" matStepperNext (click)="goToLogin()">
+              Get Visa Info
+            </button>
+
+        </div>
+      </form>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Login/signUp</ng-template>
+    <div class="container">
+      <div class="row" style="margin-top: 50px">
+        <div class="col-md-4 col-md-offset-4" *ngIf="mode==='A'">
+          <div class="card">
+            <div class="card-content">
+              <div class="row top-section2">
+                <img src="../../../assets/img/logo.png" class="agency-logo">
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Email</label>
+                    <input [(ngModel)]="email" class="form-control" type="email" name="email">
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Password</label>
+                    <input class="form-control" [(ngModel)]="password" type="password" name="password">
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <button type="submit" class="btn btn-primary full" (click)="login(stepper)">Login</button>
+                </div>
+
+                <div class="col-md-12 text-center" style="margin-bottom: 10px">
+                  <a class="full" style="color: #252525;">
+                    Do you have an account? <a (click)="goToMode('B')" style="cursor: pointer">Create!</a>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--<div class="col-md-12">-->
+          <!--<button class="btn btn-book">book now</button>-->
+          <!--</div>-->
+        </div>
+
+        <div class="col-md-4 col-md-offset-4" *ngIf="mode==='B'">
+          <div class="card">
+            <div class="card-content">
+              <div class="row top-section2">
+                <img src="../../../assets/img/logo.png" class="agency-logo">
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Email</label>
+                    <input class="form-control" [(ngModel)]="email" type="email" name="email">
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Password</label>
+                    <input class="form-control" [(ngModel)]="password" type="password" name="password">
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Confirm Password</label>
+                    <input class="form-control" [(ngModel)]="confirmPassword" type="password"
+                           name="confirmPassword">
+                  </div>
+                </div>
+
+
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Mobile Number</label>
+                    <input class="form-control" [(ngModel)]="mobileNo" type="text" name="mobile">
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <button type="submit" class="btn btn-primary full" (click)="signup()">Singup Now</button>
+                </div>
+
+                <br>
+                <div class="col-md-12 text-center">
+                  <a style="margin-top: 10px;cursor: pointer" (click)="goToMode('A')">I have an account!</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="col-md-12">
+          <button class="btn btn-light" matStepperPrevious >
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <div class="container" *ngIf="lastStep">
+      <div class="info-main">
+        <p>{{user.firstName}} {{user.lastName}}
+        </p>
+
+        <p>{{formData.name}}</p>
+
+        <div class="check-display">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" (change)="onCheck($event)" [checked]="user.policy" name="optionsCheckboxes">
+            </label>
+          </div>
+          <p class="check-text">
+            Do you have police clearance?
+          </p>
+        </div>
+
+        <p *ngFor="let item of formData.form.items">{{item.label}} : {{item.value}}</p>
+
+        <p>Price: {{formData.form.price}}</p>
+
+      </div>
+
+      <div class="row">
+        <button class="btn btn-light" matStepperPrevious >
+          Back
+        </button>
+          <button class="btn btn-success" (click)="createInquery()">
+            send Inquery
+          </button>
+      </div>
+
+    </div>
+
+    <div class="container" *ngIf="visaProcessStep === 9">
+      <h3>
+        Citizens (Passport Holders) of {{visaProcess.passport}} are visa free to {{visaProcess.visa}}
+      </h3>
+
+      <div class="col-md-12">
+        <button class="btn btn-light" (click)="backToFirst()" >
+          Back
+        </button>
+      </div>
+    </div>
+
+  </mat-step>
+</mat-vertical-stepper>
+<br>
+
+
+<div class="container">
+  <app-theme-one-footer [agency]="agency"></app-theme-one-footer>
+</div>

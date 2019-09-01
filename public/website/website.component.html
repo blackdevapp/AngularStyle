@@ -1,0 +1,600 @@
+<div class="site-wrapper">
+	<div class="section zero reverse">
+		<div class="wrp">
+			<div class="head">
+				<h1>
+					<img src="../../../../assets/img/logo.png"> Next Journey
+				</h1>
+				<nav class="nav">
+					<a href="#" >Home</a>
+					<a href="#pricing" *ngIf="pricing">pricing</a>
+					<a href="#" >API</a>
+					<a href="#book-now" class="book" >Book a Demo</a>
+				</nav>
+
+			    <div class="links">
+				  <i class="material-icons small-menu"> menu</i>
+			      <i class="material-icons each-ico mat-ico" routerLink="auth/login">
+			        account_box
+			      </i>
+			      <i class="fab fa-facebook each-ico" (click)="fb()"></i>
+			    </div>
+				<div class="falls">
+					<div class="each-fall">
+						<img src="../../../../assets/img/6.png">
+					</div>
+					<div class="each-fall">
+						<img src="../../../../assets/img/5.png">
+					</div>
+					<div class="each-fall">
+						<img src="../../../../assets/img/4.png">
+					</div>
+				</div>
+				<!-- <a href="">
+					<img src="../../../../assets/img/twitter.svg" alt="">
+				</a>
+				<a href="">
+					<img src="../../../../assets/img/facebook.svg" alt="">
+				</a>
+				<a href="">
+					<img src="../../../../assets/img/linkedin.svg" alt="">
+				</a> -->
+			</div>		
+		  	<div class="mobile-head">
+			    <nav class="navbar">
+			      <div class="container-fluid">
+			        <div class="navbar-header">
+			          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			          </button>
+			          <i class="material-icons each-ico mat-ico mobile-icon1" routerLink="auth/signup">
+			            account_box
+			          </i>
+
+			          <i class="fab fa-facebook each-ico mobile-icon2" routerLink="https://fb.com/nextjourney.co"></i>
+			        </div>
+			        <div class="collapse navbar-collapse" id="myNavbar">
+			          <ul class="nav navbar-nav">
+			            <li class="active"><a href="#">Home</a></li>
+			            <li><a href="#">Pricing</a></li>
+			            <li><a href="#" class="book">Book A Demo</a></li>
+			          </ul>
+
+			        </div>
+			      </div>
+			    </nav>
+		  	</div>
+			<div class="body">
+				<div class="intro">
+					<h2>
+						drag & drop <strong class="main-do">itenerary builder</strong> 
+						with <strong class="intro-features">
+							<ul class="intro-changable">
+								<li class="each-change">
+									marketing
+								</li>
+								<li class="each-change">
+									accounting
+								</li>
+								<li class="each-change">
+									date and time
+								</li>
+								<li class="each-change">
+									website
+								</li>
+								<li class="each-change">
+									smart booking
+								</li>
+								<li class="each-change">
+									smart visa
+								</li>
+								<li class="each-change">
+									Amadeus
+								</li>
+							</ul>
+						</strong>
+						<span class="secondary-intro-features">
+							<ul class="secondary-intro-changable">
+								<li class="secondary-each-change">
+									Automation
+								</li>
+								<li class="secondary-each-change">
+									process
+								</li>
+								<li class="secondary-each-change">
+									onboarded
+								</li>
+							</ul>
+						</span>
+						<p>
+							Next Jouney is a professional cloud trip builder and B2B community for travel and tours.
+						</p>
+					</h2>
+				</div>
+				<div class="boxes">
+					<ul class="all">
+						<li class="box">
+							<img src="../../../../assets/img/4.png">
+						</li>
+					</ul>
+				</div>
+
+			</div>
+		</div>		
+	</div>
+	<div class="section2">
+		<div class="explains">
+			<div class="each-explain" *ngFor="let explain of explains;let i = index">
+				<div class="detail-wrp">
+					<div class="slide-down-image">
+						<i class="material-icons">mouse</i>
+						<i class="fab fa-youtube"></i>
+						<i class="fas fa-link"></i>
+					</div>
+					<div class="icon">
+						<img src="{{explain.icon}}">
+					</div>
+					<div class="description">
+						{{explain.description}}
+					</div>
+					<div class="s-slider">
+						<ngx-slick-carousel class="carousel"
+	                      #slickModal="slick-carousel"
+	                      [config]="mainSlideConfig"
+	                      >
+		    				<div ngxSlickItem class="slide" *ngFor="let image of explains[i].img;let last = last">
+		    					<!-- <img src="{{image}}" alt=""> -->
+		    					<div class="content" [ngStyle]="{'background-image': 'url(' + image.address + ')'}">
+		    					</div>
+		    				</div>
+		    			</ngx-slick-carousel>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="section two">
+		<div class="wrp">
+			<h3 class="title">
+				<div class="txt">
+          SHAREABLE TRIP ELEMENTS
+				</div>
+			</h3>
+			<div class="content">
+				<div class="icon-group">
+					<img src="../../../../assets/img/5.png">
+					<img src="../../../../assets/img/4.png">
+					<img src="../../../../assets/img/6.png">
+				</div>
+				<div class="middle-logo">
+					<img src="../../../../assets/img/logo.png">
+				</div>
+				<div class="icon-group">
+					<img src="../../../../assets/img/5.png">
+					<img src="../../../../assets/img/4.png">
+					<img src="../../../../assets/img/6.png">
+				</div>
+			</div>
+			<p class="description">
+				<strong>
+					NEVER MISS AN OPPORTUNITY TO BUILD A TRIP
+				</strong>
+			</p>
+			<p class="description second-description">
+        WITH THE POWER OF NEXT JOURNEY, YOU WOULD BE ABLE TO SHARE TRIP ELEMENTS WITH ALL OTHER TRAVEL AGENCIES. THIS WILL GIVES YOU AN OPPORTUNITY TO NEVER FALL INTO HIGH PRICE FLIGHTS, HOTELS, ETC.
+			</p>
+			<div class="col-md-12 text-center">
+				<a class="more" routerLink="/public/sharable">
+					Read More
+				</a>
+			</div>
+			
+		</div>
+	</div>
+	<div class="section three reverse">
+		<div class="wrp">
+			<h3 class="title">
+				<div class="txt">
+						INSTANT WEBSITE UPDATE
+				</div>
+			</h3>
+			<div class="content">
+				<div class="middle-logo">
+					<img src="../../../../assets/img/logo.png">
+					<div class="pipe">
+						<img class="update" src="../../../../assets/img/update.png" alt="">
+						
+					</div>
+				</div>
+			</div>
+			<p class="description">
+				<strong>
+					INSTANT WEBSITE UPDATE WITH ZERO CODING SKILLS
+				</strong>
+			</p>
+			<p class="description second-description">
+        YOU WOULD NEVER EVER NEED TO TOUCH OR ORDER ANY WEBSITE FOR YOUR AGENCY! JUST BUILD YOUR TRIPS AND WAIT FOR YOUR INQUIRIES TO BE ATTENDED RIGHT INTO YOUR PANEL.
+			</p>
+			<div class="col-md-12 text-center">
+				<a class="more" routerLink="/public/instant">
+					Read More
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="section four">
+		<div class="wrp">
+			<h3 class="title">
+				<div class="txt">
+					Mega social distribution channel
+				</div>
+			</h3>
+			<div class="content">
+				<div class="middle-logo">
+					<img src="../../../../assets/img/logo.png">
+				</div>
+				<div class="all-logos">
+					<div class="img-wrp">
+						<i class="fab fa-youtube"></i>
+					</div>
+
+					<div class="img-wrp">
+						<i class="fab fa-facebook-f"></i>
+					</div>
+
+					<div class="img-wrp">
+						<i class="fab fa-linkedin"></i>
+					</div>
+
+					<div class="img-wrp">
+						<i class="fab fa-flickr"></i>
+					</div>
+
+					<div class="img-wrp">
+						<i class="fab fa-twitter"></i>
+					</div>
+
+					<div class="img-wrp">
+						<i class="fab fa-pinterest-square"></i>
+					</div>
+					<div class="img-wrp">
+						<i class="fab fa-telegram"></i>
+					</div>
+					<div class="img-wrp">
+						<img src="../../../../assets/img/6.png">
+					</div>
+
+				</div>
+			</div>
+			<p class="description">
+				<strong>
+					Social media is the new business
+				</strong>
+			</p>
+			<p class="description second-description">
+        NEXT JOURNEY HAS THE CAPABILITY TO SHARE YOUR TRIPS IN ALL SOCIAL NETWORKS ON DEMAND. THIS CAPABILITY OPENS NEW DOORS TO THE REVENUE OF YOUR BUSINESS.
+			</p>
+			<div class="col-md-12 text-center">
+				<a class="more" routerLink="/public/social-sharing">
+					Read More
+				</a>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="section five reverse">
+		<div class="wrp">
+			<h3 class="title">
+				<div class="txt">
+					Team working friendly
+				</div>
+			</h3>
+			<div class="content">
+				<div class="middle-logo">
+					<img src="../../../../assets/img/logo.png">
+				</div>
+				<div class="all-logos">
+					<div class="img-wrp">
+						
+					</div>
+
+					<div class="img-wrp">
+						
+					</div>
+
+					<div class="img-wrp">
+						
+					</div>
+
+					<div class="img-wrp">
+						<i class="fab fa-flickr"></i>
+					</div>
+
+					<div class="img-wrp">
+						<i class="fab fa-twitter"></i>
+					</div>
+
+					<div class="img-wrp">
+						<i class="fab fa-pinterest-square"></i>
+					</div>
+					<div class="img-wrp">
+						<i class="fab fa-telegram"></i>
+					</div>
+					<div class="img-wrp">
+						<img src="../../../../assets/img/6.png">
+					</div>
+
+				</div>
+			</div>
+			<p class="description">
+				<strong>
+					Keep and eye on your team, grow faster
+				</strong>
+			</p>
+			<p class="description second-description">
+				Next journey made team working even easier with employee onboarding. Your Agents, Encoders, Accountants and Tourguides are now easier to tie up with your fully secure panel.
+			</p>
+			<div class="col-md-12 text-center">
+				<a class="more" routerLink="/public/social-sharing">
+					Read More
+				</a>
+			</div>
+		</div>
+	</div> -->
+	<div class="section six reverse" *ngIf="pricing" id="pricing">
+		<div class="wrp">
+			<ul class="subscriptions">
+	        	<li class="free">
+	            
+	                <div class="main_container">
+	                
+	                    <div class="mc_header">
+	                    <span>Freelancer Plan</span>
+	                    </div>
+	                    
+	                    <p class="short_description">Try Next Journey absolutely free.</p>
+	                    
+	                    <div class="price">
+	                    
+	                        <div class="monthly_data">
+	                            <span>$0.00</span>
+	                            <small class="frequency">month</small>
+	                            <small class="yearly_price">&nbsp;</small>
+	                        </div>
+	                        
+	                        <div class="yearly_data">
+	                            <span>$0.00</span>
+	                            <small class="frequency">month</small>
+	                            <small class="yearly_price">&nbsp;</small>
+	                        </div>
+	                        
+	                    </div>
+	                                                
+	                        <a class="signup_link" href="/signup/free" data-href-monthly="/signup/free" data-href-yearly="/signup/free" title="Sign up for the Free Plan">Sign Up</a>
+	                                        
+	                </div>
+	                
+	                <div class="features_container">
+	                
+	                    <ul>
+	                        <li class="feature_api_requests">100 Trips <span style="font-size: 12px;">month</span></li>
+	                        <li class="feature_updates">Sharabale Trips</li>
+	                        <li class="feature_historical">Drag/Drop Trip Builder</li>
+	                        <!-- <li class="feature_historical">Amadeus Onboard</li> -->
+	                        <!-- <li class="feature_historical">Sabre Onboard</li> -->
+	                        <!-- <li class="feature_historical">Accounting</li> -->
+	                        <!-- <li class="feature_historical">Smart Visa</li> -->
+	                        <li class="feature_historical">1000 Social Share</li>
+	                        <!-- <li class="feature_historical">Marketing Platform</li> -->
+	                        <li class="feature_support">Limited Support</li>
+	                        <li class="feature_empty">&nbsp;</li>
+	                        <li class="feature_empty">&nbsp;</li>
+	                        <li class="feature_empty">&nbsp;</li>
+	                        <li class="feature_empty">&nbsp;</li>
+	                        <li class="feature_empty">&nbsp;</li>
+	                    </ul>
+	                
+	                </div>
+	            
+	            </li>
+	            
+	            <li class="basic">
+	            
+	                <div class="main_container">
+	                
+	                    <div class="mc_header">
+	                    <span>Kiosk Plan</span>
+	                    </div>
+	                    
+	                    <p class="short_description">Standard Kit — includes core features and higher volume.</p>
+	                    
+	                    <div class="price">
+	                                                
+	                        <div class="monthly_data">
+	                            <span>$9.99</span>
+	                            <small class="frequency">month</small>
+	                            <small class="yearly_price">or $7.99 if billed yearly</small>
+	                        </div>
+	                        
+	                        <div class="yearly_data">
+	                            <span>$7.99</span>
+	                            <small class="frequency">month</small>
+	                            <small class="yearly_price">billed yearly</small>
+	                        </div>
+	                        
+	                    </div>
+	                    
+	                    <a class="signup_link" href="/signup/basic" data-href-monthly="/signup/basic" data-href-yearly="/signup/basic/yearly" title="Sign up for the Basic Plan">Sign Up</a>
+	                                        
+	                </div>
+	                
+	                <div class="features_container">
+	                
+	                    <ul>
+	                        <li class="feature_api_requests">1,000 Trips <span style="font-size: 12px;">month</span></li>
+	                        <li class="feature_updates">Sharabale Trips</li>
+	                        <li class="feature_historical">Drag/Drop Trip Builder</li>
+	                        <!-- <li class="feature_historical">Amadeus Onboard</li> -->
+	                        <li class="feature_historical">Sabre Onboard</li>
+	                        <!-- <li class="feature_historical">Accounting</li> -->
+	                        <li class="feature_historical">Smart Visa</li>
+	                        <li class="feature_historical">100,000 Social Share</li>
+	                        <!-- <li class="feature_historical">Marketing Platform</li> -->
+	                        <li class="feature_support">Unlimited Support</li>
+	                        <li class="feature_empty">&nbsp;</li>
+	                        <li class="feature_empty">&nbsp;</li>
+	                        <li class="feature_empty">&nbsp;</li>
+	                    </ul>
+	                
+	                </div>
+	            
+	            </li>
+	            
+	            <li class="professional highlighted">
+	                
+	                <div class="main_container">
+	                
+	                    <div class="mc_header">
+	                    <span>Travel Agency Plan</span>
+	                    </div>
+	                    
+	                    <p class="short_description">Most Popular — advanced functionality and up to 100.000 monthly API requests.</p>
+	                                                
+	                    <div class="price">
+	                    
+	                        <div class="monthly_data">
+	                            <span>$39.99</span>
+	                            <small class="frequency">month</small>
+	                            <small class="yearly_price">or $31.99 if billed yearly</small>
+	                        </div>
+	                        
+	                        <div class="yearly_data">
+	                            <span>$31.99</span>
+	                            <small class="frequency">month</small>
+	                            <small class="yearly_price">billed yearly</small>
+	                        </div>
+	                        
+	                    </div>
+	                    
+	                    <a class="signup_link" href="/signup/professional" data-href-monthly="/signup/professional" data-href-yearly="/signup/professional/yearly" title="Sign up for the Professional Plan">Sign Up</a>
+	                                                                
+	                </div>
+	                
+	                <div class="features_container">
+	                
+	                    <ul>
+	                        <li class="feature_api_requests">10,000 Trips <span style="font-size: 12px;">month</span></li>
+	                        <li class="feature_updates">Sharabale Trips</li>
+	                        <li class="feature_historical">Drag/Drop Trip Builder</li>
+	                        <li class="feature_historical">Amadeus Onboard</li>
+	                        <li class="feature_historical">Sabre Onboard</li>
+	                        <li class="feature_historical">Accounting</li>
+	                        <li class="feature_historical">Smart Visa</li>
+	                        <li class="feature_historical">100,000 Social Share</li>
+	                        <li class="feature_historical">Marketing Platform</li>
+	                        <li class="feature_support">Unlimited Support</li>
+	                    </ul>
+	                
+	                </div>
+	            
+	            </li>
+	            
+	            <li class="enterprise">
+	                
+	                <div class="main_container">
+	                
+	                    <div class="mc_header">
+	                    <span>Enterprise Plan</span>
+	                    </div>
+	                    
+	                    <p class="short_description">The All-Inclusive Suite — includes the complete suite of features and unlimited quota.</p>
+	                    
+	                    <div class="price">
+	                    
+	                        <div class="monthly_data">
+	                            <span>$79.99</span>
+	                            <small class="frequency">month</small>
+	                            <small class="yearly_price">or $63.99 if billed yearly</small>
+	                        </div>
+	                        
+	                        <div class="yearly_data">
+	                            <span>$63.99</span>
+	                            <small class="frequency">month</small>
+	                            <small class="yearly_price">billed yearly</small>
+	                        </div>
+	                        
+	                    </div>
+	                
+	                        <a class="signup_link" href="/signup/enterprise" data-href-monthly="/signup/enterprise" data-href-yearly="/signup/enterprise/yearly" title="Sign up for the Enterprise Plan">Sign Up</a>
+	                                                                
+	                </div>
+	                
+	                <div class="features_container">
+	                
+	                    <ul>
+	                        <li class="feature_api_requests">Unlimted Trips <span style="font-size: 12px;">month</span></li>
+	                        <li class="feature_updates">Sharabale Trips</li>
+	                        <li class="feature_historical">Drag/Drop Trip Builder</li>
+	                        <li class="feature_historical">Amadeus Onboard</li>
+	                        <li class="feature_historical">Sabre Onboard</li>
+	                        <li class="feature_historical">Accounting</li>
+	                        <li class="feature_historical">Smart Visa</li>
+	                        <li class="feature_historical">Unlimited Social Share</li>
+	                        <li class="feature_historical">Marketing Platform</li>
+	                        <li class="feature_support">Unlimited Support</li>
+	                    </ul>
+	                
+	                </div>
+	                                
+	            </li>
+
+	        </ul>	
+		</div>
+	</div>
+</div>
+<form [formGroup]="addForm">
+
+<div class="onboard">
+	<!-- <img src="../../../../assets/img/amadeus.png" alt="">
+	<img src="../../../../assets/img/hootsuite.png" alt="">
+	<img src="../../../../assets/img/mapbox.png" alt=""> -->
+	<label for="" class="subscribe">
+		Subscribe: 
+		<input type="email" placeholder="eg. John@yahoo.com" name="name"  formControlName="name"  [(ngModel)]="email">
+    <button  [disabled]="!addForm.controls['name'].valid" (click)="submitNewsletter()">Submit</button>
+		
+		<!-- <div class="col-md-12"> -->
+			
+		<!-- </div> -->
+	</label>
+	<p *ngIf="!addForm.controls['name'].valid" class="error-text">
+		email format is incoorect
+	</p>
+	
+</div>
+</form>
+
+<div class="section3" id="book-now">
+	<div class="book-demo">
+		<span class="t">
+			Book a demo today
+		</span>
+		<div class="form">
+			<input type="text" placeholder="Name" [(ngModel)]="form.name">
+			<input type="text" placeholder="Email Address" [(ngModel)]="form.email">
+			<textarea name="" id="" cols="30" rows="10" placeholder="Inquiry" [(ngModel)]="form.inquiry"></textarea>
+			<re-captcha (captchaResponse)="handleCorrectCaptcha($event)" site_key="6LdYMH4UAAAAAMPluqvLFv6lU37I-h1uXbZJZvBx"></re-captcha>
+			<div class="book-demo-submit" (click)="submitInquiry(form)">
+				<div *ngIf="!sendingEmail">
+					Submit
+				</div>
+				<div *ngIf="sendingEmail" class="loader">
+			      <svg class="circular" viewBox="25 25 50 50">
+			          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+			      </svg>
+			    </div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,452 @@
+<div class="black-box" *ngIf="editMode">
+  You are editing previously generated component.if you wish to cancel your edit <a (click)="cancel()">click here</a>
+</div>
+
+
+<h2>
+  Hotel/Room
+</h2>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8">
+      <form>
+        <div class="row">
+          <div class="col-md-4 col-sm-4">
+            <h3>General Info</h3>
+          </div>
+          <div class="col-md-8 col-sm-6 col-xs-12">
+            <div class="form-group form-black label-floating" [ngClass]="trip.company === '' ? 'is-empty' : ''">
+              <label class="control-label">Hotel Name</label>
+              <input type="text" class="form-control" [(ngModel)]="trip.company"
+                     (ngModelChange)="tripValidation.fields.company.originalValue=trip.company" name="airline"
+                     autofocus>
+              <p class="alert" *ngIf="!tripValidation.fields.company.isValid">required(min length 2character - max
+                length 46 character) </p>
+
+            </div>
+          </div>
+          <!-- <div class="col-md-1" (click)="trip.details.roundTrip = !trip.details.roundTrip">
+              <i class="material-icons" [ngClass]="trip.details.roundTrip ? 'checked' : 'hidden'">check_circle</i>
+              <div class="form-group icon-selector">
+                  <i class="material-icons">repeat</i>
+                  <div class="row">
+                      <div class="col-md-12">
+                          Round Trip
+                      </div>
+                  </div>
+              </div>
+
+          </div> -->
+        </div>
+        <div class="row" *ngIf="trip.company !== ''">
+          <div class="col-md-4 col-sm-4">
+          </div>
+          <div class="col-md-4 col-sm-4">
+            <div class="form-group form-black label-floating"
+                 [ngClass]="trip.details.from.city === '' ? 'is-empty' : ''">
+              <label class="control-label">city</label>
+              <input type="text" name="from" class="form-control" [(ngModel)]="trip.details.to.city"
+                     (input)="getCitiesFrom($event.target.value)"
+                     [matAutocomplete]="auto10">
+              <!--<span class=" pin-ico" (click)="openMap()">-->
+				<!--<i class="material-icons">room</i>-->
+				<!--</span>-->
+              <p class="alert" *ngIf="!tripValidation.fields.city.isValid">required(min length 2character - max
+                length 86 character) </p>
+              <mat-autocomplete #auto10="matAutocomplete" (optionSelected)="trip.details.to.city = $event.option.value;
+                                                                            tripValidation.fields.city.originalValue=trip.details.to.city;
+                                                                            ">
+                <mat-option *ngFor="let item of fromResult" [value]="item.CityName" >
+                  {{item.CityName}}
+                </mat-option>
+              </mat-autocomplete>
+
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4">
+            <div class="form-group form-black label-floating full-width" [ngClass]="trip.details.address === '' ? 'is-empty' : ''">
+              <label class="control-label">Address</label>
+              <input type="text" name="to" class="form-control" [(ngModel)]="trip.details.address"
+                     (ngModelChange)="tripValidation.fields.address.originalValue=trip.details.address">
+              <!--<span class=" pin-ico" (click)="openMap()">-->
+			          	<!--<i class="material-icons">room</i>-->
+			     	<!--</span>-->
+              <p class="alert" *ngIf="!tripValidation.fields.address.isValid">optional(max length 86 character) </p>
+
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="trip.details.from.city !== '' && trip.details.to.city !== ''">
+          <div class="col-md-2">
+            <div class="form-group form-black label-floating is-empty">
+            </div>
+          </div>
+          <div class="col-md-1 col-sm-2 col-xs-2  cursor">
+            <i class="material-icons" [ngClass]="trip.details.from.class === 'BUSINESS' ? 'checked' : 'hidden'">check_circle</i>
+            <div class="form-group icon-selector" (click)="trip.details.from.class = 'BUSINESS'">
+              <i class="material-icons">airline_seat_legroom_extra</i>
+              <div class="row">
+                <div class="col-md-12">
+                  Business
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1 col-sm-2 col-xs-2  cursor">
+            <i class="material-icons" [ngClass]="trip.details.from.class === 'ECONOMY' ? 'checked' : 'hidden'">check_circle</i>
+            <div class="form-group icon-selector" (click)="trip.details.from.class = 'ECONOMY'">
+              <i class="material-icons">airline_seat_legroom_reduced</i>
+              <div class="row">
+                <div class="col-md-12">
+                  Economy
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-6 ">
+            <div class="form-group form-black label-floating is-empty">
+              <mat-form-field class="full-width">
+                <input matInput [matDatepicker]="picker1" [min]="today" placeholder="Check-In Date and Time"
+                       [(ngModel)]="trip.details.from.departure.date" name="picker1" class="date"
+                       (ngModelChange)="changeMaxDate()">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1 [startAt]="startDate"></mat-datepicker>
+                <input matInput name="time-picker1" atp-time-picker value="00:00"
+                       [(ngModel)]="trip.details.from.departure.time" class="time time-input" placeholder="Time">
+              </mat-form-field>
+
+              <p class="alert" *ngIf="!tripValidation.fields.checkIn.isValid">date most be in today and next year
+                range</p>
+
+
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-6 ">
+            <div class="form-group form-black label-floating is-empty">
+              <mat-form-field class="full-width">
+                <input matInput [matDatepicker]="picker2" [min]="today" placeholder="Check-Out Date and Time"
+                       [(ngModel)]="trip.details.from.arrival.date" class="date" name="picker2"
+                      >
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2 [startAt]="endDate"></mat-datepicker>
+                <input matInput name="time-picker2" atp-time-picker value="00:00"
+                       [(ngModel)]="trip.details.from.arrival.time" class="time time-input" placeholder="Time">
+              </mat-form-field>
+              <p class="alert" *ngIf="!tripValidation.fields.checkOut.isValid">date most be 30 min after check in and 3
+                days after check in range</p>
+
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row" *ngIf="trip.details.from.city !== '' && trip.details.to.city !== '' && trip.details.roundTrip">
+            <div class="col-md-2">
+                <div class="form-group form-black label-floating is-empty">
+                </div>
+            </div>
+            <div class="col-md-1">
+                <i class="material-icons" [ngClass]="trip.details.to.class === 'BUSINESS' ? 'checked' : 'hidden'">check_circle</i>
+                <div class="form-group icon-selector" (click)="trip.details.to.class = 'BUSINESS'">
+                    <i class="material-icons">airline_seat_legroom_extra</i>
+                    <div class="row">
+                        <div class="col-md-12">
+                            Business
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <i class="material-icons"  [ngClass]="trip.details.to.class === 'ECONOMY' ? 'checked' : 'hidden'">check_circle</i>
+                <div class="form-group icon-selector" (click)="trip.details.to.class = 'ECONOMY'">
+                    <i class="material-icons">airline_seat_legroom_reduced</i>
+                    <div class="row">
+                        <div class="col-md-12">
+                            Economy
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="form-group form-black label-floating is-empty">
+                    <mat-form-field>
+                      <input matInput [matDatepicker]="picker3" placeholder="Departure Date" [(ngModel)]="trip.details.to.departure.date" name="departure">
+                      <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                      <mat-datepicker #picker3 [startAt]="startDate"></mat-datepicker>
+                      <input matInput name="time-picker" atp-time-picker value="00:00" [(ngModel)]="trip.details.to.departure.time" class="time" placeholder="Time">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group form-black label-floating is-empty">
+                    <mat-form-field>
+                      <input matInput [matDatepicker]="picker4" placeholder="Arrival Date" [(ngModel)]="trip.details.to.arrival.date" name="arrival">
+                      <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                      <mat-datepicker #picker4 [startAt]="endDate"></mat-datepicker>
+                      <input matInput name="time-picker" atp-time-picker value="00:00" [(ngModel)]="trip.details.to.arrival.time" class="time" placeholder="Time">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div> -->
+
+        <hr>
+
+        <h3>Addons</h3>
+        <div class="row">
+          <div class="col-md-1 col-sm-2 col-xs-2" *ngFor="let addon of trip.details.addons; let i = index">
+            <app-addons [addon]="addon" (isChecked)="trip.details.addons[i].availability = $event;"></app-addons>
+          </div>
+
+        </div>
+        <hr>
+        <h3>Images</h3>
+        <div class="row">
+          <div class="card card-stats itenerary">
+            <image-upload
+                          url="{{appSetting.UPLOAD_URL}}/api/upload/5c15efb47b741fff2044ec26"
+                          [max]="10"
+                          class="cover-image image-upload"
+                          [extensions]="['jpg','png','jpeg']"
+                          [maxFileSize]="3048576"
+                          buttonCaption="Upload Cover"
+                          [partName]="'image'"
+                          dropBoxMessage=""
+                          clearButtonCaption=""
+                          (uploadStateChanged)="coverState = !coverState"
+                          (uploadFinished)="uploadFinished($event)"
+                          (removed)="onRemoved($event)"
+                          [uploadedFiles]="trip.images">
+            </image-upload>
+            <div class="cover">
+                <span class="cover-loading" *ngIf="coverState">
+                    <img src="https://www.mrsnelsons.com/Public/img/dots.gif" alt="">
+                </span>
+                <i *ngIf="trip.images?.length"
+                   (click)="trip.images.splice(currentSlide,1)"
+                   class="material-icons trash">delete</i>
+
+                <i class="material-icons" (click)="startCoverUpload()">photo_camera</i>
+                <ngx-slick-carousel (afterChange)="currentSlide = $event.currentSlide"
+                                    *ngIf="trip.images?.length"
+                                    class="carousel"
+                                    
+                                    [config]="mainSlideConfig">
+                    <div ngxSlickItem class="slide" *ngFor="let image of trip.images">
+                        <div class="content"
+                             [ngStyle]="{'background-image': 'url(' + image + ')'}">
+                        </div>
+                    </div>
+                </ngx-slick-carousel>
+            </div>
+
+          </div>
+        </div>
+        <hr>
+        <h3>Pricing Info</h3>
+
+        <div class="row">
+          <div class="col-md-2">
+
+          </div>
+          <div class="col-md-3 col-sm-4">
+            <div class="form-group form-black label-floating" [ngClass]="trip.soloPrice === '' ? 'is-empty' : ''">
+              <label class="control-label">Solo Price</label>
+              <input type="text" class="form-control" name="solo-price" [(ngModel)]="trip.soloPrice"
+                     currencyMask [options]="{ prefix: '', thousands: ',',precision: 2}"
+                     (ngModelChange)="tripValidation.fields.soloPrice.originalValue=trip.soloPrice">
+              <p class="alert" *ngIf="!tripValidation.fields.soloPrice.isValid">required(Number and greater than bulk
+                price) </p>
+
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-4">
+            <div class="form-group form-black label-floating" [ngClass]="trip.bulkPrice === '' ? 'is-empty' : ''">
+              <label class="control-label">Bulk Price</label>
+              <input type="text" class="form-control" name="bulk-price" [(ngModel)]="trip.bulkPrice"
+                     currencyMask [options]="{ prefix: '', thousands: ',',precision: 2}"
+                     (ngModelChange)="tripValidation.fields.bulkPrice.originalValue=trip.bulkPrice">
+              <p class="alert" *ngIf="!tripValidation.fields.bulkPrice.isValid">required(Number and less than solo
+                price) </p>
+
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-4">
+            <div class="form-group form-black label-floating" [ngClass]="trip.originalPriceAdult === '' ? 'is-empty' : ''">
+              <label class="control-label">Original Price(Adult)</label>
+              <input type="text" class="form-control" name="solo-price-child"
+                     [(ngModel)]="trip.originalPriceAdult"
+                     currencyMask [options]="{ prefix: '', thousands: ',',precision: 2}"
+                     (ngModelChange)="tripValidation.fields.originalPriceAdult.originalValue=trip.originalPriceAdult">
+              <p class="alert" *ngIf="!tripValidation.fields.originalPriceAdult.isValid">required(Number and greater than
+                original price) </p>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            {{memory.getActiveCurrency()?memory.getActiveCurrency():'PHP'}}
+          </div>
+          <div class="col-md-3 col-sm-4">
+            <div class="form-group form-black label-floating" [ngClass]="trip.soloPriceChild === '' ? 'is-empty' : ''">
+              <label class="control-label">Solo Price(child)</label>
+              <input type="text" class="form-control" name="solo-price-child"
+                     [(ngModel)]="trip.soloPriceChild"
+                     currencyMask [options]="{ prefix: '', thousands: ',',precision: 2}"
+                     (ngModelChange)="tripValidation.fields.soloPriceChild.originalValue=trip.soloPriceChild">
+              <p class="alert" *ngIf="!tripValidation.fields.soloPriceChild.isValid">required(Number and greater than
+                bulk
+                price) </p>
+
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-4">
+            <div class="form-group form-black label-floating" [ngClass]="trip.bulkPriceChild === '' ? 'is-empty' : ''">
+              <label class="control-label">Bulk Price(child)</label>
+              <input type="text" class="form-control" name="bulk-price-child" [(ngModel)]="trip.bulkPriceChild"
+                     currencyMask [options]="{ prefix: '', thousands: ',',precision: 2}"
+                     (ngModelChange)="tripValidation.fields.bulkPriceChild.originalValue=trip.bulkPriceChild">
+              <p class="alert" *ngIf="!tripValidation.fields.bulkPriceChild.isValid">required(Number and less than solo
+                price) </p>
+
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-4">
+            <div class="form-group form-black label-floating" [ngClass]="trip.originalPriceChild === '' ? 'is-empty' : ''">
+              <label class="control-label">Original Price(Child)</label>
+              <input type="text" class="form-control" name="bulk-price-child" [(ngModel)]="trip.originalPriceChild"
+                     currencyMask [options]="{ prefix: '', thousands: ',',precision: 2}"
+                     (ngModelChange)="tripValidation.fields.originalPriceChild.originalValue=trip.originalPriceChild">
+              <p class="alert" *ngIf="!tripValidation.fields.originalPriceChild.isValid">Required (Should be numerical and less than the original price)</p>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-2">
+
+          </div>
+          <div class="col-md-5 col-sm-4">
+            <div class="form-group form-black label-floating is-empty">
+              <mat-form-field>
+                <input matInput [min]="today" [max]="maxDate" [matDatepicker]="picker5" placeholder="Deadline Date/Time"
+                       [(ngModel)]="trip.deadline.date" name="deadline" class="input-width" >
+                <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                <mat-datepicker #picker5 [startAt]="endDate"></mat-datepicker>
+                <input matInput name="time-picker3" atp-time-picker value="00:00"
+                       [(ngModel)]="trip.deadline.time" class="time time-input" placeholder="Time">
+              </mat-form-field>
+              <p class="alert" *ngIf="!tripValidation.fields.deadline.isValid">date most be in today and next year
+                range</p>
+
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-2">
+            <div class="form-group form-black label-floating" [ngClass]="trip.quantity === '' ? 'is-empty' : ''">
+              <label class="control-label">Quantity</label>
+              <input type="text" class="form-control" name="quantity" [(ngModel)]="trip.quantity"
+                     (ngModelChange)="tripValidation.fields.quantity.originalValue=trip.quantity">
+              <p class="alert" *ngIf="!tripValidation.fields.quantity.isValid">required </p>
+
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-2">
+            <div class="form-group form-black label-floating" [ngClass]="trip.tax === '' ? 'is-empty' : ''">
+              <label class="control-label">Tax(%)</label>
+              <input type="text" maxlength="3" class="form-control" name="tax" [(ngModel)]="trip.tax"
+                     (ngModelChange)="tripValidation.fields.tax.originalValue=trip.tax">
+              <p class="alert" *ngIf="!tripValidation.fields.tax.isValid">required </p>
+
+            </div>
+          </div>
+
+          <!--<div class="col-md-3 col-sm-4">-->
+            <!--<div class="form-group form-black label-floating" [ngClass]="trip.originalPriceInfant === '' ? 'is-empty' : ''">-->
+              <!--<label class="control-label">Original Price(Infant)</label>-->
+              <!--<input type="text" class="form-control" name="bulk-price-child" [(ngModel)]="trip.originalPriceInfant"-->
+                     <!--currencyMask [options]="{ prefix: '', thousands: ',',precision: 2}"-->
+                     <!--(ngModelChange)="tripValidation.fields.originalPriceInfant.originalValue=trip.originalPriceInfant">-->
+              <!--<p class="alert" *ngIf="!tripValidation.fields.originalPriceInfant.isValid">Required (Should be numerical and less than the original price)</p>-->
+
+            <!--</div>-->
+          <!--</div>-->
+
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-md-1 col-sm-1 col-xs-2 cursor" (click)="trip.asSolo = !trip.asSolo">
+            <i class="material-icons checked" *ngIf="trip.asSolo">check_circle</i>
+            <div class="form-group icon-selector">
+              <i class="material-icons">person</i>
+              <div class="row">
+                <div class="col-md-12">
+                  Solo
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1 col-sm-1 col-xs-2 cursor" (click)="trip.asPackage = !trip.asPackage">
+            <i class="material-icons checked" *ngIf="trip.asPackage">check_circle</i>
+            <div class="form-group icon-selector">
+              <i class="material-icons">people</i>
+              <div class="row">
+                <div class="col-md-12">
+                  Package
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-1 col-sm-1 col-xs-2 cursor" (click)="trip.asSharable = !trip.asSharable">
+            <i class="material-icons checked" *ngIf="trip.asSharable">check_circle</i>
+            <div class="form-group icon-selector">
+              <i class="material-icons">share</i>
+              <div class="row">
+                <div class="col-md-12">
+                  Sharable
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!--</div>-->
+
+        <button type="submit" class="btn btn-danger pull-right" [disabled]="memory.getLoading()"
+                (click)="submitComponent()">Submit Component
+          <i *ngIf="memory.getLoading()" class="fa fa-spinner fa-pulse fa-2x fa-fw loading-icon"></i>
+        </button>
+        <div class="clearfix"></div>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <app-detail-card *ngIf="trip" [trip]="trip"></app-detail-card>
+    </div>
+  </div>
+</div>
+<div id="map2" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Location</h4>
+      </div>
+      <div class="modal-body">
+        <app-maps></app-maps>
+
+      </div>
+      <div class="modal-footer text-center">
+      </div>
+    </div>
+
+  </div>
+</div>

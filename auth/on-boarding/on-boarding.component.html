@@ -1,0 +1,417 @@
+<!--<app-header></app-header>-->
+<div class="container" *ngIf="mode=='A'">
+
+  <div class="col-md-12 form-inline" id="modeA">
+    <h2>Onboarding</h2>
+    <div class="col-md-6">
+      <div class="panel">
+        <div class="panel-body">
+          <div class="progress">
+            <div class="progress-bar progress-bar-color" role="progressbar" aria-valuenow="70"
+                 aria-valuemin="0" aria-valuemax="100" style="width:70%">
+              <span class="sr-only">70% Complete</span>
+            </div>
+          </div>
+          <div class="col-md-12 item-card" (click)="goToMode('B')">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+              <label class="custom-check"
+                     *ngIf="user.personalInformation.isValid==0||user.personalInformation.isValid==2">
+                <input type="checkbox" [checked]="user.personalInformation.isValid==2">
+                <span class="checkmark"></span>
+              </label>
+              <label class="custom-check" *ngIf="user.personalInformation.isValid==1">
+                <i class="material-icons">priority_high</i>
+              </label>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 padding">
+              <p class="item-card-title">Personal information
+                <span>
+                  <i class="fa fa-star star-ico"></i>
+                </span>
+              </p>
+              <p class="item-card-subTitle">
+                Your personal information is being used for admin account. These information will be available to edit
+                in your profile after onboarding.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-12 item-card" (click)="goToMode('C')">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+              <label class="custom-check" *ngIf="user.agencyInformation.isValid==0||user.agencyInformation.isValid==2">
+                <input type="checkbox" [checked]="user.agencyInformation.isValid==2">
+                <span class="checkmark"></span>
+              </label>
+              <label class="custom-check" *ngIf="user.agencyInformation.isValid==1">
+                <i class="material-icons">priority_high</i>
+              </label>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 padding">
+
+              <p class="item-card-title">Agency information
+                <span>              <i class="fa fa-star star-ico"></i>
+</span></p>
+              <p class="item-card-subTitle">
+                Your Agency Information will get used in your future website. These data are editable in your profile.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-12 item-card disable0back">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+              <label class="custom-check">
+                <input type="checkbox" [disabled]="true">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 padding">
+
+              <p class="item-card-title">Social Media Accounts</p>
+              <p class="item-card-subTitle">
+                Social media connections are being used for sharable data. These data are editable in your profile and
+                your main social media account.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel right-box">
+        <div class="panel-body">
+          <div class="progress">
+            <div class="progress-bar progress-bar-color" role="progressbar" aria-valuenow="70"
+                 aria-valuemin="0" aria-valuemax="100" style="width:70%">
+              <span class="sr-only">70% Complete</span>
+            </div>
+            <span>70%</span>
+          </div>
+          <div class="col-md-12 item-card" (click)="goToMode('E')">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+              <label class="custom-check" *ngIf="user.taxIdentification.isValid==0||user.taxIdentification.isValid==2">
+                <input type="checkbox" [checked]="user.taxIdentification.isValid==2">
+                <span class="checkmark"></span>
+              </label>
+              <label class="custom-check" *ngIf="user.taxIdentification.isValid==1">
+                <i class="material-icons">priority_high</i>
+              </label>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 padding">
+
+              <p class="item-card-title">Tax Identification</p>
+              <p class="item-card-subTitle">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eius -mod tempor incididunt ut labore et dolore magna aliqua.
+                Ut enim ad
+              </p>
+            </div>
+          </div>
+          <div class="col-md-12 item-card disable0back">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+              <label class="custom-check">
+                <input type="checkbox" [disabled]="true">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 padding">
+              <p class="item-card-title">Data Migration</p>
+              <p class="item-card-subTitle">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eius -mod tempor incididunt ut labore et dolore magna aliqua.
+                Ut enim ad
+              </p>
+            </div>
+          </div>
+          <div class="col-md-12 item-card" (click)="goToMode('G')">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+              <label class="custom-check">
+                <input type="checkbox" [checked]="user.employees.length>0">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 padding">
+              <p class="item-card-title">Employees Onboarding</p>
+              <p class="item-card-subTitle">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eius -mod tempor incididunt ut labore et dolore magna aliqua.
+                Ut enim ad
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="col-md-12 footer-position">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" (change)="onCheck($event)" [checked]="acceptPrivacy" name="optionsCheckboxes">
+        </label>
+      </div>
+      <p class="footer-text">
+        I accept <a (click)="goToTerms()"> terms and conditions</a> and <a (click)="goToPP()">Privacy Policy</a>.
+      </p>
+    </div>
+  </div>
+
+  <div class="col-md-12 footer-skip">
+    <button class="btn btn-footer" (click)="submit()"
+            [disabled]="!user.personalInformation.isValid || !user.agencyInformation.isValid || !acceptPrivacy">
+      Go to Dashboard
+    </button>
+    <!--<a class="skip-text">Skip Onboarding</a>-->
+
+  </div>
+</div>
+
+
+<div class="container" *ngIf="mode=='B'">
+  <app-personal-information (goBack)="goToMode($event)" [info]="user.personalInformation"></app-personal-information>
+</div>
+
+<div class="container" *ngIf="mode=='C'">
+  <app-agency-information [agencyInfo]="user.agencyInformation" (goBack)="goToMode($event)"></app-agency-information>
+</div>
+
+<div class="container" *ngIf="mode=='D'">
+  <app-social-media [media]="user.socialMedia" (goBack)="goToMode($event)"></app-social-media>
+</div>
+
+<div class="container" *ngIf="mode=='E'">
+  <app-tax-identification [tax]="user.taxIdentification" (goBack)="goToMode($event)"></app-tax-identification>
+</div>
+
+<div class="container" *ngIf="mode=='F'">
+  <div class="col-md-12 top-spacing2">
+    <div class="go-back" (click)="goToMode('A')">
+      <i class="material-icons">keyboard_arrow_left</i>
+      Back to Onboarding
+    </div>
+    <div class="card card-stats">
+      <div class="card-header" data-background-color="orange">
+        <!--<i class="fa fa-arrow-left"></i>-->
+        Data Migration
+      </div>
+      <div class="card-content">
+        <div class="col-md-12">
+          <div class="col-md-6">
+            <h5>
+              Please <a>Download Formated Excel file</a> and fill the blanks.
+              Once data has been filled up, Use below form to fetch the data:
+            </h5>
+          </div>
+
+          <div class="col-md-6">
+            <input
+              style="display: none"
+              type="file"
+              #fileInput>
+            <button type="submit" (click)="fileInput.click()" class="btn btn-primary pull-right">Upload File</button>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="col-md-8"></div>
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-success pull-right" (click)="goToMode('A')">Submit</button>
+
+            <button type="submit" class="btn btn-danger pull-right" (click)="goToMode('A')">Back</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="mode=='G'">
+  <div class="col-md-12 top-spacing2">
+    <div class="go-back" (click)="goToMode('A')">
+      <i class="material-icons">keyboard_arrow_left</i>
+      Back to Onboarding
+    </div>
+
+
+    <div class="card card-stats">
+      <div class="card-header" data-background-color="orange">
+        <!--<i class="fa fa-arrow-left"></i>-->
+        Employees
+      </div>
+      <div class="card-content">
+        <app-circular-drop (clicked)="dropClicked($event)" [data]="dropData"></app-circular-drop>
+
+        <!--<div class="pull-right">-->
+        <!--<button type="submit" class="btn btn-success pull-right"-->
+        <!--(click)="addNewEmployee()">Add New Employee-->
+        <!--</button>-->
+        <!--</div>-->
+        <div class="box-padding-vertical">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 top-space">
+              <app-table [data]="user.employees" [config]="config" (dropdown)="changeStatus($event)"
+                         (toDelete)="deleteEmployee($event)" (toEdit)="editUser($event)">
+                <div class="row">
+                  <div class="col-md-3 col-sm-7 col-xs-7">
+                    <ul class="nav nav-tabs">
+                      <li class="active border-li">
+                        <a>
+                          <i class="material-icons">view_comfy</i>
+                          <span>All</span>
+                          <div class="ripple-container"></div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6">
+                    <!--<button class="item-back" *ngIf="filter.type">-->
+                    <!--{{filter.type}}-->
+                    <!--<i class="material-icons" (click)="getInqueriesByFilter('','type')">clear</i>-->
+                    <!--</button>-->
+
+                    <!--<button class="item-back" *ngIf="filter.status">-->
+                    <!--{{filter.status}}-->
+                    <!--&lt;!&ndash;<div class="ripple-container"></div>&ndash;&gt;-->
+                    <!--<i class="material-icons" (click)="getInqueriesByFilter('','status')">clear</i>-->
+                    <!--</button>-->
+
+
+                  </div>
+                  <div class="col-md-2  col-sm-5 col-xs-5 custom-margin2">
+                    <div *ngIf="getSelectedCount()>0">
+                      <a href="#settings" data-toggle="tab">
+                        {{getSelectedCount()}} item selected
+                        <i class="material-icons" (click)="multipleDelete()">delete_sweep
+                        </i>
+                        <div class="ripple-container"></div>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="col-md-1  col-sm-4 col-xs-4 custom-margin2">
+                    <i class="material-icons sort-ico" [matMenuTriggerFor]="filter">sort
+                    </i>
+                    <mat-menu #filter="matMenu">
+                      <button mat-menu-item [matMenuTriggerFor]="hierarchy">Hierarchy</button>
+                    </mat-menu>
+                    <mat-menu #hierarchy="matMenu">
+                      <button mat-menu-item>Agent</button>
+                      <button mat-menu-item>Encoder</button>
+                    </mat-menu>
+
+                  </div>
+                </div>
+              </app-table>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row">
+          <div class="col-md-12">
+            <button type="submit" class="btn btn-danger pull-right"
+                    (click)="addNewEmployee()">Add New Employee
+            </button>
+          </div>
+        </div> -->
+
+        <div class="col-md-12">
+          <div class="col-md-8"></div>
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-success pull-right" (click)="goToMode('A')">Submit</button>
+
+            <!--<button type="submit" class="btn btn-danger pull-right" (click)="goToMode('A')">Back</button>-->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="mode=='F'">
+  <div class="col-md-12 top-spacing2">
+    <div class="go-back" (click)="goToMode('A')">
+      <i class="material-icons">keyboard_arrow_left</i>
+      Back to Onboarding
+    </div>
+    <div class="card card-stats">
+      <div class="card-header" data-background-color="orange">
+        <!--<i class="fa fa-arrow-left"></i>-->
+        Terms and Conditions
+      </div>
+      <div class="card-content">
+        <div class="box-padding-vertical">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 top-space">
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+              industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+              scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release
+              of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+              like Aldus PageMaker including versions of Lorem Ipsum.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="addEmployee" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Employee</h4>
+      </div>
+      <div class="modal-body">
+        <app-registration (newUser)="getRegisteredUser($event)" [local]="true"></app-registration>
+
+      </div>
+      <div class="modal-footer text-center">
+        <!--<button type="button" class="btn btn-danger submit-btn" data-dismiss="modal">Submit</button>-->
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="tos" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Terms And Condition</h4>
+      </div>
+      <div class="modal-body">
+        <app-tos></app-tos>
+
+      </div>
+      <div class="modal-footer text-center">
+        <!--<button type="button" class="btn btn-danger submit-btn" data-dismiss="modal">Submit</button>-->
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="pp" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Privacy Policy</h4>
+      </div>
+      <div class="modal-body">
+        <app-privacy-policy></app-privacy-policy>
+
+      </div>
+      <div class="modal-footer text-center">
+        <!--<button type="button" class="btn btn-danger submit-btn" data-dismiss="modal">Submit</button>-->
+      </div>
+    </div>
+
+  </div>
+</div>

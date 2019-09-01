@@ -1,0 +1,44 @@
+a{
+  cursor: pointer;
+}
+.padding-top{
+  padding-top: 35px
+}
+.capitalize{
+  text-transform: capitalize;
+}
+.left-float{
+  float: left;
+}
+.full-width{
+  width: 100%;
+}
+.dropdown{
+  float: left;
+  display: flex;
+  border: 1px solid #e5e5e5;
+  border-radius: 2px;
+  //max-width: 320px;
+  padding: 14px 16px;
+  margin-top: 14px;
+  width: 100%;
+  position: relative;
+  i{
+    position: absolute;
+    right: 15px;
+    top: 17px;
+  }
+}
+.birthdate-margin{
+  margin-top:16px
+}
+
+@media screen and (max-width: 600px) {
+  .mobile-padding{
+    padding: 0px;
+  }
+}
+.position{
+  width:100%;text-align:left;height:100%;
+}
+

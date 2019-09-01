@@ -1,0 +1,573 @@
+<!--<app-loading *ngIf="memory.getLoading()"></app-loading>-->
+
+<div *ngIf="memory.getLoading()">
+  <content-loader>
+    <svg:rect x="17" y="38" rx="1" ry="1" width="80" height="5" />
+    <svg:rect x="100" y="38" rx="1" ry="1" width="80" height="5" />
+    <svg:rect x="17" y="50" rx="2" ry="2" width="80" height="8" />
+    <svg:rect x="17" y="65" rx="2" ry="2" width="100" height="22" />
+    <svg:rect x="120" y="65" rx="1" ry="1" width="4" height="22" />
+  </content-loader>
+</div>
+
+<div class="main-content" *ngIf="!memory.getLoading()">
+  <div class="container-fluid">
+    <mat-tab-group>
+      <mat-tab label="Social Connections" >
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Social Media Info</h3>
+              
+              <!-- <div class="box-padding"> -->
+              <div *ngIf="!memory.getLoading()">
+                <div class="row">
+                  <div class="col-md-3 col-xs-7">
+                    <!--<div class="form-group form-black label-floating form-inline">-->
+                    <!--<label class="control-label">Facebook</label>-->
+                    <!--<input type="text" class="form-control  custom-input" name="facebook">-->
+                    <!--<i class="fa fa-facebook-f input_ico"></i>-->
+                    <!--</div>-->
+                    <button type="submit" class="btn btn-primary pull-left social facebook" [disabled]="facebookAccount?.token || disableFb"
+                      (click)="accessFB()">
+                      <i class="fab fa-facebook-f input_ico"></i>
+                       Facebook Access
+                    </button>
+
+                    <div *ngIf="facebookAccount" class="row">
+                      <!-- <div class="col-md-12">
+                        <button *ngIf="agencyDetails" class="btn btn-primary pull-left social facebook">
+
+                          FB Account ({{facebookAccount.userID}}) <i class="fa fa-close"></i>
+                        </button>
+                        <div class="row">
+                          <button class="btn btn-danger" (click)="logoutFacebookAccount()">
+                            logout
+                          </button>
+                        </div>
+
+                      </div> -->
+                      <!-- <div class="col-md-3 col-xs-2"> -->
+
+
+
+                        <!-- <div *ngFor="let page of facebookAccount.pages; let i = index">
+                          <form (submit)="setMessage(message.value)">
+                            Message: <input type="message" class="form-control" id="message" name="message"
+                              [(ngModel)]="message" placeholder="enter a message !"><br>
+
+                            <button type="submit" class="btn btn-success" (click)="sendMessageOnFacebookMessage(page)">
+                              send post to {{page.name}}
+                            </button>
+                          </form> -->
+                          <!-- <div class="col-md-12">
+                            <button class="btn btn-success" (click)="sendMessageOnFacebookMessage(page)">
+                              {{page.name}}
+                            </button>
+                          </div> -->
+
+                        <!-- </div> -->
+                        <!-- <li *ngFor="let page of facebookAccount.pages; let i = index">
+                              <div class="row">
+                                <a (click)="getTelegramPost()">
+                                  {{page.name}}
+                                </a>
+                                <input type="checkbox" [(ngModel)]="page.enable" (change)="pageCheckBoxEvent(page.id)" />
+                              </div>
+
+                            </li> -->
+                      <!-- </div> -->
+                      <div class="col-md-7  fbPostMain" [@dialog] *ngIf="telPost">
+                        <div class=" ">
+                          <div class="closeBox">
+                            <button class="btn-close">
+                              <i class="material-icons" (click)="telPost = false">close</i>
+                            </button>
+                          </div>
+                          <div class="socialPostsContainer " (scroll)="onScroll($event)" #socialBox>
+                            <app-loading class="noData" *ngIf="!telPostData "></app-loading>
+                            <div class="noData" *ngIf="telPostData && telPostData.length === 0">
+                              <i class="material-icons">
+                                sentiment_dissatisfied
+                              </i>
+                              <p>NO data found for your social network ...</p>
+                            </div>
+                            <div class="row" *ngFor="let item of telPostData">
+                              <app-telegramPost [inp]="item" (someEvent)="reshareFacebookPost($event)"></app-telegramPost>
+                            </div>
+                          </div>
+                          <div class="postTime">
+                            <!--<strong >{{fbPostData[postScrollIndex].publishedDate| njDate}}</strong>-->
+                            <app-timline (someEvent)="scrollToPst($event)" [inpt]="telPostData" [active]="postScrollIndex">
+                            </app-timline>
+                          </div>
+                        </div>
+                        <div class="test">
+                          <div class="test2 tel"></div>
+                        </div>
+                      </div>
+                      <!--<div class="col-md-3">-->
+                      <!--<a  *ngIf="agencyDetails?.social_media?.facebook?.token">-->
+                      <!--Revoke-->
+                      <!--</a>-->
+                      <!--</div>-->
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                  </div>
+                  <div class="col-md-1 col-xs-5" *ngIf="facebookAccount?.token">
+                    <div class="row">
+                    <div class="dropdown drop-ico icon-padding">
+                      <!--<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example-->
+                      <!--<span class="caret"></span>-->
+                      <!--</button>-->
+                      <!---->
+                      <i class="fa fa-ellipsis-v" type="button" data-toggle="dropdown"></i>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a (click)="accessFBPage(agencyDetails?.social_media?.facebook?.token)">
+                            <!--<button type="submit" class="btn btn-primary"-->
+                            Manage Pages
+                            <!--</button>-->
+                          </a>
+
+                        </li>
+                        <li>
+                          <a (click)="fbPost=true;getFacebookPost()">
+                            Show Posts
+                          </a>
+
+                        </li>
+                        <li>
+                          <a *ngIf="facebookAccount?.token" (click)="logoutFacebookAccount()">
+                            Revoke
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-md-7  fbPostMain" [@dialog] *ngIf="fbPost">
+                    <div class=" ">
+                      <div class="closeBox">
+                        <button class="btn-close">
+                          <i class="material-icons" (click)="fbPost = false">close</i>
+                        </button>
+                      </div>
+                      <div class="socialPostsContainer " (scroll)="onScroll($event)" #socialBox>
+                        <app-loading class="noData" *ngIf="!fbPostData "></app-loading>
+                        <div class="noData" *ngIf="fbPostData  && fbPostData.length === 0">
+                          <i class="material-icons">
+                            sentiment_dissatisfied
+                          </i>
+                          <p>NO data found for your social network ...</p>
+                        </div>
+                        <div class="row" *ngFor="let item of fbPostData">
+                          <app-facebook [inp]="item" (someEvent)="reshareFacebookPost($event)"></app-facebook>
+                        </div>
+                      </div>
+                      <div class="postTime">
+                        <!--<strong >{{fbPostData[postScrollIndex].publishedDate| njDate}}</strong>-->
+                        <app-timline (someEvent)="scrollToPst($event)" [inpt]="fbPostData" [active]="postScrollIndex">
+                        </app-timline>
+                      </div>
+                    </div>
+                    <div class="test">
+                      <div class="test2 fb"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-3 col-xs-7">
+                    <button type="submit" class="btn btn-primary pull-left social telegram"
+                      (click)="accessTelegram()" [disabled]="telegramAccount != ''">
+                      <i class="fab fa-telegram input_ico"></i>
+                       Telegram Access
+                    </button>
+                  </div>
+                  <div class="col-md-3 col-xs-5 row-top-space" *ngIf="telegramAccount != ''">
+                    <div class="row">
+                    <div class="dropdown drop-ico">
+                      <i class="fa fa-ellipsis-v" type="button" data-toggle="dropdown"></i>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a (click)="getTelegramPost()">
+                            Show Posts
+                          </a>
+                        </li>
+                        <li>
+                          <a>
+                            Nothing does
+                          </a>
+                        </li>
+                        <li>
+                          <a (click)="logoutTelegramAccount()">
+                            Revoke
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-md-7  fbPostMain" [@dialog] *ngIf="telPost">
+                    <div class=" ">
+                      <div class="closeBox">
+                        <button class="btn-close">
+                          <i class="material-icons" (click)="telPost = false">close</i>
+                        </button>
+                      </div>
+                      <div class="socialPostsContainer " (scroll)="onScroll($event)" #socialBox>
+                        <app-loading class="noData" *ngIf="!telPostData "></app-loading>
+                        <div class="noData" *ngIf="telPostData && telPostData.length === 0">
+                          <i class="material-icons">
+                            sentiment_dissatisfied
+                          </i>
+                          <p>NO data found for your social network ...</p>
+                        </div>
+                        <div class="row" *ngFor="let item of telPostData">
+                          <app-telegramPost [inp]="item" (someEvent)="reshareFacebookPost($event)"></app-telegramPost>
+                        </div>
+                      </div>
+                      <div class="postTime">
+                        <!--<strong >{{fbPostData[postScrollIndex].publishedDate| njDate}}</strong>-->
+                        <app-timline (someEvent)="scrollToPst($event)" [inpt]="telPostData" [active]="postScrollIndex">
+                        </app-timline>
+                      </div>
+                    </div>
+                    <div class="test">
+                      <div class="test2 tel"></div>
+                    </div>
+                  </div>
+                  <!--<div class="col-md-3">-->
+                  <!--<a  *ngIf="agencyDetails?.social_media?.facebook?.token">-->
+                  <!--Revoke-->
+                  <!--</a>-->
+                  <!--</div>-->
+                </div>
+                <div class="row">
+                  <div class="col-md-3 col-xs-7">
+                    <button type="submit" *ngIf="agencyDetails" class="btn btn-primary pull-left social twitter"
+                      [disabled]="twitterAccount?.token" (click)="accessTT()">
+                      <i class="fab fa-twitter input_ico"></i>
+                      Twitter Access
+                    </button>
+                  </div>
+                  <div class="col-md-1 col-xs-5 row-top-space" *ngIf="twitterAccount?.token">
+                    <div class="row">
+
+                    <div class="dropdown drop-ico">
+                      <i class="fa fa-ellipsis-v" type="button" data-toggle="dropdown"></i>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a (click)="logoutTwitterAccount()">
+                            Revoke
+                          </a>
+                        </li>
+                        <li>
+                          <a (click)="ttPost=true;getTwitterPost()">
+                            Show Posts
+                          </a>
+
+                        </li>
+                      </ul>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-md-7  fbPostMain" [@dialog] *ngIf="ttPost">
+                    <div class="closeBox">
+                      <button class="btn-close">
+                        <i class="material-icons" (click)="ttPost = false">close</i>
+                      </button>
+                    </div>
+                    <div class="socialPostsContainer" (scroll)="onScroll($event)" #socialBox>
+                      <app-loading class="noData" *ngIf="!ttPostData "></app-loading>
+                      <div class="noData" *ngIf="ttPostData && ttPostData.length === 0">
+                        <i class="material-icons">
+                          sentiment_dissatisfied
+                        </i>
+                        <p>NO data found for your social network ...</p>
+                      </div>
+                      <div class="row" *ngFor="let item of ttPostData">
+
+                        <app-twitter [inp]="item" (someEvent)="reshareTwitterPost($event)"></app-twitter>
+                      </div>
+                    </div>
+                    <div class="postTime">
+                      <!--<strong >{{fbPostData[postScrollIndex].publishedDate| njDate}}</strong>-->
+                      <app-timline (someEvent)="scrollToPst($event)" [inpt]="ttPostData" [active]="postScrollIndex">
+                      </app-timline>
+                    </div>
+                    <div class="row">
+
+
+                    </div>
+
+                    <div class="test">
+                      <div class="test2 twi"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 col-xs-7">
+                    <button type="submit" *ngIf="agencyDetails" class="btn btn-primary pull-left social linkedin"
+                      [disabled]="agencyDetails?.social_media?.linkedin" (click)="accessIN()">
+                      <i class="fab fa-linkedin input_ico"></i>
+                      Linkedin Access
+                    </button>
+                  </div>
+                  <div class="col-md-3 col-xs-5 row-top-space" *ngIf="agencyDetails?.social_media?.linkedin">
+                    <div class="row">
+                    <div class="dropdown drop-ico">
+                      <i class="fa fa-ellipsis-v" type="button" data-toggle="dropdown"></i>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a (click)="getLinkdinPost()">
+                            Show posts
+                          </a>
+                        </li>
+                        <li>
+                          <a>
+                            Do nothing
+                          </a>
+                        </li>
+                        <li>
+                          <a (click)="revoke('linkedin')">
+                            Revoke
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-md-7  fbPostMain" [@dialog] *ngIf="linkdinPost">
+                    <div class=" ">
+                      <div class="closeBox">
+                        <button class="btn-close">
+                          <i class="material-icons" (click)="linkdinPost = false">close</i>
+                        </button>
+                      </div>
+                      <div class="socialPostsContainer " (scroll)="onScroll($event)" #socialBox>
+                        <app-loading class="noData" *ngIf="!linkdinPostData "></app-loading>
+                        <div class="noData" *ngIf="linkdinPostData && linkdinPostData.length === 0">
+                          <i class="material-icons">
+                            sentiment_dissatisfied
+                          </i>
+                          <p>NO data found for your social network ...</p>
+                        </div>
+                        <div class="row" *ngFor="let item of linkdinPostData">
+                          <app-linkdin [inp]="item" (someEvent)="reshareFacebookPost($event)"></app-linkdin>
+                        </div>
+                      </div>
+                      <div class="postTime">
+                        <!--<strong >{{fbPostData[postScrollIndex].publishedDate| njDate}}</strong>-->
+                        <app-timline (someEvent)="scrollToPst($event)" [inpt]="linkdinPostData" [active]="postScrollIndex">
+                        </app-timline>
+                      </div>
+                    </div>
+
+                    <div class="test">
+                      <div class="test2 link"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" >
+                  <div class="col-md-3 col-xs-7">
+                    <button type="submit" *ngIf="agencyDetails" class="btn btn-primary pull-left social pinterest"
+                      [disabled]="agencyDetails?.social_media?.youtube" (click)="accessYT()">
+                      <i class="fab fa-youtube input_ico"></i>
+                      Youtube Access
+                    </button>
+                  </div>
+                  <div class="col-md-3 col-xs-5 row-top-space" *ngIf="agencyDetails?.social_media?.youtube">
+                    <div class="row">
+                    <div class="dropdown drop-ico">
+                      <i class="fa fa-ellipsis-v" type="button" data-toggle="dropdown"></i>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a (click)="revoke('youtube')">
+                            Revoke
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="row" *ngIf="AppSettings.MARKETING_PINTEREST">
+                  <div class="col-md-3 col-xs-7">
+                    <!-- Don't remove below -->
+                    <!-- <button type="submit" *ngIf="agencyDetails" class="btn btn-primary pull-left social pinterest"
+                        [disabled]="agencyDetails?.social_media?.pinterest" (click)="accessPT()">
+                        <i class="fa fa-pinterest-p input_ico"></i>
+                        Pinterest Access
+                      </button> -->
+                    <button disabled type="submit" *ngIf="agencyDetails" class="btn btn-primary pull-left social pinterest">
+                      <i class="fa fa-pinterest-p input_ico"></i>
+                      Pinterest Access
+                    </button>
+                  </div>
+                  <span class="coming-soon">
+                    <!-- Coming Soon! -->
+                  </span>
+                  <div class="col-md-3 col-xs-5 row-top-space" *ngIf="agencyDetails?.social_media?.pinterest">
+                    <div class="row">
+
+                    <div class="dropdown drop-ico">
+                      <i class="fa fa-ellipsis-v" type="button" data-toggle="dropdown"></i>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a (click)="revoke('pinterest')">
+                            Revoke
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="AppSettings.MARKETING_FLICKR">
+                  <div class="col-md-3 col-xs-7">
+                    <!-- <button type="submit" *ngIf="agencyDetails" class="btn btn-primary pull-left social flickr"
+                        (click)="accessFL()" [disabled]="agencyDetails?.social_media?.flickr">
+                        <i class="fa fa-flickr input_ico"></i>
+                        Flickr Access
+                      </button> -->
+                    <button disabled type="submit" *ngIf="agencyDetails" class="btn btn-primary pull-left social flickr">
+                      <i class="fa fa-flickr input_ico"></i>
+                      Flickr Access
+                    </button>
+                  </div>
+                  <span class="coming-soon">
+                    <!-- Coming Soon! -->
+                  </span>
+                  <div class="col-md-3 col-xs-5 row-top-space" *ngIf="agencyDetails?.social_media?.flickr">
+                    <!-- <a (click)="revoke('flickr')"> -->
+                    <a (click)="revoke('flickr')">
+                      Revoke
+                    </a>
+
+                    <!--<div class="dropdown drop-ico">-->
+                    <!--<i class="fa fa-ellipsis-v" type="button" data-toggle="dropdown"></i>-->
+                    <!--<ul class="dropdown-menu">-->
+                    <!--<li>-->
+                    <!--<a *ngIf="agencyDetails?.social_media?.youtube" (click)="revoke('youtube')">-->
+                    <!--Revoke-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</div>-->
+                  </div>
+                </div>
+              </div>
+
+              <!-- </div> -->
+            </div>
+          </div>        
+      </mat-tab>
+      <mat-tab label="Social Sharing" >
+        <div class="selection-wrp">
+          <div class="title"> Select Desired Channels </div>
+          <div class="selection-sec-wrp">
+            <div class="selection-each-social" [ngClass]="{'selected fas': social.active}" *ngFor="let social of allSocial" (click)="social.active = !social.active">
+              <div class="data-wrp">
+                <div class="icon">
+                  <i class="fab fa-{{social.name}}"></i>
+                </div>
+                <div class="name">
+                  {{social.name}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="selection-wrp">
+          <div class="title"> Write Your Content </div>
+          <div class="selection-sec-wrp">
+            <ckeditor [(ngModel)]="edittor" [editor]="Editor" [config]="ckconfig"
+                                          class="custom-margin editor"></ckeditor>
+          </div>
+        </div>
+        <div class="selection-wrp">
+          <div class="title"> Fetch Tags for your contents </div>
+          <div class="selection-sec-wrp">
+            test
+          </div>
+        </div>
+        <div class="selection-wrp">
+          <div class="title"> Upload Images </div>
+          <div class="selection-sec-wrp">
+            test
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+
+  </div>
+</div>
+
+<div id="telegram" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Telegram Access Integration</h4>
+      </div>
+      <div class="modal-body">
+        <!-- <app-registration (newUser)="getRegisteredUser($event)" [associated_agency]="user.associated_agency"
+        [mode]="user.role ==='admin'?'admin':''"></app-registration> -->
+        <app-telegram *ngIf="agencyDetails" [agencyDetails]="agencyDetails" (telegramEvent)="receiveTelegramAccount($event)">
+
+        </app-telegram>
+
+      </div>
+      <div class="modal-footer text-center">
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="fbPages" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Facebook Pages</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="text-center" *ngIf="loading">
+            <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+          </div>
+          <div class="text-center" *ngIf="error">
+            <h5>
+              Something happened while we're trying to fetch the pages. Please try again later.
+            </h5>
+          </div>
+          <!-- <div class="col-md-6" *ngFor="let item of facebookAccount.pages">
+            <label><input type="checkbox" checked="item.enable" (change)="pageCheckBoxEvent(item.id)"  >{{item.name}}</label>
+          </div> -->
+        </div>
+
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-danger submit-btn" data-dismiss="modal" (click)="editAccessPage()">Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,106 @@
+
+.section3{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../../../../assets/img/footer.jpg');
+  background-repeat: no-repeat;
+  height: 500px;
+  overflow: hidden;
+  position: relative;
+  background-position: center center;
+  .book-demo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    background-color: #35485d;
+    border: 0;
+    width: 300px;
+    height: 40px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.4s ease;
+    z-index: 10;
+    padding: 0;
+    .t{
+      opacity: 1
+    }
+    &:before{
+      transition: all 0.8s ease;
+      content: "";
+      width: 0%;
+      height: 0%;
+      border-radius: 50%;
+      background-color: #35485d;
+      position: absolute;
+      opacity: 0;
+      z-index: 1;
+    }
+    &:hover{
+      // opacity: 0;
+      // z-index: -5;
+      // height: 400px;
+      // padding: 10px;
+      box-sizing: initial;
+      background-color: #35485d00;
+      .t{
+        opacity: 0;
+        display: none;
+      }
+      &:before{
+        width: 300%;
+        height: 600%;
+        opacity: 0.5;
+      }
+      .form{
+        display: block;
+        z-index: 99;
+      }
+    }
+    .form{
+      display: none;
+      .book-demo-submit{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-transform: uppercase;
+        background-color: rgba(227, 0, 0, 0.45);
+        cursor: pointer;
+        border: 0;
+        width: 300px;
+        height: 40px;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        letter-spacing: 1px;
+        transition: all 0.4s ease;
+        z-index: 2;
+
+      }
+      input,textarea{
+        &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+          color: #fff;
+          opacity: 1; /* Firefox */
+        }
+
+        &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+          color: #fff;
+        }
+
+        &::-ms-input-placeholder { /* Microsoft Edge */
+          color: #fff;
+        }
+        width: 300px;
+        background-color: transparent;
+        border: 0;
+        border-bottom: 1px solid white;
+        padding: 8px;
+        color: #fff;
+        font-size: 12px;
+      }
+    }
+  }
+}

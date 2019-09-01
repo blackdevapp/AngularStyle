@@ -1,0 +1,21 @@
+label{
+	vertical-align: middle;
+}
+/deep/ .cdk-overlay-container{
+	z-index: 9999;
+}
+p.note{
+	i.material-icons{
+		vertical-align: middle;
+		margin: 5px;
+	}
+	span.blue {
+		color: blue;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+}
+.btn-default{
+  background-color: #e0e0e0;
+  color: #6a6a67;
+}

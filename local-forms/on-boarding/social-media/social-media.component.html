@@ -1,0 +1,230 @@
+<div class="col-md-12 top-spacing2">
+  <div class="go-back" (click)="goBackToDash()">
+    <i class="material-icons">keyboard_arrow_left</i>
+    Back to Onboarding
+  </div>
+  <div class="card card-stats">
+    <div class="card-header" data-background-color="orange" >
+      <!--<i class="fa fa-arrow-left"></i>-->
+      Social Media Accounts
+    </div>
+    <div class="card-content">
+      <div class="row">
+        <div class="col-md-8">
+            <!-- <h3>Social Media Info</h3> -->
+            <div class="box-padding">
+  
+            <div class="row">
+              <div class="col-md-5">
+
+                <button type="submit" class="btn btn-primary pull-left social facebook"
+                        [disabled]="agencyDetails?.social_media?.facebook?.token" (click)="accessFB()">
+                  <i class="fa fa-facebook-f input_ico"></i>
+                  Facebook Access
+                </button>
+  
+              </div>
+              <div class="col-md-2">
+                <button type="submit" class="btn btn-primary pull-left "
+                        *ngIf="agencyDetails?.social_media?.facebook?.token"
+                        (click)="accessFBPage(agencyDetails?.social_media?.facebook?.token)">
+                  Manage Page
+                </button>
+              </div>
+              <div class="col-md-2" style="margin-top: 20px">
+                <a *ngIf="agencyDetails?.social_media?.facebook?.token" (click)="revoke('facebook')">
+                  Revoke
+                </a>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group form-black label-floating form-inline">
+                  <label class="control-label">Facebook</label>
+                  <input type="text" class="form-control  custom-input" [(ngModel)]="media.facebookLink" name="facebook">
+                  <i class="fa fa-facebook-f input_ico"></i>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <button type="submit" *ngIf="agencyDetails" class="btn btn-primary pull-left social telegram"
+                        (click)="accessTelegram()">
+                  <i class="fa fa-facebook-f input_ico"></i>
+                  Telegram Access
+                </button>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group form-black label-floating form-inline">
+                  <label class="control-label">Telegram</label>
+                  <input type="text" class="form-control  custom-input" [(ngModel)]="media.telegramLink" name="telegram">
+                  <!--<i class="fa fa-facebook-f input_ico"></i>-->
+                </div>
+              </div>
+              <!--<div class="col-md-3" style="margin-top: 20px">-->
+              <!--<a  *ngIf="agencyDetails?.social_media?.facebook?.token">-->
+              <!--Revoke-->
+              <!--</a>-->
+              <!--</div>-->
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <button type="submit" *ngIf="agencyDetails" class="btn btn-primary pull-left social twitter"
+                        [disabled]="agencyDetails?.social_media?.twitter"
+                        (click)="accessTT()">
+                  <i class="fa fa-facebook-f input_ico"></i>
+                  Twitter Access
+                </button>
+              </div>
+              <div class="col-md-3" style="margin-top: 20px">
+                <a *ngIf="agencyDetails?.social_media?.twitter" (click)="revoke('twitter')">
+                  Revoke
+                </a>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group form-black label-floating form-inline">
+                  <label class="control-label">Twitter</label>
+                  <input type="text" class="form-control  custom-input" [(ngModel)]="media.twitterLink" name="twitter">
+                  <!--<i class="fa fa-facebook-f input_ico"></i>-->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <button type="submit" *ngIf="agencyDetails" class="btn btn-primary pull-left social linkedin"
+                        [disabled]="agencyDetails?.social_media?.linkedin" (click)="accessIN()">
+                  <i class="fa fa-facebook-f input_ico"></i>
+                  Linkedin Access
+                </button>
+              </div>
+              <div class="col-md-3" style="margin-top: 20px">
+                <a *ngIf="agencyDetails?.social_media?.linkedin" (click)="revoke('linkedin')">
+                  Revoke
+                </a>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group form-black label-floating form-inline">
+                  <label class="control-label">linkedin</label>
+                  <input type="text" class="form-control  custom-input" [(ngModel)]="media.linkedinLink" name="linkedin">
+                  <!--<i class="fa fa-facebook-f input_ico"></i>-->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <button type="submit" *ngIf="agencyDetails" class="btn btn-primary pull-left social pinterest"
+                        [disabled]="agencyDetails?.social_media?.pinterest" (click)="accessPT()">
+                  <i class="fa fa-facebook-f input_ico"></i>
+                  Pinterest Access
+                </button>
+              </div>
+              <div class="col-md-3" style="margin-top: 20px">
+                <a *ngIf="agencyDetails?.social_media?.pinterest" (click)="revoke('pinterest')">
+                  Revoke
+                </a>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group form-black label-floating form-inline">
+                  <label class="control-label">pinterest</label>
+                  <input type="text" class="form-control  custom-input" [(ngModel)]="media.pinterestLink" name="pinterest">
+                  <!--<i class="fa fa-facebook-f input_ico"></i>-->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <button type="submit" *ngIf="agencyDetails" class="btn btn-primary pull-left social flickr"
+                         (click)="accessFL()">
+                  <i class="fa fa-facebook-f input_ico"></i>
+                  Flickr Access
+                </button>
+              </div>
+              <div class="col-md-3" style="margin-top: 20px">
+                <a *ngIf="agencyDetails?.social_media?.flickr" (click)="revoke('flickr')">
+                  Revoke
+                </a>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group form-black label-floating form-inline">
+                  <label class="control-label">flickr</label>
+                  <input type="text" class="form-control  custom-input" [(ngModel)]="media.flickrLink" name="flickr">
+                  <!--<i class="fa fa-facebook-f input_ico"></i>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="col-md-12">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-success pull-right" (click)="submit()">Submit</button>
+
+          <!--<button type="submit" class="btn btn-danger pull-right" (click)="goBackToDash()">Back</button>-->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="telegram" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Telegram Access Integration</h4>
+      </div>
+      <div class="modal-body">
+        <!-- <app-registration (newUser)="getRegisteredUser($event)" [associated_agency]="user.associated_agency"
+        [mode]="user.role ==='admin'?'admin':''"></app-registration> -->
+        <app-telegram *ngIf="agencyDetails" [agencyDetails]="agencyDetails">
+
+        </app-telegram>
+
+      </div>
+      <div class="modal-footer text-center">
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="fbPages" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Facebook Pages</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="text-center" *ngIf="loading">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw" ></i>
+            </div>
+            <div class="text-center" *ngIf="error">
+              <h5>
+                Something happened while we're trying to fetch the pages. Please try again later.
+              </h5>
+            </div>
+            <div class="col-md-6" *ngFor="let item of pages">
+              <label>
+                <input type="checkbox" (change)="onCheck($event)" [value]="item.id" name="optionsCheckboxes">
+                {{item.name}}
+              </label>
+            </div>
+          </div>
+  
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-danger submit-btn" data-dismiss="modal" (click)="editAccessPage()">Submit
+          </button>
+        </div>
+      </div>
+  
+    </div>
+  </div>

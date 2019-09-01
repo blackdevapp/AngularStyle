@@ -1,0 +1,103 @@
+$tablet: 768px;
+$small: 320px;
+$x-small: 425px;
+.navbar {
+  margin-bottom: 0px !important;
+}
+
+.navbar .navbar-nav > li > a {
+  border-radius: 0px !important;
+}
+
+.navbar .navbar-nav > li > a .fa {
+  font-size: 10px !important;
+
+}
+
+.home-icon{
+  width: 50px;
+  cursor: pointer;
+}
+.logo{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.header {
+  background: url("../../../../assets/img/wave.png") repeat;
+  background-size: cover;
+  width: 100%;
+  background-position: center;
+  height: 105px;
+  @media screen and (max-width: $tablet) {
+    height: auto;
+  }
+  .booking {
+    padding: 15px;
+    .badge-basket{
+      position: absolute;
+      top: 7px;
+      border: 1px solid #FFF;
+      right: 0px;
+      font-size: 9px;
+      background: #f44336;
+      color: #FFFFFF;
+      min-width: 15px;
+      padding: 0px 5px;
+      height: 15px;
+      border-radius: 10px;
+      text-align: center;
+      line-height: 15px;
+      vertical-align: middle;
+      display: block;
+      z-index: 1;
+    }
+
+  }
+
+  .btn {
+    border-radius: 0;
+  }
+
+  .logo-lang {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid #555555;
+    padding: 5px;
+  }
+
+  .dropdown-toggle {
+    display: flex;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #0d47a1;
+    align-items: center;
+
+    .caret {
+      color: #0b9bee;
+    }
+  }
+
+  a{
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .navbar .navbar-collapse.collapse.in, .navbar .navbar-collapse.collapsing{
+    display: block!important;
+  }
+}
+
+@media screen and (max-width: 600px){
+  a{
+    color: #555555!important;
+  }
+}
+
+
+.nav-space{
+  padding-top: 15px
+}

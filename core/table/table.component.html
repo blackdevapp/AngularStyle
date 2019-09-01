@@ -1,0 +1,177 @@
+
+<div class="card"><app-loading *ngIf="loading"></app-loading>
+  <div class="card-header" data-background-color="red">
+    <div class="nav-tabs-navigation">
+      <div class="nav-tabs-wrapper">
+          <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+  <div class="card-content" *ngIf="!config">
+    <div class="table-responsive">
+      <table class="table table-hover margin-bottom" *ngIf="data">
+        <thead class="text-danger">
+        <tr>
+          <th *ngFor="let title of data.titles">
+            {{title}}
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of data.rows">
+          <td *ngFor="let field of row.fields; last as isLast;let i=index">
+            <div *ngIf="!isLast">
+              {{field}}
+            </div>
+            <div class="row action-row">
+              <div *ngIf="isLast" (click)="goEdit(row.node)">
+                <i class="material-icons">border_color</i>
+              </div>
+              <div *ngIf="isLast" class="close" (click)="goDelete(row.node,i)">
+                <i class="material-icons">close</i>
+              </div>
+            </div>
+
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="config">
+    <div class="card-content" *ngIf="!config.actions?.pagination">
+      <div class="table-responsive">
+        <table class="table margin-bottom" *ngIf="data">
+          <thead class="text-danger" *ngIf="data?.length">
+
+          <tr>
+            <th *ngIf="config.actions.select"></th>
+            <th *ngFor="let item of config.columns">
+              {{item.title}}
+            </th>
+            <th>
+              Actions
+            </th>
+          </tr>
+          </thead>
+          <tbody *ngIf="data?.length">
+          <tr *ngFor="let row of data;let i=index">
+            <td *ngIf="!isUser && config.actions.select">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="optionsCheckboxes" (change)="row.selected=!row.selected"
+                         [checked]="row.selected">
+                </label>
+              </div>
+            </td>
+            <td *ngFor="let field of config.columns" class="text-left">
+              <div *ngIf="field.type==='string'">{{row[field.field]}}</div>
+              <div class="dropdown" *ngIf="field.type==='dropdown'">
+                <button class="btn drop-btn dropdown-toggle dropdown-width text-center"
+                        type="button" data-toggle="dropdown">{{row[field.field]}}
+                </button>
+                <ul class="dropdown-menu">
+                  <li *ngFor="let sub of field.data"><a (click)="changeStatus(row,field.field,sub)">{{sub}}</a></li>
+                </ul>
+              </div>
+              <div *ngIf="field.type==='image'">
+                <img src="../../../assets/img/faces/marc.jpg" class="profile-img">
+              </div>
+
+            </td>
+            <td class="td-actions text-right">
+              <button type="button" rel="tooltip" *ngIf="config.actions.edit" (click)="goEdit(row)"
+                      title="Edit Task" class="btn btn-primary btn-simple btn-sm custom-margin">
+                <i class="material-icons">edit</i>
+              </button>
+              <button type="button" rel="tooltip" *ngIf="config.actions.delete"
+                      title="Remove" class="btn btn-danger btn-simple btn-sm custom-margin"
+                      (click)="goDelete(row,i)">
+                <i class="material-icons">close</i>
+              </button>
+            </td>
+
+          </tr>
+          </tbody>
+          <tbody  *ngIf="!data?.length && !loading">
+            <div class="pull-left">
+                No data to show
+            </div>
+          
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-content" *ngIf="config.actions?.pagination">
+      <!--<div class="table-responsive">-->
+      <div class="scroll" scrollable (scrollPosition)="onScroll()">
+        <table class="table margin-bottom" *ngIf="data">
+          <thead class="text-danger" *ngIf="data?.length">
+
+          <tr>
+            <th></th>
+            <th *ngFor="let item of config.columns">
+              {{item.title}}
+            </th>
+            <th>
+              Actions
+            </th>
+          </tr>
+          </thead>
+          <tbody *ngIf="data?.length">
+          <tr *ngFor="let row of data;let i=index">
+            <td *ngIf="!isUser && config.actions.select">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="optionsCheckboxes" (change)="row.selected=!row.selected"
+                         [checked]="row.selected">
+                </label>
+              </div>
+            </td>
+            <td *ngFor="let field of config.columns">
+              <div *ngIf="field.type==='string'">{{row[field.field]}}</div>
+              <div class="dropdown" *ngIf="field.type==='dropdown'">
+                <button class="btn drop-btn dropdown-toggle dropdown-width text-center"
+                        type="button" data-toggle="dropdown">{{row[field.field]}}
+                </button>
+                <ul class="dropdown-menu">
+                  <li *ngFor="let sub of field.data"><a (click)="changeStatus(row,field.field,sub)">{{sub}}</a></li>
+                </ul>
+              </div>
+              <div *ngIf="field.type==='image'" (click)="imageClicked(row[field.field])">
+                <img src="../../../assets/img/faces/marc.jpg" class="profile-img">
+              </div>
+
+              <div class="text-center" *ngIf="field.type==='button'&& row[field.field]=='VISAPROCESS'" >
+                <button type="submit" class="btn btn-danger"
+                        (click)="buttonClicked(row)">Form Detail
+                </button>
+              </div>
+
+            </td>
+            <td class="td-actions text-right">
+              <button type="button" rel="tooltip" *ngIf="config.actions.edit" (click)="goEdit(row)"
+                      title="Edit Task" class="btn btn-primary btn-simple btn-sm custom-margin">
+                <i class="material-icons">edit</i>
+              </button>
+              <button type="button" rel="tooltip" *ngIf="config.actions.delete"
+                      title="Remove" class="btn btn-danger btn-simple btn-sm custom-margin"
+                      (click)="goDelete(row,i)">
+                <i class="material-icons">close</i>
+              </button>
+            </td>
+
+          </tr>
+          </tbody>
+          <tbody *ngIf="!data?.length && !loading">
+              <div class="pull-left">
+                  No data to show
+              </div>
+          </tbody>
+        </table>
+      </div>
+      <!--</div>-->
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,220 @@
+.top-spacing {
+  padding-top: 110px;
+  .btn-back {
+    height: 54px;
+    width: 249px;
+    background: #0099FA;
+    color: white;
+    font-size: 14px;
+  }
+}
+
+.top-spacing2 {
+  padding-top: 70px;
+
+  .sectionTitle {
+    font-size: 18px;
+    color: #000000;
+    margin-left: 50px;
+    &:after {
+      position: absolute;
+      width: 57px;
+      border: 2px solid #0062bd;
+      content: "";
+      left: 0;
+      top: 78px;
+    }
+  }
+}
+
+.img-box-size {
+  width: 50px;
+  height: 50px;
+}
+
+.title {
+  color: #000000;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.sub-title {
+  color: #d5d1d0;
+  font-size: 16px;
+  text-align: center;
+  font-weight: bold;
+}
+.my-nav{
+/deep/ .nav-tabs {
+  background: #eeeeee;
+  height: 500px;
+}}
+
+/deep/ .tabs-left {
+  border-bottom: none;
+  border-right: 1px solid #ddd;
+}
+
+/deep/ .tabs-left > li {
+  float: none;
+  margin: 0px;
+
+}
+
+/deep/ .tabs-left > li.active > a,
+.tabs-left > li.active > a:hover,
+.tabs-left > li.active > a:focus {
+  border-bottom-color: #ddd;
+  border-right-color: transparent;
+  background: #eeeeee;
+  border: none;
+  border-radius: 0px;
+  margin: 0px;
+  padding-left: 70px;
+}
+
+/deep/ .nav-tabs > li > a:hover {
+  /* margin-right: 2px; */
+  line-height: 1.42857143;
+  border: 1px solid transparent;
+  /* border-radius: 4px 4px 0 0; */
+}
+
+/deep/ .tabs-left > li.active > a::after {
+  //content: "";
+  position: absolute;
+  top: 5px;
+  right: 0px;
+  //border-top: 17px solid transparent;
+  //border-bottom: 17px solid transparent;
+  //border-left: 20px solid #f90;
+  content: url("../../../assets/img/booking.png");
+  display: block;
+  width: 0;
+}
+
+/deep/ .tabs-left > li.active > a::before {
+  position: absolute;
+  width: 57px;
+  border: 2px solid #0062bd;
+  content: "";
+  left: 0;
+  top: 21px;
+}
+.my-nav{
+  /deep/ .nav-tabs > li > a, .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+    background-color: transparent;
+    font-size: 20px;
+    font-weight: 500;
+    color: #000000 !important;
+    padding-left: 70px;
+    height: 90px;
+  }
+}
+
+
+%imageBackground {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  resize: both;
+}
+
+.footer-back {
+  @extend %imageBackground;
+  height: 580px;
+  background: url("../../../assets/img/tim-marshall-82948-unsplash.jpg") center center no-repeat;
+  background-size: cover;
+}
+
+.footer-padding {
+  padding: 60px;
+
+  .footer-title {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+  }
+}
+
+%sub-text-style {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.sub-text {
+  @extend %sub-text-style;
+  color: white;
+}
+
+.sub-text2 {
+  @extend %sub-text-style;
+  color: white;
+  font-weight: bold;
+}
+
+.sub-text3 {
+  @extend %sub-text-style;
+  margin-top: 10px;
+  color: white;
+}
+
+
+.sub-text5 {
+  @extend %sub-text-style;
+  text-align: center;
+  padding-top: 45px;
+  color: white;
+  .sub-text4 {
+    margin-top: 10px;
+    color: #48BBB4;
+  }
+}
+
+.icon-padding {
+  padding-top: 60px;
+  .icons {
+    color: white;
+    font-size: 16px;
+    margin: 5px;
+  }
+}
+
+.contact-section {
+  padding-top: 60px;
+  border-bottom: 1px solid white;
+  padding-bottom: 40px;
+  i {
+    font-size: 24px;
+    color: #ffffff9e;
+  }
+
+  .blue-ico {
+    color: rgba(33, 150, 243, 0.53);
+  }
+}
+
+.btn-book {
+  height: 54px;
+  width: 372px;
+  background: #2196f3;
+  color: white;
+  font-size: 14px;
+}
+
+
+
+.gmail-text {
+  font-size: 20px;
+  .link-here {
+    text-decoration: underline;
+    color: #0d47a1;
+    cursor: pointer;
+  }
+}

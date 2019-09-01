@@ -1,0 +1,85 @@
+
+<div class="container-fluid social-media">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-body twiiter">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-2">
+              <img src="https://picsum.photos/id/1006/3000/2000" class="img">
+            </div>
+
+            <div class="col-md-10">
+              <div class="row">
+				                <span class="name">
+				                  {{twitterInfo.title}}
+				                </span>
+
+                <span class="id-info">
+				                  @{{twitterInfo.associated_agency}}
+				                </span>
+
+                <small class="id-info">
+				                  {{twitterInfo.publishedDate|date:'medium'}}
+				                </small>
+
+                <!--<span class="arrow-icon">-->
+				                  <!--<i class="fa fa-angle-down dropdown-toggle" type="button" data-toggle="dropdown"></i>-->
+
+				                  <!--<ul class="dropdown-menu">-->
+				                      <!--<li><a>item1</a></li>-->
+				                  <!--</ul>-->
+				                <!--</span>-->
+              </div>
+
+              <div class="col-md-11">
+
+                <div class="row">
+
+                  <p class="texts">{{twitterInfo.description}}</p>
+
+                </div>
+                <div >
+                  <span class="tag" *ngFor="let tag of twitterInfo.tags |slice:0:10"> <a>#{{tag}}</a> </span>
+
+                </div>
+                <!--<div class="row">-->
+                  <!--<img src="https://picsum.photos/id/1006/3000/2000" class="big-img">-->
+
+                <!--</div>-->
+
+                <div class="row footer-icon">
+
+
+                  <div class="items">
+                    <i class="fa fa-comment-o"></i>
+                    <span>1245</span>
+                  </div>
+                  <div class="items">
+                    <i class="fa fa-retweet"></i>
+                    <span>889</span>
+                  </div>
+                  <div class="items">
+                    <i class="fa fa-heart-o"></i>
+                    <span>889</span>
+                  </div>
+                  <div class="items">
+                    <i class="fa fa-envelope-o"></i>
+                  </div>
+
+                </div>
+                <div class="items">
+                  <button class="btn btn-danger" (click)="reShare()">Reshare</button>
+                </div>
+
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

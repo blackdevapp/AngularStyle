@@ -1,0 +1,122 @@
+<ul class="Row" *ngIf="!mode">
+    <i class="fas fa-filter main"></i>
+    <li *ngFor="let filter of filters;let i = index">
+        <app-dropdown [dropData]="filter.data" (selectedEvent)="filter.selected = $event.name;filter.type=$event.type;buildQuery();
+                              filter.currentData=$event.type=='dropdown'?$event.data:[];
+                               filter.displayName=$event.displayName"></app-dropdown>
+        <div class="form-group form-black label-floating" *ngIf="filter.type=='string'||filter.type=='array'">
+            <input type="text" class="form-control" autofocus
+                   [(ngModel)]="filter.value">
+        </div>
+        <div class="dropdown" *ngIf="filter.type=='dropdown'">
+            <button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown">
+                <span class="notification">{{filter.value ? filter.value : filter.displayName}}</span>
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li *ngFor="let item of filter.currentData">
+                    <a (click)="filter.value=item">{{item}}</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="form-group form-black label-floating is-empty" *ngIf="filter.type=='dateRange'">
+            <mat-form-field class="full-width">
+                <input matInput [matDatepicker]="i" placeholder="From"
+                       [(ngModel)]="filter.valueFrom" class="date" name="picker1">
+                <mat-datepicker-toggle matSuffix [for]="i"></mat-datepicker-toggle>
+                <mat-datepicker #i></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <input matInput [matDatepicker]="j" placeholder="To"
+                       [(ngModel)]="filter.valueTo" class="date" name="picker2">
+                <mat-datepicker-toggle matSuffix [for]="j"></mat-datepicker-toggle>
+                <mat-datepicker #j></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <i class="fas fa-remove" (click)="filters.splice(i,1);search()"></i>
+    </li>
+    <span class="add-new" *ngIf="filters.length != typeOfFilter.length" (click)="organizeAndAdd()">
+    	<i class="fas fa-plus"></i>
+    </span>
+    <i class="fas fa-search main" (click)="search()"></i>
+</ul>
+<ul class="Row new" *ngIf="mode">
+    <div class="search" [ngClass]='{"is-active": displaySearch}'>
+        <i class="fas fa-search"></i>
+        <input type="text" class="main-search-value" (focus)="displaySearch = true">
+        <div class="the-form" *ngIf="displaySearch">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" placeholder="From" [(ngModel)]="data.from" class="form-control"
+                               (focus)="displaySearch = true">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" placeholder="To" [(ngModel)]="data.to" class="form-control"
+                               (focus)="displaySearch = true">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <input type="text" placeholder="Company" [(ngModel)]="data.company" class="form-control"
+                               (focus)="displaySearch = true">
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <mat-form-field class="full-width">
+                            <input matInput [matDatepicker]="picker" [(ngModel)]="data.date" placeholder="Date Within">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <!-- <div class="row"> -->
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <div class="checkbox input-top-space">
+                            <label>
+                                <input type="checkbox" [(ngModel)]="data.twoWay" name="nameit">
+                            </label>
+                            Two Way
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="checkbox input-top-space">
+                            <label>
+                                <input type="checkbox" [(ngModel)]="data.inactive" name="nameit">
+                            </label>
+                            Include Inactive Trips
+                        </div>
+                    </div>
+                </div>
+                <!-- </div> -->
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success pull-right"
+                            (click)="displaySearch = false;submit1()">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="dimmer" [ngClass]='{"focus-active": displaySearch}'>
+        <div class="inner" (click)="displaySearch = false"></div>
+    </div>
+
+</ul>
+

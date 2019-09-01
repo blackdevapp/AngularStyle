@@ -1,0 +1,22 @@
+<div class="main" #scrollBox>
+
+  <div *ngFor="let item of items; let i = index" class="box">
+    <div class="items" [ngClass]="{'active' : i === actIndex}" (click)="sendIndex(i)">
+      <div class="month"> {{item.publishedDate | date:'MMM'}}</div>
+      <div class="bottom">
+        <div class="day"> {{item.publishedDate | date:'d'}}</div>
+        <div class="week"> {{item.publishedDate | date:'EEEE'}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<i class="material-icons rightAnchor"
+   *ngIf="items.length>5"
+   (click)="scrollRight()" >
+  arrow_forward_ios
+</i>
+<i class="material-icons leftAnchor"
+   *ngIf="items.length>5"
+   (click)="scrollLeft()">
+  arrow_back_ios
+</i>

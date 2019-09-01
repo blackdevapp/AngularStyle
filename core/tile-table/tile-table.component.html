@@ -1,0 +1,106 @@
+<app-loading *ngIf="memory.getLoading()"></app-loading>
+<div class="table-header">
+  <ul>
+    <!--<li *ngIf="config.actions.select">-->
+
+    <!--</li>-->
+    <li class="align" *ngFor="let item of config.columns" [ngStyle]="item.style?item.style:null">
+      <span>{{item.title}}</span>
+    </li>
+    <li class="align" *ngIf="config.actions.action" style="width: 15%">
+      <span>Actions</span>
+    </li>
+  </ul>
+</div>
+<div class="table-body custom-table-responsive" *ngIf="!config.actions.pagination">
+  <div class="text-center" *ngIf="!memory.getLoading() && !data?.length && !loading">
+    <p>No data to show</p>
+  </div>
+
+  <div *ngIf="data?.length">
+    <ul class="ul-body" *ngFor="let row of data;let i=index" >
+      <li class="align" *ngFor="let field of config.columns" [ngStyle]="field.style?field.style:null" style="text-align: center">
+        <div *ngIf="field.type==='string'" >{{row[field.field]}}</div>
+        <div class="dropdown" *ngIf="field.type==='dropdown'">
+          <button class="btn drop-btn dropdown-toggle dropdown-width text-center"
+                  type="button" data-toggle="dropdown">{{row[field.field]}}
+          </button>
+          <ul class="dropdown-menu">
+            <li class="drop-li" *ngFor="let sub of field.data"><a (click)="changeStatus(row,field.field,sub)" style="text-transform: capitalize;">{{sub}}</a></li>
+          </ul>
+        </div>
+        <div *ngIf="field.type==='image'" (click)="imageClicked(row)">
+            <i class="fas fa-user-tie"></i>
+        </div>
+
+        <div class="text-center" *ngIf="field.type==='button'&& (row[field.field]=='VISAPROCESS' ||(field.title=='Payment'&&row['status']=='APPROVED'&&row[field.field]==false))" >
+          <button type="submit" class="btn btn-danger"
+                  (click)="buttonClicked(row)">{{field.title}}
+          </button>
+        </div>
+      </li>
+      <li class="align" style="width: 15%">
+        <button type="button" rel="tooltip" *ngIf="config.actions.edit&&!(row['type']==='VISAPROCESS')" (click)="goEdit(row)"
+                title="Edit Task" class="btn btn-primary btn-simple btn-sm custom-margin">
+          <i class="material-icons">edit</i>
+        </button>
+        <button type="button" rel="tooltip" *ngIf="config.actions.delete"
+                title="Remove" class="btn btn-danger btn-simple btn-sm custom-margin"
+                (click)="goDelete(row,i)">
+          <i class="material-icons">close</i>
+        </button>
+        <i class="fa fa-eye" type="button" *ngIf="config.actions.preview" (click)="goToPrint(row)"></i>
+      </li>
+    </ul>
+  </div>
+
+</div>
+<div class="table-body custom-table-responsive" *ngIf="config.actions.pagination">
+  <div class="text-center" *ngIf="!memory.getLoading() && !data?.length && !loading" >
+    <p>No data to show</p>
+  </div>
+
+  <div class="scroll" scrollable (scrollPosition)="onScroll()" *ngIf="data?.length">
+    <ul class="ul-body" *ngFor="let row of data;let i=index" >
+      <li class="align text-center" *ngFor="let field of config.columns" [ngStyle]="field.style?field.style:null">
+        <div *ngIf="field.type==='string'" [ngStyle]="field.style?field.style:null">{{row[field.field]}}</div>
+        <div class="dropdown" *ngIf="field.type==='dropdown'">
+          <button class="btn drop-btn dropdown-toggle dropdown-width text-center"
+                  type="button" data-toggle="dropdown">{{row[field.field]}}
+          </button>
+          <ul class="dropdown-menu">
+            <li class="drop-li" *ngFor="let sub of field.data">
+                <a (click)="changeStatus(row,field.field,sub)">{{sub}}</a>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="field.type==='image'" (click)="imageClicked(row)">
+          <!-- <img src="../../../assets/img/faces/picture.svg" class="profile-img"> -->
+          <i class="fas fa-user-tie"></i>
+        </div>
+
+        <div class="text-center" *ngIf="field.type==='button'&& row[field.field]=='VISAPROCESS'" >
+          <i class="fab fa-wpforms" (click)="buttonClicked(row)"></i>
+          <!-- <button type="submit" class="btn btn-danger"
+                  >Form Detail
+          </button> -->
+        </div>
+      </li>
+      <li class="align" style="width: 15%">
+        <button type="button" rel="tooltip" *ngIf="config.actions.edit &&!(row['type']==='VISAPROCESS')" (click)="goEdit(row)"
+                title="Edit Task" class="btn btn-primary btn-simple btn-sm custom-margin">
+          <i class="material-icons">edit</i>
+        </button>
+        <button type="button" rel="tooltip" *ngIf="config.actions.delete"
+                title="Remove" class="btn btn-danger btn-simple btn-sm custom-margin"
+                (click)="goDelete(row,i)">
+          <i class="material-icons">close</i>
+        </button>
+        <i class="fa fa-eye" type="button" *ngIf="config.actions.preview" (click)="goToPrint(row)"></i>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+

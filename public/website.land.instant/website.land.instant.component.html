@@ -1,0 +1,18 @@
+<div class="site-wrapper">
+
+  <app-website-header [menuItem]="menuItem"></app-website-header>
+<app-cover [data]="data"></app-cover>
+<div class="container">
+  <section class="section-two">
+    <div class="col-md-12">
+      <div *ngFor="let section of sections;let i = index">
+        <app-content [content]="section"></app-content>  
+      </div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+
+<app-book></app-book>

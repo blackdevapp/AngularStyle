@@ -1,0 +1,20 @@
+.logs-wrp{
+	border: 1px solid grey;
+	border-radius: 6px;
+	margin-bottom: 5px;
+	ul{
+		background-color: #fff;
+		overflow: auto;
+		display: flex;
+		justify-content: flex-start;
+		font-size: 10px;
+		padding: 0;
+		margin: 0;
+		li{
+			list-style: none;
+			float: left;
+			min-width: 123px;
+			padding: 1px 6px;
+		}
+	}
+}

@@ -1,0 +1,246 @@
+ul {
+  padding-left: 0;
+}
+.without-margin-bottom{
+  margin-bottom: 0
+}
+
+.wrap {
+  padding-top: 80px;
+  .top-section {
+    .site-logo {
+      display: flex;
+      height: 10vh;
+      align-items: center;
+
+      .logo {
+        width: 40px;
+      }
+
+      h4 {
+        font-weight: bold;
+        margin-left: 10px;
+      }
+    }
+
+    .site-info {
+      h4 {
+        font-weight: bold;
+        width: 50%;
+      }
+
+      p {
+        margin: 0 0 5px;
+      }
+
+    }
+  }
+
+  .invoice-box {
+    background-color: #C0C1C3;
+    border-left: 4px solid #1C1C1E;
+    padding: 15px;
+
+    p {
+      font-weight: bold;
+    }
+  }
+
+  .bottom-section {
+    h1 {
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      font-weight: 200;
+    }
+  }
+
+  .info {
+    h4 {
+      font-weight: bold;
+    }
+
+    ul li {
+      list-style-type: none;
+      padding-left: 0;
+      margin-left: 0;
+    }
+
+
+    h3 {
+      text-transform: uppercase;
+      word-spacing: 5px;
+      margin-top: 15vh;
+    }
+
+    p {
+      font-weight: bold;
+      margin-bottom: 0px;
+    }
+
+    a {
+      color: #555555;
+      font-weight: normal;
+    }
+  }
+
+  .table-section {
+    margin-top: 20vh;
+
+    .table-ul {
+      display: flex;
+      width: 100%;
+      list-style-type: none;
+      flex-wrap: wrap;
+    }
+
+    .table-header {
+      @extend .table-ul;
+      background: #323234;
+
+      ul {
+        list-style-type: none;
+        display: flex;
+        width: 100%;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        margin-bottom: 0;
+
+        li {
+          color: #f3e5f5;
+          font-size: 20px;
+          font-weight: normal;
+          text-transform: uppercase;
+
+          &:nth-child(1) {
+            width: 55%;
+          }
+
+          &:nth-child(2) {
+            width: 15%;
+            text-align: center;
+          }
+
+          &:nth-child(3) {
+            width: 15%;
+            text-align: center;
+          }
+
+          &:nth-child(4) {
+            width: 15%;
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    .table-body {
+      @extend .table-ul;
+
+      ul {
+        list-style-type: none;
+        display: flex;
+        width: 100%;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        height: 90px;
+        align-items: center;
+        margin-bottom: 0;
+        @media screen and (max-width: 500px) {
+          height: auto;
+        }
+        li {
+          &:nth-child(1) {
+            width: 55%;
+          }
+
+          &:nth-child(2) {
+            width: 15%;
+            text-align: center;
+          }
+
+          &:nth-child(3) {
+            width: 15%;
+            text-align: center;
+          }
+
+          &:nth-child(4) {
+            width: 15%;
+            text-align: center;
+          }
+        }
+      }
+
+      //ul:nth-child(odd) {
+      //  background: ;
+      //}
+
+      ul:nth-child(even) {
+        background: #C8C9CB;
+      }
+
+      h4 {
+        font-weight: bold;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .sum-box {
+    padding-bottom: 80px;
+    .table-header {
+      @extend .table-ul;
+      background: #323234;
+
+      ul {
+        list-style-type: none;
+        display: flex;
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 0;
+
+        li {
+          color: #f3e5f5;
+          font-size: 20px;
+          font-weight: normal;
+          text-transform: uppercase;
+
+          &:nth-child(1) {
+            width: 60%;
+          }
+
+          &:nth-child(2) {
+            width: 40%;
+          }
+        }
+      }
+    }
+    p {
+      margin-bottom: 0;
+    }
+    .name {
+      font-weight: bold;
+      word-spacing: 5px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
+
+  .item-padding {
+    padding-left: 80px;
+    @media screen and (max-width: 500px) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  .padding {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+}
+
+
+.custom-table-responsive{
+  overflow-x: auto;
+  width: 100%;
+}

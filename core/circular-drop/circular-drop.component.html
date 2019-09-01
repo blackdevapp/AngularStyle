@@ -1,0 +1,41 @@
+<div class="commander">
+	<i class="material-icons">add</i>
+	<div class="menu">
+		<div class="each-menu" *ngFor="let drop of data" (click)="clickedData(drop)">
+			<div class="title">
+				<i class="material-icons">{{drop.icon}}</i>
+			</div>
+			<div class="custom-tooltip">
+				{{drop.description}}
+            	<i class="fa fa-times times-ico"></i>
+          	</div>
+		</div>
+		<!-- <div class="each-menu">
+			<div class="title">
+				<i class="material-icons">list</i>
+			</div>
+			<div class="custom-tooltip">
+				Start an Itenerary
+            	<i class="fa fa-times times-ico"></i>
+          	</div>
+		</div>
+		<div class="each-menu">
+			<div class="title">
+				<i class="material-icons">hotel</i>
+			</div>
+			<div class="custom-tooltip">
+				Add Manual Hotel
+            	<i class="fa fa-times times-ico"></i>
+          	</div>
+		</div>
+		<div class="each-menu">
+			<div class="title">
+				<i class="material-icons">flight</i>
+			</div>
+			<div class="custom-tooltip">
+				Add Manual Airfare
+            	<i class="fa fa-times times-ico"></i>
+          	</div>
+		</div> -->
+	</div>
+</div>

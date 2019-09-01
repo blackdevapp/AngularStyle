@@ -1,0 +1,220 @@
+ul {
+  min-height: 65px;
+  background: #F7F9F9;
+  width: 100%;
+  //display: flex;
+  list-style-type: none;
+  flex-wrap: wrap;
+  padding: 0px;
+
+  &:hover {
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+    background: white;
+    // cursor: pointer;
+    color: #0d47a1;
+  }
+  /deep/ app-dropdown{
+    float: left;
+    .dropdown{
+      list-style-type: none;
+      margin-left: 15px;
+      .dropdown-toggle{
+        box-shadow: none;
+        border: 0;
+        background-color: #f7f9f9;
+        border-radius: 0;
+        border-bottom: 1px solid #d2d2d2;
+        padding: 8px 10px 7px 10px;
+        margin-right: -1px;
+      }
+    }
+  }/deep/ div{
+    float: left;
+    .dropdown{
+      list-style-type: none;
+      margin-left: 15px;
+      .dropdown-toggle{
+        box-shadow: none;
+        border: 0;
+        background-color: #f7f9f9;
+        border-radius: 0;
+        border-bottom: 1px solid #d2d2d2;
+        padding: 8px 10px 7px 10px;
+        margin-right: -1px;
+      }
+    }
+  }
+  /deep/.dropdown{
+    list-style-type: none;
+    margin-left: 15px;
+    .dropdown-toggle{
+      box-shadow: none;
+      border: 0;
+      background-color: #f7f9f9;
+      border-radius: 0;
+      border-bottom: 1px solid #d2d2d2;
+      padding: 8px 10px 7px 10px;
+      margin-right: -1px;
+    }
+  }
+  .form-group{
+    float: left;
+    margin: 8px;
+    margin-left: 0;
+    text-transform: capitalize;
+  }
+  .add-new{
+    display: flex;
+    align-items: center;
+    min-width: 104px;
+    justify-content: center;
+    border: 1px dashed;
+    margin: 11px 10px 12px 7px;
+    cursor: pointer;
+    i{
+      padding: 6px 5px;
+      // border: 1px solid gray;
+      font-family: 'Font Awesome\ 5 Free';
+font-weight: 900;
+      font-style: normal;
+      font-size: 11px;
+    }
+  }
+  i{
+    font-family: 'Font Awesome\ 5 Free';
+font-weight: 900;
+    font-style: normal;
+    font-size: 18px;
+    &.main{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+    }
+  }
+}
+
+.Row{
+  display: flex;
+}
+.btn-light{
+  background-color: white;
+  color: #8f33aa;
+  border: 1px solid #eeeeee;
+  text-align: left;
+}
+
+.btn-light-width{
+  width: 100%;
+}
+
+@media screen and (max-width: 500px){
+  .btn{
+    margin: 0px;
+  }
+}
+
+.Row{
+  position: relative;
+  &.new{
+    // display: flex;
+    // justify-conte: ;nt: flex-start;
+    align-items: center;
+    padding: 0px 20px;
+    .fa-search{
+      z-index: 999999999;
+    }
+    .search{
+      width: 100%;
+      &.is-active{
+        width: calc(100% + 47px);
+        z-index: 9999999999999999;
+        background-color: white;
+        margin: -20px;
+        height: 64px;
+        padding: 15px;
+        box-shadow: 0 0 20px -1px #00000069;
+      }
+    }
+    .the-form{
+      width: 100%;
+      position: absolute;
+      top: 65px;
+      background-color: #fff;
+      left: 0;
+      padding: 14px;
+      padding-top: 0;
+      z-index: 999999998;
+      box-shadow: 0 25px 21px -18px #00000069;
+      .form-group{
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        input{
+          width: 100%;
+        }
+      }
+    }
+    .dimmer{
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 0;
+      left: 0;
+      z-index: 99999;
+      opacity: 0;
+      transition: all 0.7s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .inner{
+        position: absolute;
+        border-radius: 50%;
+        width: 50%;
+        height: 50%;
+        background-color: #00000000;
+        transition: all 0.7s ease;
+      }
+      &.focus-active{
+        opacity: 1;
+        .inner{
+          width: 1000000%;
+          height: 1000000%;
+          background-color: #00000047;
+          transition: all 0.7s ease;
+        }
+      }
+    }
+    .main-search-value{
+      z-index: 999999999;
+      width: 70%;
+      background-color: transparent;
+      border: none;
+      border-bottom: 1px solid #8080801c;
+      margin-left: -21px;
+      padding-left: 32px;
+      height: 39px;
+      transition: all 0.4s ease;
+      &:focus{
+        color: #000;
+        // height: 47px;
+        // font-size: 20px;
+      }
+      
+    }
+  }
+}
+
+
+/deep/.mat-form-field-wrapper {
+  width: 100%!important;
+}
+
+
+/deep/.cdk-overlay-container{
+  z-index: 99999999999!important;
+}
+
+.full-width{
+  width: 100%;
+}

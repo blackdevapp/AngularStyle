@@ -1,0 +1,11 @@
+<div (click)="submitPackage()" class="btn btn-danger btn-round">Submit</div>
+<div class="row">
+    <div class="col-md-4" *ngFor="let component of cardsData">
+    	<div class="checkbox" (click)="managePackages(component._id)">
+            <label>
+                <input type="checkbox" name="optionsCheckboxes">
+            </label>
+        </div>
+        <app-detail-card [trip]="component"></app-detail-card>
+    </div>
+</div>

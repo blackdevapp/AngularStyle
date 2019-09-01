@@ -1,0 +1,47 @@
+@import "../../../assets/sass/md/classes";
+$x-small: 425px;
+.icon-selector{
+	margin-top: 46px;
+	@extend .vertical-center;
+	flex-direction: column;
+	.row{
+		div{
+			font-size: 8px;
+			line-height: 11px;
+			padding-top: 4px;
+			@extend .center;
+		}
+	}
+}
+.checked{
+	top: 40px;
+}
+.card-avatar{
+	background-color: #FFF;
+	width: 160px;
+	height: 130px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	a{
+		i{
+			font-size: 60px
+		}
+	}
+}
+.addon-wrp{
+	display: flex!important;
+	@extend .center;
+}
+
+@media screen and (max-width: $x-small) {
+  .card-profile,
+  .card-testimonial {
+    margin-top: 65px;
+  }
+}
+
+.little-font-size{
+	font-size: 10px;
+}

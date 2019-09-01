@@ -1,0 +1,128 @@
+<div class="main-content">
+    <div class="container-fluid">
+		<div class="row">
+			<div [ngClass]="(currentUser && !step1) ? 'col-md-8' : 'col-md-12'">
+			  <div class="card card-nav-tabs">
+			    <div class="card-body stepper">
+					<div class="card-header" data-background-color="green">
+				        <div class="nav-tabs-navigation" [ngClass]="(currentUser && !step1) ? 'col-md-11' : 'col-md-7'">
+				            <div class="nav-tabs-wrapper">
+				                <ul class="nav nav-tabs" data-tabs="tabs">
+				                    <li [ngClass]="{'active': step1, 'completed': step1Completed}" (click)="stepperControl(false);step1=true">
+				                        <a href="#profile" data-toggle="tab">
+				                            <i class="material-icons">supervised_user_circle</i>
+				                            <span>User</span>
+				                        <div class="ripple-container"></div></a>
+				                        <i class="material-icons done">check</i>
+				                    </li>
+				                    <li  [ngClass]="{'active': step2, 'completed': step2Completed}" (click)="stepperControl(false);step2=true">
+				                        <a href="#messages" data-toggle="tab">
+				                            <i class="material-icons">fastfood</i>
+				                            <span>Addons</span>
+				                        <div class="ripple-container"></div></a>
+				                        <i class="material-icons done">check</i>
+				                    </li>
+				                    <li [ngClass]="{'active': step3, 'completed': step3Completed}" (click)="stepperControl(false);step3=true">
+				                        <a href="#settings" data-toggle="tab">
+				                            <i class="material-icons">hotel</i>
+				                            <span>Bill</span>
+				                        <div class="ripple-container"></div></a>
+				                        <i class="material-icons done">check</i>
+				                    </li>
+				                </ul>
+				            </div>
+				        </div>
+				    </div>
+			      <!-- <i class="material-icons" (click)="registrationForm = !registrationForm">person_add</i> -->
+			      <!-- <h6 class="card-category text-gray"> -->
+			      	<div class="col-md-12" *ngIf="step1">
+				      	<form class="navbar-form" role="search" autocomplete="off">
+				            <div class="form-group form-black is-empty">
+				                <input style="width: 100%" name="search" (keyup)="autoComplete()" [(ngModel)]="search" type="text" class="form-control" placeholder="Search" autocompelete="new-password">
+				                <span class="material-input"></span>
+				                <div class="search-results" *ngIf="search !== ''">
+				                	<ul class="suggestion-results">
+				                		<li *ngFor="let user of results" (click)="stepperControl(false);step2 = true;selectedUser(user)">
+
+				                			{{user.title}} {{user.firstName}} {{user.lastName}}<br>
+			                				<hr>
+				                			{{user.mobileNo}} {{user.email}}
+				                		</li>
+				                	</ul>
+				                </div>
+				            </div>
+				            <button type="submit" class="btn btn-white btn-round btn-just-icon">
+				                <i class="material-icons">search</i><div class="ripple-container"></div>
+				            </button>
+				            <button *ngIf="!results?.length>0 || search === ''" (click)="registrationForm = !registrationForm;results = [];search = ''" type="submit" class="btn btn-white btn-round btn-just-icon">
+				                <i class="material-icons">person_add</i><div class="ripple-container"></div>
+				            </button>
+				            <!-- <i class="material-icons" (click)="registrationForm = !registrationForm">person_add</i> -->
+				        </form>
+				      	<app-registration (newUser)="getRegisteredUser($event)"  *ngIf="registrationForm" class="col-md-12"></app-registration>
+			      	</div>
+			      	<div class="col-md-12" *ngIf="step2">
+			      		<div class="row">
+				            <div class="col-md-1" *ngFor="let addon of addons; let i = index">
+				            	<app-addons (isChecked)="addon.availability = $event" [addon]="addon"></app-addons>
+				            	<hr>
+				            </div>
+			            	<app-restaurant *ngIf="addons[0].availability" class="col-md-12"></app-restaurant>
+			            	<app-laundry *ngIf="addons[1].availability" class="col-md-12"></app-laundry>
+			            	<app-housekeeping *ngIf="addons[2].availability" class="col-md-12"></app-housekeeping>
+			            	<app-transportation *ngIf="addons[3].availability" class="col-md-12"></app-transportation>
+
+				            
+				        </div>
+			      	</div>
+			      	<div class="col-md-12" *ngIf="step3">
+				      	<form>	
+					      <h4 class="card-title">
+					      	Form
+					      </h4>
+					      <p class="card-description">
+					        
+					      </p>
+					      <button (click)="insetReservations()" type="button" class="btn btn-primary">
+					      	Checkin
+					      </button>
+				      	</form>
+			      	</div>
+			      <!-- </h6> -->
+			    </div>
+			  </div>
+			</div>
+			<div class="col-md-4" *ngIf="currentUser && !step1">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+			        <div class="card card-stats" >
+			            <div class="card-header" data-background-color="green">
+			                <!-- <i class="material-icons">store</i> -->
+			                <img width="55px" src="{{currentUser.img}}">
+			            </div>
+			            <div class="card-content">
+			                <p class="category">
+			                	{{currentUser.title}} {{currentUser.firstName}} {{currentUser.lastName}}<br>
+			                </p>
+			                <h3 class="title">$34</h3>
+			            </div>
+			            <div class="card-footer">
+			                <div class="stats">
+			                    Check in Date/Time<i class="material-icons" style="color: green">date_range</i> {{moment(data.start).format('YYYY MMM DD HH:mm')}} <br>
+			                    Check out Date/Time<i class="material-icons" style="color: maroon">date_range</i>  {{moment(data.end).format('YYYY MMM DD HH:mm')}}
+			                </div>
+			            </div>
+				        <button (click)="insetReservations()" type="button" class="btn btn-primary">
+					      	Checkin
+					    </button>
+			        </div>
+			    </div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<!-- <p>
+  {{moment(data.start).format('YYYY MMM DD HH:mm')}}<br>
+  {{moment(data.end).format('YYYY MMM DD HH:mm')}}<br>
+  {{moment(data.start).diff(moment(data.end), 'days')}}<br>
+</p> -->

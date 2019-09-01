@@ -1,0 +1,48 @@
+<div class="price">
+  <div class="top-red-section">
+    {{packagePrice(package)}}
+    <i class="material-icons">flight_takeoff</i>
+
+    <div class="more-info">
+      <div *ngIf="package.componentsData[0]">
+        {{(package.componentsData[0].associated_agency!='amadeus'&&package.componentsData[0].associated_agency!='airasia')?package.componentsData[0].details.from.city:package.componentsData[0].segments[0].flightSegment.departure.iataCode}}
+      </div>
+      <i class="material-icons">arrow_right_alt</i>
+      <div *ngIf="package.componentsData[0].details">
+        {{(package.componentsData[0].associated_agency!='amadeus'&&package.componentsData[0].associated_agency!='airasia')?package.componentsData[0].details.to.city:package.componentsData[0].segments[package.componentsData[0].segments.length-1].flightSegment.arrival.iataCode}}
+      </div>
+    </div>
+  </div>
+
+  <ul class="deep-info" [ngStyle]="mode==='inquery'?{'color':'black'}:{'color':'white'}">
+    <li *ngFor="let component of package.componentsData" [ngClass]="mode==='inquery'?'each-info-black':'each-info'">
+      <div class="icon">
+        <i class="material-icons" [ngStyle]="mode==='inquery'?{'color':'black'}:null">date_range</i>
+        <span [ngStyle]="mode==='inquery'?{'color':'black'}:null">
+          {{(component.associated_agency=='amadeus'||component.associated_agency=='airasia')?convertAmadeusDate(component.segments[0].flightSegment.departure.at):(component.pair?cleanDate(component.details.to.departure.date,component):cleanDate(component.details.from.departure.date,component))}}
+        </span>
+      </div>
+      <div class="description">
+        <div *ngIf="component.mode === 'transport'">
+          <i class="material-icons info-ico">{{component.icon}}</i>
+          <div *ngIf="component">
+            <span [ngStyle]="mode==='inquery'?{'color':'black'}:null">
+               {{(component.associated_agency!='amadeus'&&component.associated_agency!='airasia')?component.details.from.city:component.segments[0].flightSegment.departure.iataCode}}
+            </span>
+          </div>
+          <i class="material-icons">arrow_right_alt</i>
+          <div *ngIf="component">
+            <span [ngStyle]="mode==='inquery'?{'color':'black'}:null">
+               {{(component.associated_agency!='amadeus'&&component.associated_agency!='airasia')?component.details.to.city:component.segments[component.segments.length-1].flightSegment.arrival.iataCode}}
+            </span>
+          </div>
+        </div>
+        <div class="itemText" *ngIf="component.mode === 'accomodation'">
+          <i class="material-icons info-ico">{{component.icon}}</i>
+          <span
+            [ngStyle]="mode==='inquery'?{'color':'black'}:null">{{component.company ? component.company : component.associated_agency==='amadeus'?'Amadeus':'Airasia'}}</span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

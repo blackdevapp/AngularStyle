@@ -1,0 +1,146 @@
+
+<app-header  *ngIf="agency" [agency]="agency"></app-header>
+<app-loading *ngIf="loading"></app-loading>
+<div class="container-fluid">
+  <div class="col-md-12 top-spacing">
+    <button class="btn btn-back" (click)="goBack()">
+      <i class="fa  fa-angle-left"></i>
+      BACK TO TOUR DESCRIPTION
+    </button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="col-md-12 top-spacing2">
+    <p class="sectionTitle">TOUR SUMMERY</p>
+  </div>
+
+  <div class="col-md-10 col-md-offset-1 top-spacing2">
+    <div class="col-md-1"></div>
+    <div class="col-md-2 text-center">
+      <img src="../../../assets/img/coin.svg" class="img-box-size">
+      <p class="title">Price</p>
+      <p class="sub-title"><span *ngIf="package">{{packagePrice(package)}}</span></p>
+    </div>
+
+    <div class="col-md-2 text-center">
+      <img src="../../../assets/img/directions.svg" class="img-box-size">
+      <p class="title">Trip</p>
+      <p class="sub-title">Beach Tour</p>
+    </div>
+
+    <div class="col-md-2 text-center">
+      <img src="../../../assets/img/cloudy-night.svg" class="img-box-size">
+      <p class="title">Nights</p>
+      <p class="sub-title"><span *ngIf="duration">{{duration[1]}}</span></p>
+    </div>
+
+    <div class="col-md-2 text-center">
+      <img src="../../../assets/img/speedometer.svg" class="img-box-size">
+      <p class="title">Duration</p>
+      <p class="sub-title"><span *ngIf="duration">{{duration[0]}}</span></p>
+    </div>
+
+    <div class="col-md-2 text-center">
+      <img src="../../../assets/img/users-group.svg" class="img-box-size">
+      <p class="title">Team size</p>
+      <p class="sub-title"><span>Max 6</span>People</p>
+    </div>
+
+    <div class="col-md-1"></div>
+  </div>
+</div>
+
+<div class="container-fluid ">
+  <div class="col-md-12 top-spacing2">
+
+    <div class="col-md-4 my-nav">
+      <ul class="nav nav-tabs tabs-left sideways">
+        <li class="disabled"><a>CUSTOMIZE YOUR TRIP</a></li>
+        <li [ngClass]="mode!=='C'?'active':''"><a  href="#profile-v" data-toggle="tab">LOGIN TO YOUR ACCOUNT</a></li>
+        <li [ngClass]="mode=='C'?'active':'disabled'" ><a href="#messages-v"  data-toggle="tab">FINALISE YOUR BOOKING</a></li>
+      </ul>
+    </div>
+
+    <div class="col-md-8">
+      <div class="tab-content">
+        <div class="tab-pane">Home Tab.</div>
+        <div class="tab-pane" [ngClass]="mode!=='C'?'active':''" id="profile-v">
+          <div class="col-md-6" *ngIf="mode=='A'">
+            <div class="card">
+              <div class="card-header" data-background-color="purple">
+                <h4 class="title">Login</h4>
+              </div>
+              <div class="card-content">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">Email</label>
+                      <input [(ngModel)]="email" class="form-control" type="email" name="email">
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">Password</label>
+                      <input class="form-control" [(ngModel)]="password"  type="password" name="password">
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary pull-right" (click)="login()">Login</button>
+                    <a class="pull-left" style="cursor: pointer" (click)="signup()">SignUp</a>
+                    <a class="pull-left" style="cursor: pointer" (click)="mode='B'">Forget Password</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--<div class="col-md-12">-->
+              <!--<button class="btn btn-book">book now</button>-->
+            <!--</div>-->
+          </div>
+
+          <div class="col-md-6" *ngIf="mode=='B'">
+              <div class="card" >
+                  <div class="card-header" data-background-color="purple">
+                      <h4 class="title">Forget Password</h4>
+                      <p class="category">Next Journey Smart Login</p>
+          
+                  </div>
+                  <div class="card-content">
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <div class="form-group form-black label-floating is-empty">
+                                      <label class="control-label">Email</label>
+                                      <input  class="form-control" [(ngModel)]="emailPass" type="email" name="email">
+                                  </div>
+                              </div>
+                          </div>
+          
+                          <button type="submit" class="btn btn-danger pull-right" [disabled]="!emailPass" (click)="forgetPass()">Forget Pass</button>
+          
+                        <a  style="cursor: pointer" (click)="signup()">Signup</a><br>
+                        <a  style="margin-top: 10px;cursor: pointer" (click)="mode='A'">Login</a>
+          
+                  </div>
+              </div>
+          </div>
+
+          <p class="gmail-text" *ngIf="mode=='C'">You are logged in  to logout please <a class="link-here" (click)="logout()">click here</a></p>
+        </div>
+        <div class="tab-pane" [ngClass]="mode=='C'?'active':'disabled'"   id="messages-v" *ngIf="mode=='C'">
+          <div *ngIf="package">
+            <app-timeline [mode]="'inquery'" [package]="package"></app-timeline>
+          </div>
+          <div class="col-md-12">
+            <button class="btn btn-book" [disabled]="mode!=='C'" (click)="sendInquery()">book now</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+<footer  *ngIf="agency" [agency]="agency"></footer>

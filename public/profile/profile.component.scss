@@ -1,0 +1,265 @@
+@import "../../../variables";
+%imageBackground{
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  max-height: 100%;
+  resize: both;
+}
+
+$phone: 750px;
+$tablet: 780px;
+.padding{
+  padding: 0;
+}
+.section1Back {
+  @extend %imageBackground;
+  height: 868px;
+  background: url("../../../assets/img/landingTour/profileSection1.png") center center no-repeat;
+  background-size: cover;
+  @media (max-width: $tablet) {
+    background: url("../../../assets/img/landingTour/tabletProfileSection1.png") center center no-repeat;
+    background-size: cover;
+  }
+  @media (max-width: $phone) {
+    height: 70vh;
+  }
+}
+
+.section2Back {
+  height: 436px;
+  @media (max-width: $tablet) {
+    height: unset;
+  }
+}
+
+.section3Back {
+  background-color: $DarkMidnightBlue;
+  height: 700px;
+  @media (max-width: $tablet) {
+    height: unset;
+  }
+}
+
+.circle_profile_img {
+  height: 350px;
+  width: 350px;
+  border-radius: 50%;
+  margin-top: -220px;
+}
+
+.profile_name {
+  font-size: 50px;
+  margin-top: 25px;
+  color: $OuterSpace;
+  @media (max-width: $phone) {
+    font-size: 32px;
+  }
+}
+
+.profile_description {
+  font-size: 24px;
+  margin-top: 20px;
+  color: $OuterSpace;
+  text-align: justify;
+}
+
+.dark_blue_box {
+  background-color: $DarkCerulean;
+  height: 436px;
+
+}
+
+.left_white_box{
+  background: $white;
+  padding-bottom: 28px;
+  height: 436px;
+}
+
+.section3_left_box{
+  margin-top: 40px;
+
+}
+
+.dark_blue_box_title {
+  font-size: 28px;
+  color: $white;
+  margin-top: 50px;
+}
+
+.price {
+  transition: all 0.6s ease;
+  width: 100%;
+  font-size: 45px;
+  color: white;
+  padding: 18px;
+  &:nth-last-child:before{
+    color: red;
+  }
+  .more-info {
+    font-size: 12px;
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .deep-info {
+    .each-info {
+      height: 95px;
+      transition: all 0.6s ease;
+      &:not(:last-child):before {
+        content: "";
+        height: 95px;
+        width: 1px;
+        background-color: #fff;
+        margin-left: -30px;
+        margin-top: 18px;
+        position: absolute;
+      }
+      & * {
+        transition: all 0.6s ease;
+      }
+      .icon {
+        float: left;
+        padding-right: 13px;
+        font-size: 25px;
+        width: 100%;
+        float: none;
+        & * {
+          font-size: 25px
+        }
+      }
+      .description {
+        font-size: 12px;
+        color: #fff;
+        margin-left: 20px;
+        & > div {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          i {
+            font-size: 14px;
+          }
+          .arrow-ico {
+            font-size: 30px;
+          }
+        }
+        .info-ico {
+          background: #000;
+          border-radius: 50%;
+          padding: 4px;
+          margin-right: 10px;
+        }
+        .itemText {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}
+
+
+.price2 {
+  transition: all 0.6s ease;
+  font-size: 45px;
+  padding-right: 18px;
+  padding-bottom: 18px;
+  padding-left: 18px;
+  padding-top: 0;
+  list-style-image: url("../../../assets/img/landingTour/round-add-button.png");
+  .deep-info {
+    .each-info {
+      height: 80px;
+      transition: all 0.6s ease;
+      &:before {
+        content: "";
+        height: 104px;
+        width: 1px;
+        background-color: #fff;
+        margin-left: -30px;
+        margin-top: -103px;
+        position: absolute;
+      }
+    }
+  }
+}
+.section3Title {
+  font-size: 28px;
+  color: $white;
+  margin-top: 30px;
+}
+
+/deep/.mat-form-field-appearance-legacy .mat-form-field-underline{
+  background-color: $white;
+}
+
+.input_ico {
+  background: #000;
+  border-radius: 50%;
+  padding: 4px;
+  margin-right: 10px;
+  color: $white;
+}
+
+
+.search_input{
+  direction: rtl;
+  width: 300px;
+  @media (max-width: $tablet) {
+    width: 150px;
+  }
+  @media (max-width: $phone) {
+    width: 100%;
+  }
+}
+
+%photo_box_style{
+  border-radius: 50%;
+  border: 3px solid #C5C4C4;
+  margin-left: -20px;
+  background-color: #969696;
+}
+.timeline_photo_box{
+  @extend %photo_box_style;
+  width: 45px;
+  height: 45px;
+  & .photo_box_more{
+    font-size: 14px!important;
+    text-align: center;
+    color: $white;
+    margin-top: 10px;
+    position: absolute;
+  }
+}
+
+.timeline-photo{
+  display: inline-flex;
+  margin-left:30px
+}
+.timeline-padding{
+  padding-bottom: 5px
+}
+
+
+.custom_input{
+  border-bottom: 2px solid $white;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background: transparent;
+}
+
+.custom-input-width{
+  direction: rtl;width: 150px
+}
+
+.withe-icon{
+  color: white;
+}
+
+.light-icon{
+  color: #d4d4d4
+}

@@ -1,0 +1,97 @@
+/**
+ * Created by Milad Ahmadi in Dec 2018.
+ */
+import {NotifyType} from './notify-type';
+import ConfigDefault from './notify-config-default';
+import {NotifyPlacement} from './notify-placement';
+import {Animate} from '../animate';
+import {isNullOrUndefined} from 'util';
+import template1 from './templates/template';
+import {TEMPLATES} from './templates/template.enums';
+
+export class NotifyConfig {
+  settings = ConfigDefault.settings;
+  options = ConfigDefault.options;
+  constructor(notifyType: NotifyType,
+              notifyPlacement: NotifyPlacement,
+              template: TEMPLATES,
+              message: string,
+              title?: string,
+              ) {
+    this.options.title = title;
+    this.options.message = message;
+    if (!isNullOrUndefined(template) && title !== '') {
+      if (isNullOrUndefined(title) || title === '') {
+        if (!this.settings.hasOwnProperty('template')) {
+          this.settings['template'] = '';
+        }
+        this.settings.template = template1[template + '_without_title'];
+      } else {
+        this.settings.template = template1[template];
+      }
+    } else {
+      delete this.settings.template;
+    }
+    this.settings.type = notifyType;
+    this.settings.placement.from = notifyPlacement.from;
+    this.settings.placement.align = notifyPlacement.align;
+    switch (notifyType) {
+      case NotifyType.INFO:
+        // this.options.icon = 'fa fa-info-circle';
+        this.settings.animate.enter = Animate.Sliding_Entrances.SlideInDown;
+        this.settings.animate.exit = Animate.Sliding_Entrances.SlideInDown;
+        break;
+      case NotifyType.WARNING:
+        // this.options.icon = 'fa fa-exclamation-triangle';
+        this.settings.animate.enter = Animate.Sliding_Entrances.SlideInDown;
+        this.settings.animate.exit = Animate.Sliding_Entrances.SlideInDown;
+        break;
+      case NotifyType.SUCCESS:
+        // this.options.icon = 'fa fa-check-circle';
+        this.settings.animate.enter = Animate.Sliding_Entrances.SlideInDown;
+        this.settings.animate.exit = Animate.Sliding_Entrances.SlideInDown;
+        break;
+      case NotifyType.DANGER:
+        // this.options.icon = 'fa fa-exclamation-triangle';
+        this.settings.animate.enter = Animate.Sliding_Entrances.SlideInDown;
+        this.settings.animate.exit = Animate.Sliding_Entrances.SlideInDown;
+        break;
+    }
+  }
+  // options: {
+  //   icon: string;
+  //   title: string;
+  //   message: string;
+  //   url: string;
+  //   target: string;
+  // };
+  // settings: {
+  //   element: string;
+  //   position: string;
+  //   type: NotifyType;
+  //   allow_dismiss: boolean;
+  //   newest_on_top: boolean;
+  //   showProgressbar: boolean;
+  //   placement: {
+  //     from: string;
+  //     align: string;
+  //   };
+  //   offset: number;
+  //   spacing: number;
+  //   z_index: number;
+  //   delay: number;
+  //   timer: number;
+  //   url_target: string;
+  //   mouse_over: any;
+  //   animate: {
+  //     enter: string,
+  //     exit: string
+  //   };
+  //   onShow: any;
+  //   onShown: any;
+  //   onClose: any;
+  //   onClosed: any;
+  //   icon_type: string;
+  //   template: string;
+  // };
+}

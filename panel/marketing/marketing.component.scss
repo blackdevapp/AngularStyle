@@ -1,0 +1,275 @@
+/deep/ .mat-tab-body-content{
+  overflow: initial!important;
+}
+.btn.btn-primary.pull-left{
+  &.social{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  &.telegram{
+    background-color: #29A0D9;
+  }
+  &.facebook{
+    background-color: #3E568F;
+  }
+  &.pinterest{
+    background-color: #C61F25;
+  }
+  &.linkedin{
+    background-color: #2464AE;
+  }
+  &.twitter{
+    background-color: #04A7E5;
+  }
+  &.flickr{
+    background-color: #F70080;
+  }
+}
+.font-size-close{
+  font-size: 30px;
+}
+a{
+  cursor: pointer!important;
+}
+
+
+.drop-ico{
+  //padding-top: 17px;
+  i{
+    font-size: 30px;
+    cursor: pointer;
+  }
+}
+
+.icon-padding{
+  padding-top: 17px
+}
+
+.row-top-space{
+  margin-top: 20px
+}
+.coming-soon{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 61px;
+}
+
+.nj-displayNon{
+  display: none;
+}
+.noPad{
+  padding: 0!important;
+}
+.closeBox{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  right: 4px;
+  z-index: 1000;
+  text-align: right;
+  padding: 4px;
+  padding-bottom: 8px;
+
+
+  .btn-close{
+    position: relative;
+    right: -15px;
+    background: rgba(140, 140, 140, 0.12);
+    border: none;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    i{
+      color: #ff4081;;
+    }
+  }
+}
+
+.fbPostMain{
+  background: white;
+  box-shadow: 1px 1px 1px black;
+  z-index: 100;
+  position: absolute;
+  left: 280px;
+  width: 620px;
+  box-shadow:0 1px 8px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  padding-bottom: 10px;
+  top: 0px;
+  .postTime{
+
+    text-align: center;
+    color: dodgerblue;
+  }
+}
+
+.after{
+  content:'';
+  position:absolute;
+  width:20px;
+  height:20px;
+  left:-35px;
+  transform:translate(50%,-50%) rotate(-45deg);
+  background-color:white;
+  border-top: 1px solid #dcdada;
+  border-left: 1px solid #dcdada;
+}
+.test{
+  position: absolute;
+  height: 100%;
+  width: 0px;
+  top: 0px;
+  .test2{
+    position: relative;
+    height: inherit;
+  }
+
+  .fb::after {
+    @extend .after;
+    top:90px;
+  }
+
+  .tel::after{
+    @extend .after;
+    top:160px;
+  }
+
+  .twi::after{
+    @extend .after;
+    top:223px;
+  }
+
+  .link::after{
+    @extend .after;
+    top:287px;
+  }
+}
+
+.socialPostsContainer{
+  max-height: 400px;
+  //width: 40%;
+  overflow: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  //position: fixed;
+
+}
+.noData{
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #0b9bee;
+  flex-direction: column;
+  i{
+    font-size: 64px;
+    padding-bottom: 15px;
+  }
+}
+
+.Felesh{
+  content:'';
+  position:relative;
+  width:20px;
+  height:20px;
+  left:-20px;
+  top:20px;
+  transform:translate(50%,-50%) rotate(-45deg);
+  background-color:red;
+}
+
+/* ------------------ scroll bar  -----------------------*/
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: gainsboro;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(23, 23, 50, 0.75);
+  border-radius: 10px;
+}
+.selection-wrp{
+  padding: 10px 0px;
+  .title{
+    font-size: 25px;
+    margin-bottom: 26px;
+  }
+  .selection-sec-wrp{
+    border: 1px solid #d1d1d1;
+    box-sizing: border-box;
+    padding: 16px;
+    border-radius: 5px;
+    overflow: auto;
+    .selection-each-social{
+      max-width: 100px;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      border: 1px solid #d1d1d1;
+      cursor: pointer;
+      position: relative;
+      float: left;
+      margin: 0px 20px;
+      &.selected{
+        border: 1px solid #00612b;
+        font-family: "Font Awesome 5 Free";
+        & *{
+          color: #00612b!important;
+        }
+        &:before{
+          top: 3px;
+          right: 4px;
+          content: "\f00c";
+          background-color: #00612b;
+          border-radius: 50%;
+          font-size: 10px;
+          padding: 3px;
+          color: #fff;
+          position: absolute;
+          width: 15px;
+          height: 15px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+      .data-wrp{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        .icon{
+          font-size: 38px;
+          margin: 11px;
+          color: #d1d1d1;
+          font-family: "Font Awesome 5 Brands"!important;
+        }
+        .name{
+          font-size: 8px;
+          text-transform: uppercase;
+          font-weight: bold;
+          color: #d1d1d1;
+          font-family: Roboto,"Helvetica Neue",sans-serif;
+        }
+      }
+    }
+  }
+}
+
+.editor{
+  height: 50vh
+}

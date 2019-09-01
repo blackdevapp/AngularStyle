@@ -1,0 +1,49 @@
+
+<div class="container-fluid social-media">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-body telegram">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-1">
+              <div class="avatar-img">
+                <span>NJ</span>
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div class="topDetail">
+                <a class="name">{{telInfo.associated_agency}}</a>
+                <small>{{telInfo.publishedDate| date:'short'}}</small>
+              </div>
+
+              <div class="massage-details">
+
+                <!--<div class="row">-->
+                  <!--<img src="https://picsum.photos/id/1006/3000/2000" class="big-img">-->
+
+                <!--</div>-->
+                {{telInfo.description}}
+
+                <a class="more">
+                  <span class="tag" *ngFor="let tag of telInfo.tags  |slice:0:10"> <a>#{{tag}}</a> </span>
+                </a>
+              </div>
+              <div class="row footer-icon">
+
+
+                <div class="items">
+                  <i class="material-icons">
+                    visibility
+                  </i>
+                  <span>1245</span>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

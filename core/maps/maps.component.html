@@ -1,0 +1,33 @@
+<!--<div id="map"></div>-->
+<div class="main-wrp" [ngStyle]="{'position':position?'relative':'fixed'}">
+  <!-- <div class="row">
+    <div class="col-md-6">
+      <div class="form-group label-floating is-empty ">
+        <label class="control-label">address</label>
+        <input type="text" class="form-control " [matAutocomplete]="auto1" [(ngModel)]="search" (keyup)="searched()" name="confirmEmail" required autofocus>
+        <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let item of results" [value]="item">
+            {{item.label}}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+    </div>
+  </div> -->
+  
+  <div class="map"
+       leaflet
+       [leafletOptions]="options"
+       (leafletMapReady)="onMapReady($event)"
+       (leafletClick)="clicked($event)"
+       [(leafletCenter)]="center"
+       [leafletLayers]="markers">
+  </div>
+  <!--<button type="button"-->
+          <!--class="btn btn-primary"-->
+          <!--(click)="addMarker()">Add Marker</button>-->
+  
+  <!-- <button type="button"
+          class="btn btn-primary"
+          (click)="removeMarker()">Remove Marker</button> -->
+  
+</div>

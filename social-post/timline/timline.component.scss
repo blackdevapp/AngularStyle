@@ -1,0 +1,124 @@
+.main{
+  //display: flex;
+  //justify-content: space-around;
+  //align-items: center;
+  overflow: auto;
+  white-space: nowrap;
+  box-shadow: 0px -5px 9px -9px rgba(30, 30, 30, 0.72);
+  scroll-behavior: smooth;
+  .box{
+
+    display: inline-block;
+    //padding: 14px;
+    //justify-content: space-between;
+    //align-items: center;
+    //flex-direction: column;
+    .items{
+
+      cursor: pointer;
+      width: 120px;
+
+      //flex-basis: 100%;
+      //display: flex;
+      //justify-content: space-between;
+      //align-items: center;
+      //flex-direction: column;
+      .month{
+        position: relative;
+        color: #ed6c57;
+        background: white;
+        font-size: 16px;
+        padding: 5px 10px;
+        font-weight: bold;
+        border-right: 1px solid wheat;
+      }
+
+      .bottom{
+        transition: all 0.4s ease-in;
+        padding: 10px;
+        background: #131313;
+        color: darkgrey;
+        border-right:  1px solid #313131;
+        border-width: 0 0.5px;
+        .day{
+          transition: all 0.6s ease-in;
+          font-size: 24px;
+          font-weight: bold;
+        }
+        .week{
+          color: darkgrey;
+        }
+      }
+
+
+    }
+    .active {
+      .month {
+        color: white;
+        background: #ed6c57;
+      }
+      .month::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        left: 50px;
+        top: 30px;
+        transform: translate(50%, -50%) rotate(-45deg);
+        background-color: #ed6c57;
+      }
+      .bottom {
+        background: #383838;
+        color: white;
+        .day {
+          font-size: 24px;
+          font-weight: bold;
+        }
+        .week {
+          color: white;
+        }
+      }
+    }
+  }
+
+
+}
+
+
+.main::-webkit-scrollbar {
+  width: 0 !important ;
+  display: none!important;
+}
+.main { overflow: -moz-scrollbars-none; }
+.rightAnchor{
+  position: absolute;
+  right: 15px;
+  height: 95px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00bfff3d;
+  bottom: 8px;
+  background: #8c8c8c2e;
+  transition: all 0.4s ease;
+}
+.leftAnchor{
+  position: absolute;
+  left: 15px;
+  height: 95px;
+  padding-left: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00bfff3d;
+  bottom: 8px;
+  background: #8c8c8c2e;
+  transition: all 0.4s ease;
+}
+.leftAnchor:hover, .rightAnchor:hover {
+  cursor: pointer;
+  color: rgb(0, 143, 255);
+  background: rgba(140, 140, 140, 0.29);
+  //font-size: 28px;
+}

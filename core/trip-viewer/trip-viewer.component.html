@@ -1,0 +1,336 @@
+<div class="card card-stats">
+  <div class="card-header" data-background-color="orange">
+    {{memory.getActiveCurrency()?memory.getActiveCurrency():'PHP'}} {{checkPrice()}}
+  </div>
+  <div class="card-content">
+    <!-- <div class="card-footer">
+              <div class="stats">
+                  $500
+              </div>
+        </div> -->
+    <div class="trip-wrp " *ngIf="tripData?.length">
+      <div class="row">
+        <div class="col-md-9">
+          <div [sortablejs]="tripData" [sortablejsOptions]="options">
+            <div class=" trip-data item-height" *ngFor="let trip of tripData">
+              <div class="line">
+                <div class="data" *ngIf="trip.isValid">
+                  <div [ngClass]="trip.hasBorder?'border-box':''"></div>
+                  <div class="back-style" (mouseenter)="mouseEnter(trip)" (mouseout)="mouseOut(trip)">
+                    <i class="fa fa-times-circle-o hover-time-ico"
+                      (click)="deleteComponent(trip)"></i>
+                  </div>
+
+                  <div class="icon date">
+                    <i class="material-icons">{{trip.icon}}</i>
+                    <div class="date-format">
+
+                      {{formatDate(trip.pair ? trip.details.to.departure.date : trip.details.from.departure.date)}}
+                      {{trip.pair ? trip.details.to.departure.time : trip.details.from.departure.time}}
+                    </div>
+                  </div>
+                  <div class="name">
+                    {{trip.company?trip.company:'Amadeus'}}
+                  </div>
+                  <div class="check-main" *ngIf="trip.details.roundTrip && !trip.pair">
+                    <i class="material-icons circle-ico">check_circle</i>
+                    <div class="form-group icon-selector">
+                      <i class="material-icons repeat-ico">repeat</i>
+                      <div class="row">
+                        <div class="col-md-12 main-text">
+                          Round Trip
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!trip.isValid" class="data-failed">
+                  <div [ngClass]="trip.hasBorder?'border-box':''"></div>
+                  <div class="back-style" (mouseenter)="mouseEnter(trip)" (mouseout)="mouseOut(trip)">
+                    <i class="fa fa-times-circle-o hover-time-ico"
+                      (click)="deleteComponent(trip)"></i>
+                  </div>
+                  <div class="custom-tooltip">
+                    Selected component doesn't match appropriate date range to validate this pair.
+                    Consider editing date or choose another component.
+                    <i class="fa fa-times times-ico" (click)="deleteComponent(trip)"></i>
+                  </div>
+                  <i class="material-icons notification-ico">!</i>
+                  <div class="icon date">
+                    <i class="material-icons">{{trip.icon}}</i>
+                    <div class="date-format">
+
+                      {{formatDate(trip.pair ? trip.details.to.departure.date : trip.details.from.departure.date)}}
+                      {{trip.pair ? trip.details.to.departure.time : trip.details.from.departure.time}}
+                    </div>
+                  </div>
+                  <div class="name">
+                    {{trip.company}}
+                  </div>
+                  <div class="check-main" *ngIf="trip.details.roundTrip && !trip.pair">
+                    <i class="material-icons circle-ico">check_circle</i>
+                    <div class="form-group icon-selector">
+                      <i class="material-icons repeat-ico">repeat</i>
+                      <div class="row">
+                        <div class="col-md-12 main-text">
+                          Round Trip
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="trip-data">
+                            <div class="line">
+                                <div class="data">
+                                    <div class="icon date">
+                                        <i class="material-icons">flight_takeoff</i>
+                                        <div class="date-format">
+
+                                            23 June 2018
+                                        </div>
+                                    </div>
+                                    <div class="name">
+                                        BOS
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+        </div>
+        <div class="col-md-3 actions  full-width-btn">
+          <div class="btn btn-danger btn-round" (click)="openModal()">Preview
+            <div class="ripple-container"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row ">
+      <div class="col-md-2">
+        <a (click)="resetComponents()">RESET COMPONENTS</a>
+      </div>
+      <div class="col-md-8 text-center">
+        <p *ngIf="tripData.length>=2">{{dateService.rangeOfTrip(tripData)}}</p>
+      </div>
+      <div class="col-md-2">
+        <a *ngIf="update" (click)="cancelUpdate()">CANCEL UPDATE</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!--(click)="broadCastClickEvent()"-->
+<div id="submitModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close font-size-close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Packages</h4>
+      </div>
+      <div class="row custom-margin">
+        <div class="col-md-4 text-left" style="margin-left:30px">
+          <div class="form-group form-black label-floating is-empty">
+            <label class="control-label">Trip Name</label>
+            <input [(ngModel)]="name" class="form-control" type="text" name="tripName">
+          </div>
+        </div>
+        <div class="col-md-4 text-left" style="margin-left:30px">
+          <div class="form-group form-black label-floating is-empty">
+            <label class="control-label">Discount</label>
+            <input [(ngModel)]="discount" maxlength="2" class="form-control" type="text" name="discount">
+          </div>
+        </div>
+      </div>
+      <div class="row custom-margin">
+        <div class="col-md-4 text-left" style="margin-left:30px">
+          <mat-form-field>
+            <input matInput [min]="today" [max]="tripData[0].deadline.date" [matDatepicker]="picker1" placeholder="Trip Deadline"
+                   [(ngModel)]="tripDeadline.date" name="tripDeadline" class="date" 
+                   style="width: 74px;float: left;">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+            <input matInput name="time-picker1" atp-time-picker value="00:00"
+                       [(ngModel)]="tripDeadline.time" class="time time-input" placeholder="Time"
+                >
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="modal-body">
+
+        <div class="card card-stats">
+
+          <div class="card-header" data-background-color="orange">
+            {{memory.getActiveCurrency()?memory.getActiveCurrency():'PHP'}} {{checkPrice()}}
+          </div>
+          <div class="card-content">
+            <div class="trip-wrp" *ngIf="tripData?.length">
+              <div class="title">
+                <i class="fas fa-braille"></i>
+                <h2>Itenerary Break Down</h2>
+              </div>
+              <div class="row custom-margin">
+                <div class="col-md-12">
+                  <div class="trip-data" *ngFor="let trip of tripData">
+                    <div class="line">
+                      <div class="data">
+                        <div class="icon date">
+                          <i class="material-icons">{{trip.icon}}</i>
+                          <div class="date-format">
+                            {{formatDate(trip.pair ? trip.details.to.departure.date : trip.details.from.departure.date)}}
+                            {{trip.pair ? trip.details.to.departure.time : trip.details.from.departure.time}}
+                          </div>
+                        </div>
+                        <div class="name">
+                          {{trip.company}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <hr>
+              <div class="title">
+                <i class="fas fa-share-alt"></i>
+                <h2>Social Media Sharing</h2>
+              </div>
+              <div class="row custom-margin">
+                <div class="" *ngIf="!agencyDetail?.telegram 
+                &&!agencyDetail?.facebook
+                &&!agencyDetail?.linkedin
+                &&!agencyDetail?.twitter
+                &&!agencyDetail?.youtube
+                &&!agencyDetail?.flickr
+                &&!agencyDetail?.pinterest
+                ">
+                    <div class="col-md-3 text-left top-space">
+                        No Social media connected <a routerLink="/panel/marketing">Connect Social Medias Now</a>
+                    </div>
+                </div>
+                <div class="" *ngIf="agencyDetail?.telegram">
+                  <div class="col-md-3 text-left top-space">
+                    <mat-slide-toggle social="" [(ngModel)]="isSharable" color="primary">Telegram</mat-slide-toggle>
+                  </div>
+                </div>
+                <div class="" *ngIf="agencyDetail?.facebook">
+                  <div class="col-md-3 text-left top-space">
+                    <mat-slide-toggle social="" [(ngModel)]="isSharableFacebook" color="primary">Facebook
+                    </mat-slide-toggle>
+                  </div>
+                </div>
+                <div class="" *ngIf="agencyDetail?.linkedin">
+                  <div class="col-md-3 text-left top-space">
+                    <mat-slide-toggle social="" [(ngModel)]="isSharableLinkedin" color="primary">Linkedin
+                    </mat-slide-toggle>
+                  </div>
+                </div>
+                <div class="" *ngIf="agencyDetail?.twitter">
+                  <div class="col-md-3 text-left top-space">
+                    <mat-slide-toggle social="" [(ngModel)]="isSharableTwitter" color="primary">Twitter
+                    </mat-slide-toggle>
+                  </div>
+                </div>
+                <div class="" *ngIf="agencyDetail?.youtube">
+                  <div class="col-md-3 text-left top-space">
+                    <mat-slide-toggle social="" [(ngModel)]="isSharableYoutube" color="primary">Youtube
+                    </mat-slide-toggle>
+                  </div>
+                </div>
+                <div class="" *ngIf="agencyDetail?.flickr">
+                  <div class="col-md-3 text-left top-space">
+                    <mat-slide-toggle social="" [(ngModel)]="isSharableFlickr" color="primary">Flickr
+                    </mat-slide-toggle>
+                  </div>
+                </div>
+                <div class="" *ngIf="agencyDetail?.pinterest">
+                  <div class="col-md-3 text-left top-space">
+                    <mat-slide-toggle social="" [(ngModel)]="isSharablePinterest" color="primary">Pinterest</mat-slide-toggle>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="title">
+                <i class="fas fa-toolbox"></i>
+                <h2>Itenerary Config</h2>
+              </div>
+
+              <div class="row custom-margin">
+                <div class="">
+                  <div class="col-md-3 text-left top-space">
+                    <mat-slide-toggle [(ngModel)]="isDrafted" color="primary">Draft</mat-slide-toggle>
+                  </div>
+                </div>
+                <div class="">
+                  <div class="col-md-3 text-left top-space">
+                    <mat-slide-toggle [(ngModel)]="isFeatured" color="primary">Featured</mat-slide-toggle>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="title">
+                <i class="far fa-images"></i>
+                <h2>Itenerary Image</h2>
+              </div>
+              <hr class="or" title="Image auto suggestion">
+              <div class="row custom-margin">
+                <div class="suggestion-images" [ngClass]="{'remove-icon': (images.indexOf(image.web)) > -1 }"
+                  *ngFor="let image of suggestionImages" (click)="uploadFinished(image.web);">
+                  <!-- <img src="{{image.preview}}" alt=""> -->
+                  <div class="img-wrp" [ngClass]="{'selected': (images.indexOf(image.web)) > -1 }"
+                    [ngStyle]="{'background-image': 'url(' + image.preview + ')'}">
+                    <!-- {{image.web}} -->
+                  </div>
+                </div>
+
+              </div>
+              <div *ngIf="suggestionImages?.length > 0 && hideShowMore" class="suggestion-images"
+                (click)="getImageSuggestion(true);hideShowMore = true">
+                <!-- <img src="{{image.preview}}" alt=""> -->
+                getAllSuggestions
+              </div>
+              <hr class="or" title="OR">
+              <div class="row custom-margin">
+                <div class="col-md-12 form-inline img-section">
+                  <image-upload url="{{appSetting.UPLOAD_URL}}/api/upload/5c15efb47b741fff2044ec26" [max]="10"
+                    [extensions]="['jpg','png','jpeg']" [maxFileSize]="3048576" buttonCaption="" dropBoxMessage=""
+                    clearButtonCaption="" (uploadFinished)="uploadFinished($event)" [uploadedFiles]="images"
+                    (removed)="onRemoved($event)" [uploadedFiles]="images">
+                  </image-upload>
+                  <div class="col-md-1">
+                  </div>
+
+                </div>
+                <hr class="inline-hr">
+                <div class="title">
+                  <i class="fas fa-align-left"></i>
+                  <h2>Itenerary Description</h2>
+                </div>
+
+                <ckeditor [(ngModel)]="remarks" [editor]="Editor" class="custom-margin"></ckeditor>
+
+                <hr class="inline-hr">
+
+                <div class="col-md-3">
+                  <button (click)="broadCastClickEvent()" [disabled]="!name" class="btn btn-danger btn-round ">Submit
+                    <div class="ripple-container"></div>
+                  </button>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer text-center">
+        <!--<button type="button" class="btn btn-danger submit-btn" data-dismiss="modal">Submit</button>-->
+      </div>
+    </div>
+
+  </div>
+</div>

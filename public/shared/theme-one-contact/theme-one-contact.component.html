@@ -1,0 +1,133 @@
+<div class="container-fluid top-section">
+  <div class="row">
+    <div class="cover"></div>
+    <div class="map-card">
+      <app-maps [position]="true"></app-maps>
+    </div>
+  </div>
+
+  <div class="top-menu">
+    <app-theme-one-header [agency]="agency" [headerItem]="headerItem" [color]="'white'"
+                          [border]="'white'"></app-theme-one-header>
+  </div>
+</div>
+
+<div class="bottom-section">
+  <div class="bottom-wrap">
+    <div class="col-md-8 col-md-offset-2 card-position">
+      <div class="info-card">
+        <div class="row">
+
+          <div class="col-md-8">
+            <div class="left-box">
+              <div class="col-md-12">
+                <h4>Send Message</h4>
+              </div>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">First Name</label>
+                      <input class="form-control" type="text" name="first">
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">Last Name</label>
+                      <input class="form-control" type="text" name="last">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">Phone</label>
+                      <input class="form-control" type="text" name="phone">
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">Email</label>
+                      <input class="form-control" type="email" name="email" [(ngModel)]="contact.from">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-10">
+                    <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">Massage</label>
+                      <textarea class="form-control" type="text" name="Massage"
+                                [(ngModel)]="contact.message"> </textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="send-circle" (click)="send()">
+                      <i class="fa fa-send"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="right-box">
+              <div class="row">
+                <div class="col-md-12">
+                <div class="col-md-12">
+                  <h4>Contact Information</h4>
+                </div>
+                <div class="col-md-12">
+                  <p>
+                    <i class="fa fa-map-pin"></i>
+                    &nbsp;
+                    {{agency?.city}}
+                  </p>
+                </div>
+
+                <div class="col-md-12">
+                  <div *ngFor="let mobile of agency.mobile_number;let i=index">
+                    <p>
+                      <i class="fa fa-mobile-phone" *ngIf="i===0"></i>
+                      <i class="" *ngIf="i >0" style="margin-right: 12px"></i>
+                      &nbsp;
+                      {{mobile}}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div *ngFor="let email of agency.email_address;let i=index">
+                    <p>
+                      <i class="fa fa-envelope-open" *ngIf="i===0"></i>
+                      <i class="" *ngIf="i >0" style="margin-right: 12px"></i>
+                      &nbsp;
+                      {{email}}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-md-12 social-icon">
+                  <i class="fa fa-facebook-f"></i>
+                  <i class="fa fa-twitter"></i>
+                  <i class="fa fa-linkedin"></i>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <app-theme-one-footer [agency]="agency"></app-theme-one-footer>
+    </div>
+  </div>
+</div>

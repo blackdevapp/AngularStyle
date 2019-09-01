@@ -1,0 +1,29 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <app-circular-drop (clicked)="dropClicked($event)" [data]="dropData"></app-circular-drop>
+    <app-tile-table *ngIf="currentForm === 'list-car-van'" [data]="tableItems" [config]="config"></app-tile-table>
+
+    <div class="row" *ngIf="!listMode&&currentForm != 'list-car-van'">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header" data-background-color="red">
+            <div class="row">
+              <!--<div class="form-group form-black label-floating is-empty col-md-6">-->
+                <!--<label class="control-label">Component Name</label>-->
+                <!--<input type="text" [(ngModel)]="componentName" class="form-control">-->
+              <!--</div>-->
+            </div>
+          </div>
+          <div class="card-content table-responsive">
+            <app-airplane *ngIf="currentForm === 'AIRPLANE'" [airlines]="airlines" [contentData]="nodeData" [editMode]="update" [componentName]="componentName"></app-airplane>
+            <app-boat-ship *ngIf="currentForm === 'boat-ship'"></app-boat-ship>
+            <app-bus *ngIf="currentForm === 'bus'" [contentData]="nodeData"></app-bus>
+            <app-car-van *ngIf="currentForm === 'car-van'" [contentData]="nodeData" [editMode]="update" [componentName]="componentName"></app-car-van>
+            <app-hotel-room *ngIf="currentForm === 'hotel-room'" [airlines]="airlines" [contentData]="nodeData" [editMode]="update" [componentName]="componentName"></app-hotel-room>
+            <app-tour-guide *ngIf="currentForm === 'tour-guide'"></app-tour-guide>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,124 @@
+<app-loading *ngIf="loading"></app-loading>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Agency's Basic Info</h3>
+        </div>
+      </div>
+
+      <div class="box-padding">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group form-black label-floating" [ngClass]="!agency.email ? 'is-empty' : ''">
+              <label class="control-label">Email</label><!--[ngClass]="validation.checkString(user.firstName,26)?'':'has-error'"-->
+              <input type="email" class="form-control " [(ngModel)]="agency.email" name="email">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-black label-floating" [ngClass]="!agency.mobileNo ? 'is-empty' : ''">
+              <label class="control-label">MobileNo</label>
+              <input type="text" maxlength="11" class="form-control" [(ngModel)]="agency.mobileNo"
+                      name="monileNo">
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Permissions</h3>
+        </div>
+      </div>
+      <div class="box-padding">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="checkbox input-top-space">
+              <label>
+                <input (change)="selectAll($event)" name="all" type="checkbox"><span class="checkbox-material">
+                </span>
+              </label> Select All
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="checkbox input-top-space">
+              <label>
+                <input  [ngModelOptions]="{standalone: true}" [(ngModel)]="agency.permissions.dashboard" name="dashboard" type="checkbox"><span class="checkbox-material">
+                </span>
+              </label> Dashboard
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="checkbox input-top-space">
+              <label>
+                <input  [ngModelOptions]="{standalone: true}" [(ngModel)]="agency.permissions.itinerary" name="itinerary" type="checkbox">
+                <span class="checkbox-material">
+                </span>
+              </label> Itinerary
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="checkbox input-top-space">
+              <label>
+                <input  [ngModelOptions]="{standalone: true}" [(ngModel)]="agency.permissions.inquries" name="inquries" type="checkbox"><span class="checkbox-material">
+                  
+                </span>
+              </label> Inqueries
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="checkbox input-top-space">
+              <label>
+                <input  [ngModelOptions]="{standalone: true}" [(ngModel)]="agency.permissions.accounting" name="accounting" type="checkbox"><span class="checkbox-material">
+                  
+                </span>
+              </label> Accounting
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="checkbox input-top-space">
+              <label>
+                <input  [ngModelOptions]="{standalone: true}" [(ngModel)]="agency.permissions.marketing" name="marketing" type="checkbox"><span class="checkbox-material">
+                  
+                </span>
+              </label> Marketing
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="checkbox input-top-space">
+              <label>
+                <input  [ngModelOptions]="{standalone: true}" [(ngModel)]="agency.permissions.smartVisa" name="smartVisa" type="checkbox"><span class="checkbox-material">
+                  
+                </span>
+              </label> Smart Visa
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="checkbox input-top-space">
+              <label>
+                <input  [ngModelOptions]="{standalone: true}" [(ngModel)]="agency.permissions.agencyConfig" name="agencyConfig" type="checkbox"><span class="checkbox-material">
+                  
+                </span>
+              </label> Agency Configuration
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="checkbox input-top-space">
+              <label>
+                <input  [ngModelOptions]="{standalone: true}" [(ngModel)]="agency.permissions.agencyEmployees" name="agencyEmployees" type="checkbox"><span class="checkbox-material">
+                  
+                </span>
+              </label> Agency Employees
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-danger pull-right" (click)="submit()">Submit</button>
+      <!--</form>-->
+    </div>
+
+  </div>
+</div>
+
